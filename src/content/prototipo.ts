@@ -106,35 +106,23 @@ export const projects = [
 export const phases = [
   {
     index: "01",
-    title: "Elegís y cotizás",
-    window: "Día 0",
-    body: "Recibimos tu pedido y te respondemos por WhatsApp con el precio final y la fecha de entrega.",
-    you: "Elegir el tipo de web y completar el formulario.",
-    deliverable: "Precio y fecha por escrito, sin compromiso.",
+    title: "Elegís qué necesitás, con el precio a la vista",
+    body: "Completás el formulario de abajo. Lleva menos de un minuto.",
   },
   {
     index: "02",
-    title: "Contás el negocio",
-    window: "Día 1",
-    body: "Hacemos una llamada de 20 minutos para entender el negocio, el público y qué tiene que lograr la web. Con eso cerramos el alcance; la semana se reserva con el 25%.",
-    you: "Contarnos el negocio y confirmar el alcance.",
-    deliverable: "Alcance por escrito y la fecha reservada.",
+    title: "Cerramos precio y fecha de entrega",
+    body: "Seguimos por WhatsApp. Te pasamos un brief de 10 minutos sobre tu negocio y con eso te confirmamos el número final y el día de entrega. Sin reuniones de venta.",
   },
   {
     index: "03",
-    title: "Diseño y desarrollo",
-    window: "Días 2–7",
-    body: "Diseñamos y programamos la web. Cada pocos días te mostramos una versión navegable desde el celular para que la revises.",
-    you: "Revisar desde el celular y pedir ajustes dentro del alcance.",
-    deliverable: "Web navegable, textos y dos rondas de cambios.",
+    title: "Revisás la web y pedís cambios",
+    body: "La arma el equipo y te la manda para que la navegues desde el celular. La ajustamos con vos hasta que la apruebes.",
   },
   {
     index: "04",
-    title: "Publicación y entrega",
-    window: "Días 8–10",
-    body: "Conectamos el dominio, probamos en dispositivos reales, dejamos la medición funcionando y te entregamos todos los accesos.",
-    you: "Pasarnos el dominio o comprarlo juntos y aprobar la versión final.",
-    deliverable: "Web online a tu nombre, accesos y documentación.",
+    title: "La publicamos a tu nombre",
+    body: "Conectamos tu dominio y te damos todos los accesos. Una landing page queda online en 7 a 10 días hábiles desde el brief.",
   },
 ] as const;
 
