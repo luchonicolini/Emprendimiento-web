@@ -1,39 +1,6 @@
-import { brand, heroSheet, projects } from "@/content/prototipo";
+import { brand, heroSheet } from "@/content/prototipo";
 import { CornerMarks, Cota, Kicker } from "@/components/prototipo/primitives";
 import { Reveal } from "@/components/prototipo/Reveal";
-
-function ClientStrip() {
-  const names = projects.map((project) => project.name);
-
-  return (
-    <div className="overflow-hidden border-b border-[var(--line)] py-4">
-      <div className="proto-marquee flex w-max">
-        {[0, 1].map((copy) => (
-          <div
-            key={copy}
-            aria-hidden={copy === 1 || undefined}
-            className="flex shrink-0 items-center"
-          >
-            {names.map((name) => (
-              <span
-                key={`${copy}-${name}`}
-                className="flex items-center whitespace-nowrap pr-10"
-              >
-                <span className="font-cota text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
-                  {name}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="ml-10 h-[3px] w-[3px] bg-[var(--signal)]"
-                />
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function ProtoHero() {
   return (
@@ -66,7 +33,7 @@ export function ProtoHero() {
             <Reveal delay={140}>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a href="#contacto" className="proto-btn">
-                  Pedir cotización
+                  Pedir presupuesto
                   <span aria-hidden="true" className="font-cota text-[11px]">
                     ↗
                   </span>
@@ -133,8 +100,6 @@ export function ProtoHero() {
           </Reveal>
         </div>
       </div>
-
-      <ClientStrip />
     </section>
   );
 }

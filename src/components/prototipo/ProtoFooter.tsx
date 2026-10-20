@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { CookiePreferences } from "@/components/CookiePreferences";
 import { brand, nav } from "@/content/prototipo";
 
 export function ProtoFooter() {
@@ -24,7 +26,7 @@ export function ProtoFooter() {
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={`/${item.href}`}
                     className="inline-block py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
                   >
                     {item.label}
@@ -74,7 +76,7 @@ export function ProtoFooter() {
               <li>{brand.availability}</li>
               <li>{brand.location}</li>
               <li>{brand.coordinates}</li>
-              <li className="text-[var(--signal)]">Prototipo no indexado</li>
+              <li className="text-[var(--signal)]">Sitio en construcción</li>
             </ul>
           </div>
         </div>
@@ -88,12 +90,18 @@ export function ProtoFooter() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-[var(--line)] py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-[var(--line)] py-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <span className="proto-label">© 2026 {brand.name}</span>
-          <span className="proto-label">
-            Prototipo de diseño · contenido y datos de ejemplo
-          </span>
-          <span className="proto-label">{brand.location}</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <Link
+              href="/politica-de-privacidad"
+              className="proto-label transition-colors hover:text-[var(--fg)]"
+            >
+              Política de privacidad
+            </Link>
+            <CookiePreferences className="proto-label transition-colors hover:text-[var(--fg)]" />
+          </div>
+          <span className="proto-label">Contenido de ejemplo</span>
         </div>
       </div>
     </footer>

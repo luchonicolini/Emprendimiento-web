@@ -1,7 +1,6 @@
 "use client";
 
 import Script from "next/script";
-import { usePathname } from "next/navigation";
 import { useConsent } from "@/lib/use-consent";
 
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
@@ -12,10 +11,8 @@ const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
  * environments stay quiet.
  */
 export function Analytics() {
-  const pathname = usePathname();
   const consent = useConsent();
 
-  if (pathname?.startsWith("/prototipo")) return null;
   if (consent !== "granted" || !clarityId) return null;
 
   return (

@@ -1,6 +1,6 @@
-// Contenido del prototipo. Todo lo que está acá es reemplazable: marca,
-// contacto, precios, trabajos y reseñas. El sitio real se arma cambiando este
-// archivo, no los componentes.
+// Contenido de Cota. Todo lo que está acá es reemplazable: marca, contacto,
+// precios, trabajos y reseñas. El sitio se arma cambiando este archivo, no los
+// componentes.
 
 export const brand = {
   name: "Cota",

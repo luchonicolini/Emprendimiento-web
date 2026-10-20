@@ -17,14 +17,53 @@ const deadlines = ["Esta semana", "Este mes", "En 2 o 3 meses", "Sin apuro"];
 export function Contact() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [leadId, setLeadId] = useState("");
+  const [website, setWebsite] = useState("");
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (website) return;
+
     setLoading(true);
-    window.setTimeout(() => {
-      setLoading(false);
+    setError("");
+
+    const data = new FormData(event.currentTarget);
+
+    try {
+      const response = await fetch("/api/save-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre: String(data.get("nombre") ?? ""),
+          whatsapp: String(data.get("whatsapp") ?? ""),
+          proyecto: String(data.get("tipo") ?? ""),
+          plazo: String(data.get("plazo") ?? ""),
+          negocio: "",
+          mensaje: String(data.get("mensaje") ?? ""),
+          website,
+          parcial: "no",
+        }),
+      });
+
+      const result = (await response.json().catch(() => ({}))) as {
+        id?: string;
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "No pudimos enviar la consulta.");
+      }
+
+      setLeadId(result.id ?? "");
       setSent(true);
-    }, 700);
+    } catch {
+      setError(
+        "No pudimos enviar el formulario. Escribinos directo por WhatsApp.",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -93,16 +132,18 @@ export function Contact() {
             <div role="status" className="flex min-h-[420px] flex-col justify-between py-8">
               <div>
                 <span className="proto-label text-[var(--signal)]">
-                  Solicitud registrada
+                  Consulta recibida
                 </span>
                 <h3 className="proto-display mt-5 text-4xl">Quedó anotado.</h3>
                 <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-[var(--muted)]">
                   Te escribimos por WhatsApp con el precio final y la fecha de
                   entrega. Si es urgente, mandanos un mensaje directo.
                 </p>
-                <p className="mt-6 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
-                  Ref. CT-2026-001
-                </p>
+                {leadId ? (
+                  <p className="mt-6 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                    Ref. {leadId}
+                  </p>
+                ) : null}
               </div>
               <div className="flex flex-col gap-3 border-t border-[var(--line)] pt-5 sm:flex-row">
                 <a
@@ -118,7 +159,10 @@ export function Contact() {
                 </a>
                 <button
                   type="button"
-                  onClick={() => setSent(false)}
+                  onClick={() => {
+                    setSent(false);
+                    setLeadId("");
+                  }}
                   className="proto-btn proto-btn-ghost"
                 >
                   Enviar otra consulta
@@ -126,7 +170,18 @@ export function Contact() {
               </div>
             </div>
           ) : (
-            <form onSubmit={submit} className="pt-6">
+            <form onSubmit={submit} className="relative pt-6">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={website}
+                onChange={(event) => setWebsite(event.target.value)}
+                className="absolute left-[-9999px] h-0 w-0 opacity-0"
+              />
+
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="nombre" className="proto-label">
@@ -193,6 +248,15 @@ export function Contact() {
                 </div>
               </div>
 
+              {error ? (
+                <p
+                  role="alert"
+                  className="mt-5 border border-[var(--signal)] p-3 text-sm leading-relaxed text-[var(--signal)]"
+                >
+                  {error}
+                </p>
+              ) : null}
+
               <label className="mt-5 flex items-start gap-3 text-xs leading-relaxed text-[var(--muted)]">
                 <input
                   type="checkbox"
@@ -200,8 +264,15 @@ export function Contact() {
                   className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--signal)]"
                 />
                 <span>
-                  Autorizo el uso de estos datos para responder mi consulta. En
-                  este prototipo el formulario no envía ni guarda información.
+                  Autorizo el uso de estos datos para responder mi consulta.
+                  Ver{" "}
+                  <a
+                    href="/politica-de-privacidad"
+                    className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2"
+                  >
+                    política de privacidad
+                  </a>
+                  .
                 </span>
               </label>
 
@@ -216,7 +287,7 @@ export function Contact() {
                 </span>
               </button>
               <p className="proto-label mt-3">
-                Prototipo — sin persistencia de datos
+                Respuesta en menos de 24 h hábiles
               </p>
             </form>
           )}

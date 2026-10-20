@@ -58,8 +58,8 @@ export function Testimonials() {
         </div>
 
         <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[var(--muted)]">
-          Reseñas de ejemplo para el prototipo. Reemplazalas por reseñas reales
-          verificables antes de publicar.
+          Reseñas de ejemplo. Reemplazalas por reseñas reales verificables antes
+          de publicar.
         </p>
       </div>
     </section>

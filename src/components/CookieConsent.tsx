@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OPEN_CONSENT_EVENT, writeConsent } from "@/lib/consent";
 import { useConsent } from "@/lib/use-consent";
 
 export function CookieConsent() {
-  const pathname = usePathname();
   const consent = useConsent();
   const [reopened, setReopened] = useState(false);
 
@@ -16,9 +14,6 @@ export function CookieConsent() {
     window.addEventListener(OPEN_CONSENT_EVENT, reopen);
     return () => window.removeEventListener(OPEN_CONSENT_EVENT, reopen);
   }, []);
-
-  // The prototype has its own visual world and no analytics.
-  if (pathname?.startsWith("/prototipo")) return null;
 
   const open = reopened || consent === null;
   if (!open) return null;
@@ -32,15 +27,15 @@ export function CookieConsent() {
     <div
       role="region"
       aria-label="Preferencias de cookies"
-      className="fixed inset-x-0 bottom-0 z-[60] border-t border-white/10 bg-[#0d1220]/95 backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-[60] border-t border-[var(--line-strong)] bg-[var(--bg)]/95 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <p className="max-w-2xl text-sm leading-relaxed text-white/70">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p className="max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
           Usamos cookies de medición para entender cómo se usa el sitio. No
           cargamos analítica hasta que las aceptes.{" "}
           <Link
             href="/politica-de-privacidad"
-            className="text-[#2dd4bf] underline underline-offset-2 hover:text-white"
+            className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-4"
           >
             Política de privacidad
           </Link>
@@ -49,14 +44,14 @@ export function CookieConsent() {
           <button
             type="button"
             onClick={() => decide("denied")}
-            className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/40"
+            className="proto-btn proto-btn-ghost"
           >
             Solo esenciales
           </button>
           <button
             type="button"
             onClick={() => decide("granted")}
-            className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#080c18] transition-colors hover:bg-white/90"
+            className="proto-btn"
           >
             Aceptar
           </button>

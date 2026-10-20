@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { CookiePreferences } from "@/components/CookiePreferences";
-import { Footer } from "@/components/Footer";
+import { ProtoFooter } from "@/components/prototipo/ProtoFooter";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
   description:
-    "Cómo Ahora Web recopila, usa y conserva los datos que enviás a través del formulario de presupuesto, y cómo gestionar tus cookies.",
+    "Cómo Cota recopila, usa y conserva los datos que enviás a través del formulario de presupuesto, y cómo gestionar tus cookies.",
   alternates: {
     canonical: "/politica-de-privacidad",
-  },
-  openGraph: {
-    title: "Política de privacidad | Ahora Web",
-    description:
-      "Cómo Ahora Web recopila, usa y conserva los datos que enviás a través del formulario de presupuesto, y cómo gestionar tus cookies.",
-    url: "/politica-de-privacidad",
   },
 };
 
@@ -24,36 +17,36 @@ const updated = "Octubre de 2026";
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-[#080c18] text-white">
-      <header className="border-b border-white/[0.08]">
-        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-6">
+    <main className="min-h-screen">
+      <header className="border-b border-[var(--line)]">
+        <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-5 sm:px-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+            className="proto-label inline-flex items-center gap-2 transition-colors hover:text-[var(--fg)]"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <span aria-hidden="true">←</span>
             Volver al inicio
           </Link>
-          <span className="font-display text-sm font-semibold tracking-tight">
-            {site.name}
+          <span className="text-sm font-semibold tracking-[-0.04em]">
+            {site.name.toUpperCase()}
           </span>
         </div>
       </header>
 
-      <article className="mx-auto max-w-3xl px-5 py-16 sm:px-6 sm:py-24">
-        <h1 className="font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.04em] sm:text-5xl">
-          Política de{" "}
-          <em className="font-serif font-normal italic tracking-[-0.01em]">
-            privacidad
-          </em>
+      <article className="mx-auto max-w-[820px] px-5 py-16 sm:px-6 sm:py-24">
+        <p className="proto-label">Cota / Legal</p>
+        <h1 className="proto-display mt-5 text-[clamp(2.4rem,6vw,4.8rem)]">
+          Política de
+          <br />
+          privacidad.
         </h1>
-        <p className="mt-4 text-sm text-white/40">
+        <p className="mt-4 text-sm text-[var(--muted)]">
           Última actualización: {updated}
         </p>
 
-        <div className="mt-10 space-y-8 text-[15px] leading-relaxed text-white/65">
+        <div className="mt-12 space-y-10 border-t border-[var(--line)] pt-10 text-[15px] leading-relaxed text-[var(--muted)]">
           <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               1. Quién es el responsable
             </h2>
             <p className="mt-3">
@@ -62,7 +55,7 @@ export default function PrivacyPage() {
               en este sitio. Para cualquier consulta podés escribirnos a{" "}
               <a
                 href={`mailto:${site.email}`}
-                className="text-[#2dd4bf] underline underline-offset-2 hover:text-white"
+                className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2"
               >
                 {site.email}
               </a>
@@ -70,15 +63,15 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               2. Qué datos recopilamos
             </h2>
             <p className="mt-3">
               A través del formulario de presupuesto recopilamos el nombre, el
-              número de WhatsApp, el tipo de proyecto, el plazo, el rubro del
-              negocio y el mensaje que decidas escribirnos. El correo electrónico
-              es opcional y solo se usa si lo incluís.
+              número de WhatsApp, el tipo de proyecto, el plazo y el mensaje que
+              decidas escribirnos. El correo electrónico es opcional y solo se
+              usa si lo incluís.
             </p>
             <p className="mt-3">
               También registramos datos técnicos de navegación (páginas vistas,
@@ -87,8 +80,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               3. Para qué los usamos
             </h2>
             <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -102,8 +95,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               4. Base legal y conservación
             </h2>
             <p className="mt-3">
@@ -115,8 +108,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               5. Tus derechos
             </h2>
             <p className="mt-3">
@@ -124,24 +117,25 @@ export default function PrivacyPage() {
               tus datos escribiendo a{" "}
               <a
                 href={`mailto:${site.email}`}
-                className="text-[#2dd4bf] underline underline-offset-2 hover:text-white"
+                className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2"
               >
                 {site.email}
               </a>
-              . También podés presentar un reclamo ante la Agencia de Acceso a la
-              Información Pública de Argentina.
+              .{" "}También podés presentar un reclamo ante la Agencia de Acceso a
+              la Información Pública de Argentina.
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               6. Cookies y medición
             </h2>
             <p className="mt-3">
               Usamos cookies esenciales para que el sitio funcione y, solo si las
               aceptás, Microsoft Clarity para analizar el uso de forma agregada.
               Podés cambiar tu elección en cualquier momento desde{" "}
-              <CookiePreferences />.
+              <CookiePreferences className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2" />
+              .
             </p>
             <p className="mt-3">
               No cargamos ninguna herramienta de medición antes de que otorgues
@@ -149,8 +143,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               7. Seguridad
             </h2>
             <p className="mt-3">
@@ -160,8 +154,8 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="font-display text-xl font-semibold text-white">
+          <section className="border-t border-[var(--line)] pt-8">
+            <h2 className="proto-display text-2xl text-[var(--fg)]">
               8. Cambios en esta política
             </h2>
             <p className="mt-3">
@@ -172,7 +166,7 @@ export default function PrivacyPage() {
         </div>
       </article>
 
-      <Footer />
+      <ProtoFooter />
     </main>
   );
 }

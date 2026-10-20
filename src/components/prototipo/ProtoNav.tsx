@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { brand, nav } from "@/content/prototipo";
 
@@ -15,14 +16,14 @@ export function ProtoNav() {
             <span className="proto-label">{brand.location}</span>
             <span className="proto-label hidden md:inline">{brand.coordinates}</span>
             <span className="proto-label text-[var(--signal)]">
-              Prototipo · datos de ejemplo
+              Versión en construcción
             </span>
           </div>
         </div>
       </div>
 
       <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-5 sm:px-6">
-        <a href="/prototipo" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <span className="proto-mark text-[var(--fg)]" aria-hidden="true" />
           <span className="text-xl font-semibold tracking-[-0.06em]">
             {brand.name.toUpperCase()}
@@ -30,7 +31,7 @@ export function ProtoNav() {
           <span className="proto-label hidden self-end pb-1 sm:inline">
             Estudio
           </span>
-        </a>
+        </Link>
 
         <nav aria-label="Secciones" className="hidden items-center gap-7 lg:flex">
           {nav.map((item, index) => (
@@ -49,7 +50,7 @@ export function ProtoNav() {
 
         <div className="flex items-center gap-2">
           <a href="#contacto" className="proto-btn hidden sm:inline-flex">
-            Pedir cotización
+            Pedir presupuesto
             <span aria-hidden="true" className="font-cota text-[11px]">
               ↗
             </span>
@@ -91,7 +92,7 @@ export function ProtoNav() {
             onClick={() => setOpen(false)}
             className="proto-btn mt-4 w-full"
           >
-            Pedir cotización
+            Pedir presupuesto
             <span aria-hidden="true" className="font-cota text-[11px]">
               ↗
             </span>

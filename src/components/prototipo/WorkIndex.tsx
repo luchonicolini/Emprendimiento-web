@@ -114,9 +114,8 @@ export function WorkIndex() {
         </div>
 
         <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[var(--muted)]">
-          Selección de trabajos de ejemplo para el prototipo. Antes de publicar,
-          reemplazá las capturas y los enlaces por los proyectos reales de tu
-          estudio.
+          Selección de trabajos de ejemplo. Antes de publicar, reemplazá las
+          capturas y los enlaces por los proyectos reales de Cota.
         </p>
       </div>
     </section>

@@ -1,27 +1,33 @@
-import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { TechStack } from "@/components/TechStack";
-import { Pricing } from "@/components/Pricing";
-import { Showcase } from "@/components/Showcase";
-import { Process } from "@/components/Process";
-import { Testimonials } from "@/components/Testimonials";
-import { Faq } from "@/components/Faq";
-import { LeadForm } from "@/components/LeadForm";
-import { Footer } from "@/components/Footer";
+import { ScrollProgress } from "@/components/prototipo/ScrollProgress";
+import { ProtoNav } from "@/components/prototipo/ProtoNav";
+import { ProtoHero } from "@/components/prototipo/ProtoHero";
+import { ProtoTechStack } from "@/components/prototipo/ProtoTechStack";
+import { Scope } from "@/components/prototipo/Scope";
+import { WorkIndex } from "@/components/prototipo/WorkIndex";
+import { Process } from "@/components/prototipo/Process";
+import { PricingTable } from "@/components/prototipo/PricingTable";
+import { Testimonials } from "@/components/prototipo/Testimonials";
+import { Faq } from "@/components/prototipo/Faq";
+import { Contact } from "@/components/prototipo/Contact";
+import { ProtoFooter } from "@/components/prototipo/ProtoFooter";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="relative min-h-screen bg-[#080c18] text-white selection:bg-[#009688]/30">
-      <Navbar />
-      <Hero />
-      <TechStack />
-      <Pricing />
-      <Showcase />
-      <Process />
-      <Testimonials />
-      <Faq />
-      <LeadForm />
-      <Footer />
-    </main>
+    <>
+      <ScrollProgress />
+      <ProtoNav />
+      <main>
+        <ProtoHero />
+        <ProtoTechStack />
+        <Scope />
+        <WorkIndex />
+        <Process />
+        <PricingTable />
+        <Testimonials />
+        <Faq />
+        <Contact />
+      </main>
+      <ProtoFooter />
+    </>
   );
 }

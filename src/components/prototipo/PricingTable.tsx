@@ -97,7 +97,7 @@ export function PricingTable() {
             antes.
           </p>
           <a href="#contacto" className="proto-btn shrink-0">
-            Pedir cotización
+            Pedir presupuesto
             <span aria-hidden="true" className="font-cota text-[11px]">
               ↗
             </span>

@@ -1,15 +1,13 @@
-# Ahora Web — sitio de desarrollo web
+# Cota — sitio de desarrollo web
 
-Landing de conversión para el servicio de desarrollo web de Ahora Web. Página
-única en español (es-AR) con formulario de presupuesto en tres pasos.
+Sitio de Cota, estudio de desarrollo web. Next.js 16 (App Router), React 19,
+Tailwind CSS 4 y TypeScript estricto.
 
-## Stack
+## Estado
 
-- Next.js 16 (App Router, Turbopack, Cache Components)
-- React 19
-- Tailwind CSS 4
-- Framer Motion + Radix Accordion + Lucide
-- TypeScript estricto
+Cota está en construcción. La home vive en `/` y el sitio está marcado
+`noindex, nofollow` hasta que el contenido y el formulario estén listos para
+publicarse. La antigua ruta `/prototipo` redirige a `/`.
 
 ## Scripts
 
@@ -36,62 +34,50 @@ Copiá `.env.example` a `.env.local`:
 src/
   app/
     layout.tsx                 # fuentes, metadata, JSON-LD, consentimiento
-    page.tsx                   # landing
-    globals.css                # tokens, animaciones, reduced motion
+    page.tsx                   # home de Cota
+    globals.css                # base Tailwind y movimiento reducido
+    cota.css                   # sistema visual "plano técnico"
     robots.ts / sitemap.ts     # SEO técnico
     politica-de-privacidad/    # página legal
     api/save-lead/             # recepción de leads
-    api/track-event/           # eventos (pendiente de integración)
-  components/                  # una sección por archivo
-  lib/                         # site config, consentimiento, utils
+    api/track-event/           # eventos (integración pendiente)
+  components/
+    prototipo/                 # secciones y primitivas de Cota
+    Analytics.tsx              # Clarity condicionado al consentimiento
+    CookieConsent.tsx          # banner de cookies
+    CookiePreferences.tsx      # reapertura del banner
+  content/
+    prototipo.ts               # marca, precios, trabajos, proceso, reseñas y FAQ
+  lib/
+    site.ts                    # datos del sitio
+    consent.ts / use-consent.ts
+    utils.ts
 public/
   portfolio/                   # capturas de proyectos
-  stack/                       # logos del stack
-  og/                          # imagen Open Graph 1200x630
+  stack/                       # logos de herramientas (referencia)
 ```
-
-## Prototipo `/prototipo`
-
-El prototipo de la web propia vive en `src/app/prototipo/` y se puede ver en
-`http://localhost:3000/prototipo`. Usa un mundo visual distinto (plano técnico:
-papel, azul tinta, Archivo + Martian Mono) para comparar contra la landing
-actual sin reemplazarla.
-
-- Está marcado `noindex, nofollow` y no carga el consentimiento ni Clarity.
-- Todo el contenido editable está en `src/content/prototipo.ts`: marca
-  provisoria (**Cota**), contacto, precios, trabajos, proceso, reseñas y FAQ.
-- Los datos de contacto, las reseñas y los trabajos son de ejemplo. El
-  formulario no envía ni persiste nada; solo muestra el estado de confirmación.
-- Los componentes están en `src/components/prototipo/` y los estilos en
-  `src/app/prototipo/prototipo.css`.
-
-Para convertirlo en el sitio principal, mover la página a `/`, reemplazar los
-datos de ejemplo y decidir si se conserva la landing actual como historial.
 
 ## Capa de producción
 
 - **Metadata**: title con marca, description, canonical, Open Graph y Twitter
-  Card. La imagen OG vive en `public/og/desarrollo-web.jpg`.
+  Card.
 - **SEO técnico**: `robots.ts`, `sitemap.ts` y JSON-LD (`Organization` +
   `WebSite`) en el layout raíz.
 - **Consentimiento**: `CookieConsent` guarda la elección en `localStorage`.
-  Microsoft Clarity solo se carga con consentimiento explícito
-  (`Analytics.tsx`). "Preferencias de cookies" en el footer reabre el banner.
-- **Resiliencia sin JS**: `ScrollReveal` agrega `data-reveal` y el layout
-  incluye un `<noscript>` que fuerza el estado final. Sin JavaScript la página
-  se ve completa.
-- **Accesibilidad de movimiento**: `ScrollReveal` respeta
-  `prefers-reduced-motion` y `globals.css` desactiva ticker, transiciones y
-  scroll suave cuando corresponde.
+  Microsoft Clarity solo se carga con consentimiento explícito.
+- **Resiliencia sin JS**: `Reveal` agrega `data-reveal` y el layout incluye un
+  `<noscript>` que fuerza el estado final.
+- **Accesibilidad de movimiento**: `Reveal` y `cota.css` respetan
+  `prefers-reduced-motion`.
 
-## Pendiente (fase 2)
+## Pendiente antes de publicar
 
-1. **Persistencia de leads**: `api/save-lead` solo hace `console.log`. Hay que
-   escribirlos en una base (Supabase) y notificar por email/WhatsApp.
-2. **`leadId`**: los envíos parciales de cada paso no se pueden unir.
-3. **Contenido centralizado**: los precios están duplicados en `Pricing`,
-   `LeadForm` y `Hero`; mover a `src/content/`.
-4. **Paridad de contenido**: restaurar "Mateo, el dueño del estudio", las citas
-   del showcase y el CTA faltante.
-5. **Imágenes**: `public/portfolio` pesa 14 MB en PNG; convertir a WebP/AVIF.
-6. **Tests**: no hay cobertura del flujo de leads ni del formulario.
+1. Reemplazar marca, contacto, disponibilidad, precios, trabajos y reseñas de
+   ejemplo por datos reales de Cota.
+2. Decidir si el portfolio actual se mantiene como trabajo de Cota.
+3. Persistir los leads de `api/save-lead` (Supabase) y notificar por
+   email/WhatsApp.
+4. Crear una imagen Open Graph propia de Cota y activar la indexación
+   (`robots.index`).
+5. Convertir las capturas de `public/portfolio` a WebP/AVIF.
+6. Agregar pruebas del flujo de leads y del formulario.

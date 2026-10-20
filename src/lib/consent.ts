@@ -1,8 +1,8 @@
 export type Consent = "granted" | "denied";
 
-export const CONSENT_KEY = "ahoraweb.cookie-consent";
-export const CONSENT_EVENT = "ahoraweb:consent-change";
-export const OPEN_CONSENT_EVENT = "ahoraweb:consent-open";
+export const CONSENT_KEY = "cota.cookie-consent";
+export const CONSENT_EVENT = "cota:consent-change";
+export const OPEN_CONSENT_EVENT = "cota:consent-open";
 
 export function readConsent(): Consent | null {
   try {
