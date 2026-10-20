@@ -21,62 +21,60 @@ export function Process() {
             index="04 / Proceso"
             title={
               <>
-                La obra, en cuatro
+                Cómo trabajamos,
                 <br />
-                etapas.
+                en cuatro pasos.
               </>
             }
             intro={
               <p>
-                Una landing page lleva diez días hábiles. Este es el plano de
-                ruta, con la carga de trabajo de cada etapa a la vista.
+                En cada paso sabés qué hacemos, qué tenés que hacer vos y qué te
+                llevás. Sin reuniones de venta ni sorpresas.
               </p>
             }
           />
         </Reveal>
 
         <Reveal className="mt-12 border border-[var(--line)]">
-          <div className="hidden grid-cols-[200px_1fr_56px] gap-6 border-b border-[var(--line)] px-6 py-3 sm:grid">
-            <span className="proto-label">Etapa</span>
-            <span className="proto-label">Carga · días hábiles</span>
-            <span className="proto-label text-right">Total</span>
-          </div>
-
           {phases.map((phase) => (
-            <div
+            <article
               key={phase.index}
-              className="grid gap-5 border-b border-[var(--line)] px-5 py-6 last:border-b-0 sm:grid-cols-[200px_1fr_56px] sm:items-start sm:gap-6 sm:px-6"
+              className="grid gap-5 border-b border-[var(--line)] p-5 last:border-b-0 sm:grid-cols-[210px_1fr] sm:gap-10 sm:p-7"
             >
-              <div className="flex gap-4">
-                <span className="font-cota text-[10px] tracking-[0.2em] text-[var(--signal)]">
-                  {phase.index}
-                </span>
-                <div>
-                  <h3 className="text-xl tracking-[-0.03em]">{phase.title}</h3>
-                  <p className="proto-label mt-2">{phase.window}</p>
+              <div>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-cota text-[10px] tracking-[0.2em] text-[var(--signal)]">
+                    {phase.index}
+                  </span>
+                  <h3 className="text-[22px] leading-tight tracking-[-0.035em] sm:text-2xl">
+                    {phase.title}
+                  </h3>
                 </div>
+                <p className="proto-label mt-3">{phase.window}</p>
               </div>
 
               <div>
-                <div className="relative h-[10px] w-full border border-[var(--line)] bg-transparent">
-                  <div
-                    aria-hidden="true"
-                    className="absolute top-0 h-full bg-[var(--fg)]"
-                    style={{
-                      left: phase.offset,
-                      width: phase.width,
-                    }}
-                  />
-                </div>
-                <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--muted)]">
+                <p className="proto-label">Qué hacemos</p>
+                <p className="mt-2 max-w-xl text-[15px] leading-relaxed">
                   {phase.body}
                 </p>
-              </div>
 
-              <span className="font-cota text-[10px] tracking-[0.16em] text-[var(--muted)] sm:text-right">
-                {phase.days} d
-              </span>
-            </div>
+                <dl className="mt-5 grid gap-4 md:grid-cols-2 md:gap-6">
+                  <div className="border-l-2 border-[var(--signal)] pl-4">
+                    <dt className="proto-label">Tu parte</dt>
+                    <dd className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
+                      {phase.you}
+                    </dd>
+                  </div>
+                  <div className="border-l border-[var(--line-strong)] pl-4">
+                    <dt className="proto-label">Te llevás</dt>
+                    <dd className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
+                      {phase.deliverable}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
           ))}
         </Reveal>
 
@@ -116,7 +114,10 @@ export function Process() {
           </Reveal>
         </div>
 
-        <Cota label="Plazo medido en días hábiles desde el brief" className="mt-14" />
+        <Cota
+          label="Plazo total: 7–10 días hábiles desde la seña"
+          className="mt-14"
+        />
       </div>
     </section>
   );
