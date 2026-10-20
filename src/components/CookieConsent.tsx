@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { OPEN_CONSENT_EVENT, writeConsent } from "@/lib/consent";
 import { useConsent } from "@/lib/use-consent";
 
 export function CookieConsent() {
+  const pathname = usePathname();
   const consent = useConsent();
   const [reopened, setReopened] = useState(false);
 
@@ -14,6 +16,9 @@ export function CookieConsent() {
     window.addEventListener(OPEN_CONSENT_EVENT, reopen);
     return () => window.removeEventListener(OPEN_CONSENT_EVENT, reopen);
   }, []);
+
+  // The prototype has its own visual world and no analytics.
+  if (pathname?.startsWith("/prototipo")) return null;
 
   const open = reopened || consent === null;
   if (!open) return null;

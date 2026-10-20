@@ -50,6 +50,24 @@ public/
   og/                          # imagen Open Graph 1200x630
 ```
 
+## Prototipo `/prototipo`
+
+El prototipo de la web propia vive en `src/app/prototipo/` y se puede ver en
+`http://localhost:3000/prototipo`. Usa un mundo visual distinto (plano técnico:
+papel, azul tinta, Archivo + Martian Mono) para comparar contra la landing
+actual sin reemplazarla.
+
+- Está marcado `noindex, nofollow` y no carga el consentimiento ni Clarity.
+- Todo el contenido editable está en `src/content/prototipo.ts`: marca
+  provisoria (**Cota**), contacto, precios, trabajos, proceso, reseñas y FAQ.
+- Los datos de contacto, las reseñas y los trabajos son de ejemplo. El
+  formulario no envía ni persiste nada; solo muestra el estado de confirmación.
+- Los componentes están en `src/components/prototipo/` y los estilos en
+  `src/app/prototipo/prototipo.css`.
+
+Para convertirlo en el sitio principal, mover la página a `/`, reemplazar los
+datos de ejemplo y decidir si se conserva la landing actual como historial.
+
 ## Capa de producción
 
 - **Metadata**: title con marca, description, canonical, Open Graph y Twitter

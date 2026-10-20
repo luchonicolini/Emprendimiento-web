@@ -1,0 +1,276 @@
+/* Prototipo "Plano técnico" — aislado del sitio actual.
+   Las utilidades de Tailwind siguen disponibles; acá viven los tokens,
+   la grilla de plano y los detalles de medición. */
+
+.proto-root {
+  --bg: #e9e6dd;
+  --fg: #0d1418;
+  --muted: #5b615e;
+  --line: rgba(13, 20, 24, 0.14);
+  --line-strong: rgba(13, 20, 24, 0.34);
+  --grid: rgba(13, 20, 24, 0.055);
+  --accent: #16324f;
+  --accent-fg: #edeae1;
+  --signal: #e4572e;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
+}
+
+.proto-dark {
+  --bg: #0d1418;
+  --fg: #e9e6dd;
+  --muted: #98a19e;
+  --line: rgba(233, 230, 221, 0.16);
+  --line-strong: rgba(233, 230, 221, 0.42);
+  --grid: rgba(233, 230, 221, 0.06);
+  --accent: #e9e6dd;
+  --accent-fg: #0d1418;
+  --signal: #ff6a3d;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.proto-blue {
+  --bg: #16324f;
+  --fg: #edeae1;
+  --muted: #a9bccf;
+  --line: rgba(237, 234, 225, 0.18);
+  --line-strong: rgba(237, 234, 225, 0.44);
+  --grid: rgba(237, 234, 225, 0.08);
+  --accent: #edeae1;
+  --accent-fg: #16324f;
+  --signal: #ff7a4d;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@layer components {
+  .font-cota {
+    font-family: var(--font-martian), ui-monospace, SFMono-Regular, monospace;
+  }
+
+  .proto-display {
+    font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.94;
+  }
+}
+
+.proto-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+}
+
+.proto-cota {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.proto-cota-line {
+  position: relative;
+  height: 1px;
+  flex: 1;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.proto-cota-line::before,
+.proto-cota-line::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 9px;
+  background: currentColor;
+}
+
+.proto-cota-line::before {
+  left: 0;
+}
+
+.proto-cota-line::after {
+  right: 0;
+}
+
+[data-reveal] {
+  will-change: opacity, transform;
+}
+
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+[data-reveal="visible"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: auto;
+}
+
+@keyframes proto-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.proto-marquee {
+  animation: proto-marquee 42s linear infinite;
+}
+
+.proto-marquee:hover {
+  animation-play-state: paused;
+}
+
+.proto-mark {
+  display: inline-block;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+}
+
+.proto-mark::before,
+.proto-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.proto-mark::before {
+  left: 50%;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+}
+
+.proto-mark::after {
+  top: 50%;
+  left: -3px;
+  right: -3px;
+  height: 1px;
+}
+
+.proto-root ::selection {
+  background: var(--signal);
+  color: #0d1418;
+}
+
+.proto-root section[id],
+.proto-root footer {
+  scroll-margin-top: 4rem;
+}
+
+@media (min-width: 640px) {
+  .proto-root section[id],
+  .proto-root footer {
+    scroll-margin-top: 5.75rem;
+  }
+}
+
+.proto-root :focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.proto-root a,
+.proto-root button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .proto-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    border: 1px solid var(--fg);
+    background: var(--fg);
+    color: var(--bg);
+    padding: 0.8rem 1.15rem;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition:
+      background 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  .proto-btn:hover {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #0d1418;
+  }
+
+  .proto-btn-ghost {
+    background: transparent;
+    color: var(--fg);
+  }
+
+  .proto-btn-ghost:hover {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+
+  .proto-label {
+    font-family: var(--font-martian), ui-monospace, monospace;
+    font-size: 10px;
+    line-height: 1.1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .proto-field {
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    padding: 0.8rem 0.9rem;
+    font-size: 14px;
+    color: var(--fg);
+    border-radius: 0;
+    appearance: none;
+  }
+
+  .proto-field::placeholder {
+    color: var(--muted);
+    opacity: 0.75;
+  }
+
+  .proto-field:focus {
+    outline: none;
+    border-color: var(--signal);
+  }
+
+  .proto-field option {
+    background: var(--bg);
+    color: var(--fg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-root [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .proto-marquee {
+    animation: none;
+  }
+}

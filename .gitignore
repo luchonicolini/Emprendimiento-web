@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# impeccable design artifacts
+/.impeccable/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
