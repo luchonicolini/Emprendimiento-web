@@ -19,9 +19,19 @@ export const nav = [
   { label: "Alcance", href: "#alcance" },
   { label: "Trabajos", href: "#trabajos" },
   { label: "Proceso", href: "#proceso" },
-  { label: "Precios", href: "#precios" },
+  { label: "Presupuesto", href: "#precios" },
   { label: "Preguntas", href: "#preguntas" },
 ] as const;
+
+export const projectTypes = [
+  "Landing page",
+  "Web multipágina",
+  "Tienda online",
+  "Sistema a medida",
+  "No sé todavía",
+] as const;
+
+export type ProjectType = (typeof projectTypes)[number];
 
 export const heroSheet = [
   { label: "Alcance", value: "Landing · multipágina · tienda · sistema" },
@@ -128,34 +138,46 @@ export const phases = [
 
 export const pricing = [
   {
+    plan: "Landing page",
     type: "Landing page",
     fit: "Oficios y profesionales que necesitan una sola página para recibir consultas.",
     includes: "Diseño, desarrollo, WhatsApp, formulario, analítica y publicación.",
+    pricePrefix: "",
     price: "USD 350",
     term: "7–10 días",
+    recommended: false,
   },
   {
+    plan: "Web multipágina",
     type: "Web multipágina",
     fit: "Estudios y empresas con varios servicios que compiten por búsquedas distintas.",
     includes: "Una página por servicio, SEO por sección, medición y entrega documentada.",
+    pricePrefix: "",
     price: "USD 500",
     term: "10–15 días",
+    recommended: true,
   },
   {
+    plan: "Tienda online",
     type: "Tienda online",
     fit: "Marcas que venden con carrito, envíos y medios de pago.",
     includes: "Tienda Nube o Shopify, carga inicial de hasta 30 productos y capacitación.",
-    price: "Desde USD 650",
+    pricePrefix: "Desde",
+    price: "USD 650",
     term: "15–20 días",
-  },
-  {
-    type: "Sistema a medida",
-    fit: "Operaciones con usuarios, turnos, pedidos o paneles propios.",
-    includes: "Relevamiento, base de datos, roles y panel de administración.",
-    price: "Desde USD 1.500",
-    term: "A definir",
+    recommended: false,
   },
 ] as const;
+
+export const customSystem = {
+  plan: "Sistema a medida",
+  type: "Sistema a medida",
+  fit: "Operaciones con usuarios, turnos, pedidos o paneles propios.",
+  includes: "Relevamiento, base de datos, roles y panel de administración.",
+  pricePrefix: "Desde",
+  price: "USD 1.500",
+  term: "A definir",
+} as const;
 
 export const testimonials = [
   {

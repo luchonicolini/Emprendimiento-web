@@ -1,16 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { brand } from "@/content/prototipo";
+import { useEffect, useState } from "react";
+import {
+  brand,
+  projectTypes,
+  type ProjectType,
+} from "@/content/prototipo";
 import { Cota, Kicker } from "@/components/prototipo/primitives";
-
-const projectTypes = [
-  "Landing page",
-  "Web multipágina",
-  "Tienda online",
-  "Sistema a medida",
-  "No sé todavía",
-];
+import { PLAN_SELECT_EVENT } from "@/lib/plan-selection";
 
 const deadlines = ["Esta semana", "Este mes", "En 2 o 3 meses", "Sin apuro"];
 
@@ -20,6 +17,19 @@ export function Contact() {
   const [error, setError] = useState("");
   const [leadId, setLeadId] = useState("");
   const [website, setWebsite] = useState("");
+  const [projectType, setProjectType] =
+    useState<ProjectType>("No sé todavía");
+
+  useEffect(() => {
+    const handlePlanSelection = (event: Event) => {
+      const plan = (event as CustomEvent<ProjectType>).detail;
+      if (projectTypes.includes(plan)) setProjectType(plan);
+    };
+
+    window.addEventListener(PLAN_SELECT_EVENT, handlePlanSelection);
+    return () =>
+      window.removeEventListener(PLAN_SELECT_EVENT, handlePlanSelection);
+  }, []);
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -122,7 +132,10 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="border border-[var(--line-strong)] p-5 sm:p-8">
+        <div
+          id="ficha"
+          className="scroll-mt-20 border border-[var(--line-strong)] p-5 sm:scroll-mt-28 sm:p-8"
+        >
           <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
             <span className="proto-label">Ficha de proyecto</span>
             <span className="proto-label">Paso 01 / 01</span>
@@ -214,7 +227,15 @@ export function Contact() {
                   <label htmlFor="tipo" className="proto-label">
                     Tipo de proyecto
                   </label>
-                  <select id="tipo" name="tipo" className="proto-field mt-2">
+                  <select
+                    id="tipo"
+                    name="tipo"
+                    className="proto-field mt-2"
+                    value={projectType}
+                    onChange={(event) =>
+                      setProjectType(event.target.value as ProjectType)
+                    }
+                  >
                     {projectTypes.map((option) => (
                       <option key={option} value={option}>
                         {option}
