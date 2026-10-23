@@ -2,14 +2,9 @@
 
 Sitio oficial de **Cota**, estudio especializado en diseño y desarrollo web de alta precisión. Construido con arquitectura moderna, tipografía editorial técnica y rendimiento nativo.
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.3-blue?logo=react)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178c6?logo=typescript)](https://www.typescriptlang.org/)
-
 ---
 
-## 📐 Concepto Visual: Plano Técnico (Blueprint)
+## Concepto Visual: Plano Técnico (Blueprint)
 
 El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería**:
 * **Paleta:** Papel pergamino (`#e9e6dd`), tinta carbón (`#0d1418`), azul blueprint (`#16324f`) y naranja de marcación técnica (`#e4572e`).
@@ -18,10 +13,10 @@ El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería
 
 ---
 
-## ✨ Componentes y Experiencia Interactiva
+## Componentes y Experiencia Interactiva
 
 1. **Hero con Comparador Antes / Después:**
-   * Slider interactivo con control circular `◄ || ►` que compara en tiempo real una web genérica generada por IA (plantilla saturada, código lento, sin indexación) frente a una web profesional de Cota (Next.js 16, 0.4s de carga, SEO nativo y base de datos propia).
+   * Slider interactivo con control circular que compara en tiempo real una web genérica generada por IA (plantilla saturada, código lento, sin indexación) frente a una web profesional de Cota (Next.js 16, 0.4s de carga, SEO nativo y base de datos propia).
 2. **02 / Alcance (Stacking Cards on Scroll):**
    * Efecto mazo de planos sticky donde las 4 fases se van apilando suavemente con el scroll del usuario, con aceleración por GPU (`transform-gpu`) y fichas de entregables reales.
 3. **03 / Trabajos (Galería Editorial):**
@@ -31,11 +26,11 @@ El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería
 5. **05 / Presupuesto (Precios cerrados):**
    * Triptych de 3 tarjetas equilibradas (Landing page, Web multipágina destacada en blueprint y Tienda online) + sub-banner para sistemas a medida.
 6. **WhatsApp Flotante:**
-   * Botón de contacto directo con indicador de estado activo (pulso verde) y mensaje preconfigurado.
+   * Botón de contacto directo con indicador de estado activo y mensaje preconfigurado.
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 * **Framework:** Next.js 16 (App Router + Turbopack)
 * **Librería UI:** React 19
@@ -46,7 +41,7 @@ El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería
 
 ---
 
-## 🚀 Comandos de Desarrollo
+## Comandos de Desarrollo
 
 ```bash
 # Instalar dependencias
@@ -70,7 +65,7 @@ npm run start
 
 ---
 
-## ⚙️ Variables de Entorno
+## Variables de Entorno
 
 Copiá `.env.example` a `.env.local`:
 
@@ -85,7 +80,7 @@ cp .env.example .env.local
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
@@ -115,6 +110,6 @@ public/
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Privado © Cota Estudio. Todos los derechos reservados.
