@@ -11,7 +11,7 @@
   --grid: rgba(13, 20, 24, 0.055);
   --accent: #16324f;
   --accent-fg: #edeae1;
-  --signal: #e4572e;
+  --signal: #b83812;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
@@ -101,20 +101,30 @@
 }
 
 [data-reveal] {
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
 
 [data-reveal="hidden"] {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(18px) scale(0.98);
+  filter: blur(8px);
+}
+
+@media (min-width: 640px) {
+  [data-reveal="hidden"] {
+    transform: translateY(22px) scale(0.98);
+    filter: blur(12px);
+  }
 }
 
 [data-reveal="visible"] {
   opacity: 1;
   transform: none;
+  filter: blur(0);
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: auto;
 }
 
@@ -146,7 +156,8 @@
   animation: proto-marquee 42s linear infinite;
 }
 
-.proto-marquee:hover {
+.proto-marquee:hover,
+.proto-marquee:focus-within {
   animation-play-state: paused;
 }
 
@@ -293,6 +304,18 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.proto-root h1,
+.proto-root h2,
+.proto-root h3,
+.proto-root h4,
+.proto-display {
+  text-wrap: balance;
+}
+
+.proto-root p {
+  text-wrap: pretty;
+}
+
 @layer components {
   .proto-btn {
     display: inline-flex;
@@ -331,9 +354,9 @@
 
   .proto-label {
     font-family: var(--font-martian), ui-monospace, monospace;
-    font-size: 10px;
-    line-height: 1.1;
-    letter-spacing: 0.2em;
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -369,6 +392,7 @@
   .proto-root [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
     transition: none !important;
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   brand,
   projectTypes,
@@ -17,8 +17,16 @@ export function Contact() {
   const [error, setError] = useState("");
   const [leadId, setLeadId] = useState("");
   const [website, setWebsite] = useState("");
+  const loadedAtRef = useRef<number>(0);
+  const [whatsappHref, setWhatsappHref] = useState<string>(brand.whatsapp);
+  const [mailHref, setMailHref] = useState<string>(`mailto:${brand.email}`);
   const [projectType, setProjectType] =
     useState<ProjectType>("No sé todavía");
+  const [deadline, setDeadline] = useState<string>(deadlines[1]);
+
+  useEffect(() => {
+    loadedAtRef.current = Date.now();
+  }, []);
 
   useEffect(() => {
     const handlePlanSelection = (event: Event) => {
@@ -33,51 +41,155 @@ export function Contact() {
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (website) return;
+
+    // Anti-bot: Honeypot y Time-Latch (un bot llena el formulario en < 1.5s)
+    if (
+      website ||
+      (loadedAtRef.current > 0 && Date.now() - loadedAtRef.current < 1500)
+    ) {
+      setSent(true);
+      return;
+    }
 
     setLoading(true);
     setError("");
 
     const data = new FormData(event.currentTarget);
+    const nombre = String(data.get("nombre") ?? "").trim();
+    const tel = String(data.get("whatsapp") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const tipo = String(data.get("tipo") ?? "").trim();
+    const plazo = String(data.get("plazo") ?? "").trim();
+    const mensaje = String(data.get("mensaje") ?? "").trim();
 
+    const refId = `nd_${Date.now().toString().slice(-6)}`;
+    setLeadId(refId);
+
+    // Mensaje estructurado para WhatsApp
+    const lines = [
+      "Hola Luciano! Acabo de armar la ficha técnica en Nicolini Design:",
+      "",
+      `• Nombre: ${nombre}`,
+      `• WhatsApp: ${tel}`,
+    ];
+
+    if (email) {
+      lines.push(`• Email: ${email}`);
+    }
+
+    lines.push(
+      `• Tipo de proyecto: ${tipo}`,
+      `• Plazo: ${plazo}`,
+    );
+
+    if (mensaje) {
+      lines.push(`• Qué necesito: ${mensaje}`);
+    }
+
+    lines.push("", `Ficha Ref: #${refId}`);
+
+    const targetUrl = `${brand.whatsapp}?text=${encodeURIComponent(
+      lines.join("\n"),
+    )}`;
+    setWhatsappHref(targetUrl);
+
+    // Enlace pre-armado para envío alternativo por correo electrónico
+    const mailSubject = `Ficha técnica: ${tipo} — Ref #${refId}`;
+    const mailBodyLines = [
+      "Hola Nicolini Design!",
+      "",
+      "Acabo de generar la ficha técnica en la web:",
+      "",
+      `• Nombre: ${nombre}`,
+      `• Teléfono / WhatsApp: ${tel}`,
+    ];
+    if (email) {
+      mailBodyLines.push(`• Email de respuesta: ${email}`);
+    }
+    mailBodyLines.push(
+      `• Tipo de proyecto: ${tipo}`,
+      `• Plazo deseado: ${plazo}`,
+    );
+    if (mensaje) {
+      mailBodyLines.push(`• Qué necesito: ${mensaje}`);
+    }
+    mailBodyLines.push(
+      "",
+      `Ficha Ref: #${refId}`,
+      "",
+      "Prefiero recibir la propuesta por este medio de correo. Saludos!",
+    );
+
+    const mailtoUrl = `mailto:${brand.email}?subject=${encodeURIComponent(
+      mailSubject,
+    )}&body=${encodeURIComponent(mailBodyLines.join("\n"))}`;
+    setMailHref(mailtoUrl);
+
+    // Envío silencioso a tu Gmail mediante Web3Forms (no revela tu correo al cliente)
+    const web3formsKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+      "6926fd5b-29c5-4fd8-b98d-0eb7fcff4da0";
+
+    if (web3formsKey) {
+      try {
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3formsKey,
+            subject: `[NUEVO CLIENTE COTA] ${nombre} — ${tipo} (${plazo})`,
+            from_name: "Nicolini Design Web",
+            nombre,
+            whatsapp: tel,
+            email: email || undefined,
+            tipo_proyecto: tipo,
+            plazo_deseado: plazo,
+            mensaje: mensaje || "Sin requerimientos adicionales",
+            referencia: refId,
+          }),
+        }).catch(() => {});
+      } catch {
+        // Falla silenciosa sin interrumpir al usuario
+      }
+    }
+
+    // Registro secundario en el servidor con protección anti-bot
     try {
-      const response = await fetch("/api/save-lead", {
+      fetch("/api/save-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nombre: String(data.get("nombre") ?? ""),
-          whatsapp: String(data.get("whatsapp") ?? ""),
-          proyecto: String(data.get("tipo") ?? ""),
-          plazo: String(data.get("plazo") ?? ""),
+          nombre,
+          whatsapp: tel,
+          proyecto: tipo,
+          plazo,
           negocio: "",
-          mensaje: String(data.get("mensaje") ?? ""),
+          mensaje,
           website,
           parcial: "no",
+          loadedAt: loadedAtRef.current,
         }),
-      });
-
-      const result = (await response.json().catch(() => ({}))) as {
-        id?: string;
-        error?: string;
-      };
-
-      if (!response.ok) {
-        throw new Error(result.error ?? "No pudimos enviar la consulta.");
-      }
-
-      setLeadId(result.id ?? "");
-      setSent(true);
+      }).catch(() => {});
     } catch {
-      setError(
-        "No pudimos enviar el formulario. Escribinos directo por WhatsApp.",
-      );
-    } finally {
-      setLoading(false);
+      // Ignorar error de red secundario
     }
+
+    // Abrir WhatsApp directamente
+    try {
+      window.open(targetUrl, "_blank", "noopener,noreferrer");
+    } catch {
+      // Si el navegador bloquea el popup, el botón de respaldo queda en pantalla
+    }
+
+    setLoading(false);
+    setSent(true);
   };
 
   return (
-    <section id="contacto" className="proto-dark border-b border-[var(--line)] py-16 sm:py-24">
+    <section id="contacto" className="proto-dark border-b border-[var(--line)] py-12 sm:py-24">
       <div className="mx-auto grid max-w-[1240px] gap-12 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <div className="flex items-center gap-3">
@@ -106,7 +218,7 @@ export function Contact() {
             </a>
             <a
               href={`${brand.whatsapp}?text=${encodeURIComponent(
-                "Hola Cota, quiero consultar por un proyecto web para mi negocio.",
+                "Hola Luciano, quiero consultar por un proyecto web para mi negocio.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -141,41 +253,58 @@ export function Contact() {
           </div>
 
           {sent ? (
-            <div role="status" className="flex min-h-[420px] flex-col justify-between py-8">
+            <div role="status" className="flex min-h-[420px] flex-col justify-between py-6 sm:py-8">
               <div>
                 <span className="proto-label text-[var(--signal)]">
-                  Consulta recibida
+                  Ficha de proyecto registrada
                 </span>
-                <h3 className="proto-display mt-5 text-4xl">Quedó anotado.</h3>
-                <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-[var(--muted)]">
-                  Te escribimos por WhatsApp con el precio final y la fecha de
-                  entrega. Si es urgente, mandanos un mensaje directo.
+                <h3 className="proto-display mt-4 text-3xl sm:text-4xl">Ficha lista.</h3>
+                <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--muted)]">
+                  Tu consulta ya fue recibida en nuestro sistema. Elegí por qué canal preferís continuar la conversación:
                 </p>
                 {leadId ? (
-                  <p className="mt-6 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                  <p className="mt-5 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
                     Ref. {leadId}
                   </p>
                 ) : null}
               </div>
-              <div className="flex flex-col gap-3 border-t border-[var(--line)] pt-5 sm:flex-row">
-                <a
-                  href={brand.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="proto-btn"
-                >
-                  Abrir WhatsApp
-                </a>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSent(false);
-                    setLeadId("");
-                  }}
-                  className="proto-btn proto-btn-ghost"
-                >
-                  Enviar otra consulta
-                </button>
+
+              {/* Botones de acción: WhatsApp o Correo electrónico */}
+              <div className="space-y-4 border-t border-[var(--line)] pt-5">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="proto-btn justify-center text-center"
+                  >
+                    <span>Enviar por WhatsApp</span>
+                    <span aria-hidden="true" className="font-cota text-xs">↗</span>
+                  </a>
+                  <a
+                    href={mailHref}
+                    className="proto-btn proto-btn-ghost justify-center text-center"
+                  >
+                    <span>Enviar por correo</span>
+                    <span aria-hidden="true" className="font-cota text-xs">✉</span>
+                  </a>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSent(false);
+                      setLeadId("");
+                    }}
+                    className="font-cota text-[10px] uppercase tracking-wider text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+                  >
+                    ← Modificar datos
+                  </button>
+                  <span className="font-cota text-[9px] uppercase tracking-wider text-[var(--muted)]">
+                    Respuesta en &lt; 24h hábiles
+                  </span>
+                </div>
               </div>
             </div>
           ) : (
@@ -191,23 +320,26 @@ export function Contact() {
                 className="absolute left-[-9999px] h-0 w-0 opacity-0"
               />
 
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2">
+                {/* 01. Nombre */}
                 <div>
-                  <label htmlFor="nombre" className="proto-label">
-                    Nombre *
+                  <label htmlFor="nombre" className="flex items-center justify-between font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                    <span>01. Nombre *</span>
                   </label>
                   <input
                     id="nombre"
                     name="nombre"
                     required
                     autoComplete="name"
-                    placeholder="Tu nombre"
-                    className="proto-field mt-2"
+                    placeholder="Tu nombre o empresa"
+                    className="mt-2 w-full border border-[var(--line-strong)] bg-[#0f171d] px-3.5 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--muted)]/60 transition-all duration-200 focus:border-[var(--signal)] focus:bg-[#142028] focus:outline-none focus:ring-1 focus:ring-[var(--signal)]"
                   />
                 </div>
+
+                {/* 02. WhatsApp */}
                 <div>
-                  <label htmlFor="whatsapp" className="proto-label">
-                    WhatsApp *
+                  <label htmlFor="whatsapp" className="flex items-center justify-between font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                    <span>02. WhatsApp *</span>
                   </label>
                   <input
                     id="whatsapp"
@@ -215,52 +347,133 @@ export function Contact() {
                     type="tel"
                     required
                     autoComplete="tel"
+                    inputMode="tel"
                     placeholder="+54 9 11 ..."
-                    className="proto-field mt-2"
+                    className="mt-2 w-full border border-[var(--line-strong)] bg-[#0f171d] px-3.5 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--muted)]/60 transition-all duration-200 focus:border-[var(--signal)] focus:bg-[#142028] focus:outline-none focus:ring-1 focus:ring-[var(--signal)]"
                   />
                 </div>
-                <div>
-                  <label htmlFor="tipo" className="proto-label">
-                    Tipo de proyecto
-                  </label>
-                  <select
-                    id="tipo"
-                    name="tipo"
-                    className="proto-field mt-2"
-                    value={projectType}
-                    onChange={(event) =>
-                      setProjectType(event.target.value as ProjectType)
-                    }
-                  >
-                    {projectTypes.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="plazo" className="proto-label">
-                    Para cuándo
-                  </label>
-                  <select id="plazo" name="plazo" className="proto-field mt-2">
-                    {deadlines.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+
+                {/* Email (opcional para quien prefiera correo) */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="mensaje" className="proto-label">
-                    Qué necesitás
+                  <label htmlFor="email" className="flex items-center justify-between font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                    <span>Email (opcional — si preferís respuesta por correo)</span>
+                    <span className="text-[9px] lowercase opacity-60">opcional</span>
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    placeholder="tu@correo.com"
+                    className="mt-2 w-full border border-[var(--line-strong)] bg-[#0f171d] px-3.5 py-3 text-sm text-[var(--fg)] placeholder:text-[var(--muted)]/60 transition-all duration-200 focus:border-[var(--signal)] focus:bg-[#142028] focus:outline-none focus:ring-1 focus:ring-[var(--signal)]"
+                  />
+                </div>
+
+                {/* 03. Tipo de proyecto (Selector interactivo de fichas) */}
+                <div className="sm:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                      03. Tipo de proyecto
+                    </span>
+                    <span className="font-cota text-[9px] uppercase tracking-wider text-[var(--signal)]">
+                      {projectType}
+                    </span>
+                  </div>
+                  <input type="hidden" name="tipo" value={projectType} />
+                  <div
+                    role="radiogroup"
+                    aria-label="Tipo de proyecto"
+                    className="mt-2 flex flex-wrap gap-2"
+                  >
+                    {projectTypes.map((option) => {
+                      const isSelected = projectType === option;
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          role="radio"
+                          aria-checked={isSelected}
+                          onClick={() => setProjectType(option)}
+                          className={`flex items-center gap-2 border px-3 py-2 font-cota text-[11px] tracking-wider uppercase transition-all duration-150 ${
+                            isSelected
+                              ? "border-[var(--signal)] bg-[var(--signal)] font-semibold text-[#0d1418] shadow-sm"
+                              : "border-[var(--line-strong)] bg-[#0f171d] text-[var(--muted)] hover:border-[var(--fg)] hover:text-[var(--fg)]"
+                          }`}
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 ${
+                              isSelected
+                                ? "bg-[#0d1418]"
+                                : "bg-[var(--line-strong)]"
+                            }`}
+                            aria-hidden="true"
+                          />
+                          <span>{option}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 04. Plazo deseado (Selector interactivo de tiempo) */}
+                <div className="sm:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                      04. Para cuándo lo necesitás
+                    </span>
+                    <span className="font-cota text-[9px] uppercase tracking-wider text-[var(--muted)]">
+                      {deadline}
+                    </span>
+                  </div>
+                  <input type="hidden" name="plazo" value={deadline} />
+                  <div
+                    role="radiogroup"
+                    aria-label="Plazo de entrega"
+                    className="mt-2 flex flex-wrap gap-2"
+                  >
+                    {deadlines.map((option) => {
+                      const isSelected = deadline === option;
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          role="radio"
+                          aria-checked={isSelected}
+                          onClick={() => setDeadline(option)}
+                          className={`flex items-center gap-2 border px-3 py-2 font-cota text-[11px] tracking-wider uppercase transition-all duration-150 ${
+                            isSelected
+                              ? "border-[var(--signal)] bg-[var(--signal)] font-semibold text-[#0d1418] shadow-sm"
+                              : "border-[var(--line-strong)] bg-[#0f171d] text-[var(--muted)] hover:border-[var(--fg)] hover:text-[var(--fg)]"
+                          }`}
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 ${
+                              isSelected
+                                ? "bg-[#0d1418]"
+                                : "bg-[var(--line-strong)]"
+                            }`}
+                            aria-hidden="true"
+                          />
+                          <span>{option}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 05. Qué necesitás */}
+                <div className="sm:col-span-2">
+                  <label htmlFor="mensaje" className="flex items-center justify-between font-cota text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]">
+                    <span>05. Qué necesitás (detalles de obra)</span>
+                    <span className="text-[9px] lowercase opacity-60">opcional</span>
                   </label>
                   <textarea
                     id="mensaje"
                     name="mensaje"
                     rows={4}
                     placeholder="Ej: tengo el logo y los textos, necesito una página con servicios y un botón a WhatsApp."
-                    className="proto-field mt-2 resize-none"
+                    className="mt-2 w-full border border-[var(--line-strong)] bg-[#0f171d] p-3.5 text-sm text-[var(--fg)] placeholder:text-[var(--muted)]/60 resize-none transition-all duration-200 focus:border-[var(--signal)] focus:bg-[#142028] focus:outline-none focus:ring-1 focus:ring-[var(--signal)]"
                   />
                 </div>
               </div>
@@ -274,18 +487,17 @@ export function Contact() {
                 </p>
               ) : null}
 
-              <label className="mt-5 flex items-start gap-3 text-xs leading-relaxed text-[var(--muted)]">
+              <label className="mt-6 flex items-start gap-3 cursor-pointer text-xs leading-relaxed text-[var(--muted)] select-none">
                 <input
                   type="checkbox"
                   required
-                  className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--signal)]"
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded-none border border-[var(--line-strong)] bg-[#0f171d] accent-[var(--signal)]"
                 />
                 <span>
-                  Autorizo el uso de estos datos para responder mi consulta.
-                  Ver{" "}
+                  Autorizo el uso de estos datos para responder mi consulta técnica. Ver{" "}
                   <a
                     href="/politica-de-privacidad"
-                    className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2"
+                    className="text-[var(--fg)] underline decoration-[var(--signal)] underline-offset-2 hover:text-[var(--signal)]"
                   >
                     política de privacidad
                   </a>
@@ -296,11 +508,14 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="proto-btn mt-6 w-full disabled:opacity-60"
+                className="proto-btn mt-6 w-full justify-between px-5 text-sm disabled:opacity-60"
               >
-                {loading ? "Enviando…" : "Enviar consulta"}
+                <span>{loading ? "Registrando consulta técnica…" : "Pedir presupuesto técnico"}</span>
+                <span aria-hidden="true" className="font-cota text-xs">
+                  {loading ? "…" : "01/01 ↗"}
+                </span>
               </button>
-              <p className="proto-label mt-3">
+              <p className="proto-label mt-3 text-center sm:text-left">
                 Respuesta en menos de 24 h hábiles
               </p>
             </form>

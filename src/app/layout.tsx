@@ -20,7 +20,7 @@ const martian = Martian_Mono({
   weight: ["400", "500", "700"],
 });
 
-const title = "Cota — Sitios web con medidas exactas";
+const title = "Nicolini Design — Sitios web con medidas exactas";
 
 export const viewport: Viewport = {
   themeColor: "#e9e6dd",
@@ -39,10 +39,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  // Cota todavía está en construcción. Quitar este bloque al publicar.
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   openGraph: {
     type: "website",

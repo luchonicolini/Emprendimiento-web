@@ -6,7 +6,7 @@ export function Testimonials() {
   return (
     <section
       id="resenas"
-      className="proto-blue proto-grid border-b border-[var(--line)] py-16 sm:py-24"
+      className="proto-blue proto-grid border-b border-[var(--line)] py-12 sm:py-24"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
@@ -29,9 +29,18 @@ export function Testimonials() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div
+          role="region"
+          aria-label="Reseñas de clientes"
+          tabIndex={0}
+          className="proto-scroll-strip mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:mt-12 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pb-0"
+        >
           {testimonials.map((item, index) => (
-            <Reveal key={item.name} delay={index * 70}>
+            <Reveal
+              key={item.name}
+              delay={index * 70}
+              className="h-full w-full min-w-full shrink-0 snap-start md:w-auto md:min-w-0"
+            >
               <figure className="flex h-full flex-col border-t border-[var(--line-strong)] pt-5">
                 <div className="flex items-center justify-between">
                   <span
@@ -57,9 +66,8 @@ export function Testimonials() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[var(--muted)]">
-          Reseñas de ejemplo. Reemplazalas por reseñas reales verificables antes
-          de publicar.
+        <p className="proto-label mt-4 md:hidden">
+          Deslizá para ver las tres →
         </p>
       </div>
     </section>

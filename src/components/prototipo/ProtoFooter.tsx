@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CookiePreferences } from "@/components/CookiePreferences";
 import { brand, nav } from "@/content/prototipo";
+import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
 
 export function ProtoFooter() {
   return (
@@ -8,12 +9,7 @@ export function ProtoFooter() {
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <div className="grid gap-10 border-b border-[var(--line)] py-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-3">
-              <span className="proto-mark text-[var(--fg)]" aria-hidden="true" />
-              <span className="text-xl font-semibold tracking-[-0.06em]">
-                {brand.name.toUpperCase()}
-              </span>
-            </div>
+            <NicoliniLogo showDescriptor={false} />
             <p className="mt-4 max-w-[220px] text-sm leading-relaxed text-[var(--muted)]">
               {brand.descriptor}. Diseño, desarrollo y medición para negocios que
               necesitan que los contacten.
@@ -26,7 +22,7 @@ export function ProtoFooter() {
               {nav.map((item) => (
                 <li key={item.href}>
                   <a
-                    href={`/${item.href}`}
+                    href={item.href}
                     className="inline-block py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
                   >
                     {item.label}
@@ -76,18 +72,26 @@ export function ProtoFooter() {
               <li>{brand.availability}</li>
               <li>{brand.location}</li>
               <li>{brand.coordinates}</li>
-              <li className="text-[var(--signal)]">Sitio en construcción</li>
+              <li>Entregas en 7 a 10 días</li>
             </ul>
           </div>
         </div>
 
-        <div className="overflow-hidden py-8">
-          <p
-            aria-hidden="true"
-            className="proto-display text-[clamp(4.5rem,30vw,24rem)] leading-[0.75] tracking-[-0.07em]"
-          >
-            {brand.name.toUpperCase()}
-          </p>
+        <div className="overflow-hidden border-t border-[var(--line)] py-10 sm:py-14">
+          <div className="flex select-none flex-col">
+            <span
+              aria-hidden="true"
+              className="proto-display text-[clamp(2.6rem,11.5vw,9.5rem)] leading-[0.85] tracking-[-0.04em] text-[var(--fg)]"
+            >
+              NICOLINI
+            </span>
+            <span
+              aria-hidden="true"
+              className="font-cota text-[clamp(0.85rem,3.4vw,2.8rem)] uppercase tracking-[0.32em] text-[var(--signal)]"
+            >
+              DESIGN
+            </span>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-[var(--line)] py-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
@@ -101,7 +105,7 @@ export function ProtoFooter() {
             </Link>
             <CookiePreferences className="proto-label transition-colors hover:text-[var(--fg)]" />
           </div>
-          <span className="proto-label">Contenido de ejemplo</span>
+          <span className="proto-label">Hecho con medidas exactas</span>
         </div>
       </div>
     </footer>

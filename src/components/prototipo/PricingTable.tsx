@@ -1,9 +1,11 @@
 "use client";
 
-import { customSystem } from "@/content/prototipo";
+import { useState } from "react";
+import { brand, customSystem } from "@/content/prototipo";
 import { PricingPlanLink } from "@/components/prototipo/PricingPlanLink";
 import { Reveal } from "@/components/prototipo/Reveal";
 import { CornerMarks, SectionHead } from "@/components/prototipo/primitives";
+import { cn } from "@/lib/utils";
 
 const plansData = [
   {
@@ -11,16 +13,18 @@ const plansData = [
     type: "Landing page",
     tag: "PLAN 01 // CONVERSIÓN",
     fit: "Profesionales, oficios y lanzamientos que buscan validar y recibir consultas directas sin vueltas.",
-    price: "USD 350",
+    price: "USD 200",
+    originalPrice: "USD 350",
+    promoBadge: "Promo este mes",
     pricePrefix: "Precio cerrado",
     term: "7 a 10 días hábiles",
     recommended: false,
     features: [
-      "Diseño exclusivo orientado a conversión",
-      "Integración de WhatsApp y formulario directo",
-      "Optimización 100% Mobile y velocidad de carga",
-      "Configuración de analítica (Pixel / Analytics)",
-      "Dominio propio conectado y publicación incluida",
+      "Diseño exclusivo enfocado en que te escriban por WhatsApp",
+      "Botón directo de WhatsApp y formulario de contacto ágil",
+      "Carga en < 1 segundo para que tus visitas no se vayan",
+      "Medición de consultas (Pixel de Meta / Google Analytics)",
+      "Dominio propio (.com / .ar) y publicación incluidos",
     ],
   },
   {
@@ -33,10 +37,10 @@ const plansData = [
     term: "10 a 15 días hábiles",
     recommended: true,
     features: [
-      "Hasta 5 páginas o secciones independientes",
-      "Estrategia y arquitectura SEO por servicio",
-      "Formularios, llamados a la acción y WhatsApp",
-      "Entrega documentada y métricas de rendimiento",
+      "Hasta 5 páginas o secciones para ordenar todos tus servicios",
+      "Estructura preparada para que Google te encuentre cuando busquen tu rubro",
+      "Llamados a la acción claros y botón de WhatsApp en cada página",
+      "Carga instantánea y máxima seguridad sin caídas",
       "Dominio, SSL y hosting configurados a tu nombre",
     ],
   },
@@ -51,19 +55,26 @@ const plansData = [
     recommended: false,
     features: [
       "Montaje profesional en Tienda Nube o Shopify",
-      "Pasarelas de cobro y envíos configuradas",
-      "Carga inicial de hasta 30 productos con variantes",
-      "Capacitación en video para gestionar stock y ventas",
+      "Cobros con Mercado Pago / tarjetas y envíos automatizados",
+      "Carga inicial de hasta 30 productos listos para vender",
+      "Capacitación en video para que manejes tus ventas sin depender de nadie",
       "Dominio propio vinculado y lista para operar",
     ],
   },
 ];
 
 export function PricingTable() {
+  // En mobile se muestra un plan por vez; el recomendado arranca seleccionado.
+  const recommendedIndex = Math.max(
+    plansData.findIndex((item) => item.recommended),
+    0,
+  );
+  const [planIndex, setPlanIndex] = useState(recommendedIndex);
+
   return (
     <section
       id="precios"
-      className="border-b border-[var(--line)] py-16 sm:py-24"
+      className="border-b border-[var(--line)] py-12 sm:py-24"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
@@ -80,12 +91,68 @@ export function PricingTable() {
           />
         </Reveal>
 
+        {/* Selector de plan en mobile: una tarjeta a la vez, sin perder contenido. */}
+        <fieldset className="mt-8 lg:hidden">
+          <legend className="proto-label">Elegí un plan</legend>
+          <div className="mt-3 grid grid-cols-3 border border-[var(--line-strong)]">
+            {plansData.map((item, index) => {
+              const active = index === planIndex;
+              return (
+                <label
+                  key={item.plan}
+                  className={cn(
+                    "relative cursor-pointer border-r border-[var(--line)] px-2 py-3 text-center transition-colors last:border-r-0",
+                    active
+                      ? "bg-[var(--fg)] text-[var(--bg)]"
+                      : "text-[var(--muted)]",
+                  )}
+                >
+                  <input
+                    type="radio"
+                    name="plan-mobile"
+                    value={item.plan}
+                    checked={active}
+                    onChange={() => setPlanIndex(index)}
+                    className="peer sr-only"
+                  />
+                  <span className="block font-cota text-[9px] tracking-[0.12em] uppercase">
+                    {item.type}
+                  </span>
+                  <span className="mt-1 block font-cota text-[13px] font-bold">
+                    {"originalPrice" in item && item.originalPrice ? (
+                      <span className="flex items-center justify-center gap-1.5">
+                        <span className="text-[11px] font-normal text-[var(--muted)] line-through decoration-[var(--signal)]">
+                          {item.originalPrice}
+                        </span>
+                        <span>{item.price}</span>
+                      </span>
+                    ) : (
+                      item.price
+                    )}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 peer-focus-visible:outline-2 peer-focus-visible:-outline-offset-2 peer-focus-visible:outline-[var(--signal)] peer-focus-visible:outline"
+                  />
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
+
         {/* Grid de 3 Tarjetas de Precios (Triptych) */}
-        <div className="mt-14 grid gap-8 md:grid-cols-3 lg:gap-8 items-stretch">
+        <div className="mt-6 grid gap-8 items-stretch lg:mt-14 lg:grid-cols-3">
           {plansData.map((item, index) => {
             const isRec = item.recommended;
             return (
-              <Reveal key={item.plan} delay={index * 80} className="flex">
+              <Reveal
+                key={item.plan}
+                delay={index * 80}
+                className={cn(
+                  "mx-auto flex w-full max-w-[520px] lg:mx-0 lg:max-w-none",
+                  index !== planIndex && "hidden lg:flex",
+                )}
+              >
                 <article
                   className={`group relative flex w-full flex-col justify-between border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1.5 ${
                     isRec
@@ -97,19 +164,19 @@ export function PricingTable() {
 
                   {/* Badge de Recomendado */}
                   {isRec && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 border border-[var(--signal)] bg-[var(--signal)] px-3.5 py-1 font-cota text-[9px] uppercase tracking-[0.2em] text-white shadow-md">
-                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 border border-[var(--signal)] bg-[var(--signal)] px-3.5 py-1 font-cota text-[10px] uppercase tracking-[0.2em] text-white shadow-md">
+                      <span className="h-1.5 w-1.5 bg-white" aria-hidden="true" />
                       Recomendado · Más elegido
                     </div>
                   )}
 
                   <div>
                     {/* Encabezado técnico */}
-                    <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
-                      <span className="font-cota text-[10px] tracking-[0.2em] font-medium text-[var(--signal)]">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] pb-3">
+                      <span className="font-cota text-[10px] font-medium tracking-[0.14em] whitespace-nowrap text-[var(--signal)] sm:tracking-[0.18em]">
                         {item.tag}
                       </span>
-                      <span className="font-cota text-[9px] tracking-wider uppercase px-2 py-0.5 border border-[var(--line)] text-[var(--muted)]">
+                      <span className="font-cota text-[9px] tracking-wider whitespace-nowrap uppercase px-2 py-0.5 border border-[var(--line)] text-[var(--muted)]">
                         {item.term}
                       </span>
                     </div>
@@ -124,14 +191,29 @@ export function PricingTable() {
 
                     {/* Bloque de Precio */}
                     <div className="mt-6 border-y border-[var(--line)] py-5">
-                      <span className="font-cota text-[10px] tracking-wider uppercase text-[var(--muted)]">
-                        {item.pricePrefix}
-                      </span>
-                      <div className="mt-1 flex items-baseline gap-2">
+                      <div className="flex items-center gap-2 font-cota text-[10px] tracking-wider uppercase text-[var(--muted)]">
+                        <span>{item.pricePrefix}</span>
+                        {"promoBadge" in item && item.promoBadge ? (
+                          <>
+                            <span>·</span>
+                            <span className="text-[var(--signal)] font-medium">
+                              {item.promoBadge}
+                            </span>
+                          </>
+                        ) : null}
+                      </div>
+
+                      <div className="mt-1.5 flex flex-wrap items-baseline gap-2.5">
+                        {"originalPrice" in item && item.originalPrice ? (
+                          <span className="font-cota text-xl sm:text-2xl text-[var(--muted)] line-through">
+                            {item.originalPrice}
+                          </span>
+                        ) : null}
                         <span className="font-cota text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg)]">
                           {item.price}
                         </span>
                       </div>
+
                       <span className="mt-1 block font-cota text-[11px] text-[var(--muted)]">
                         Plazo: {item.term}
                       </span>
@@ -235,8 +317,8 @@ export function PricingTable() {
                 </PricingPlanLink>
                 <span className="text-xs text-[var(--muted)]">o</span>
                 <a
-                  href={`https://wa.me/5491155550101?text=${encodeURIComponent(
-                    "Hola Cota, estoy viendo la tabla de precios y no sé qué plan me conviene para mi proyecto.",
+                  href={`${brand.whatsapp}?text=${encodeURIComponent(
+                    "Hola Luciano, estoy viendo la tabla de precios de Nicolini Design y no sé qué plan me conviene para mi proyecto.",
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

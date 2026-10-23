@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { brand, nav } from "@/content/prototipo";
+import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
 
 export function ProtoNav() {
   const [open, setOpen] = useState(false);
@@ -11,26 +12,21 @@ export function ProtoNav() {
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--bg)] backdrop-blur-md">
       <div className="hidden border-b border-[var(--line)] sm:block">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-2">
-          <span className="proto-label">{brand.descriptor}</span>
+          <span className="proto-label whitespace-nowrap">{brand.descriptor}</span>
           <div className="flex items-center gap-6">
-            <span className="proto-label">{brand.location}</span>
-            <span className="proto-label hidden md:inline">{brand.coordinates}</span>
-            <span className="proto-label text-[var(--signal)]">
-              Versión en construcción
-            </span>
+            <span className="proto-label whitespace-nowrap">{brand.location}</span>
+            <span className="proto-label hidden whitespace-nowrap lg:inline">{brand.coordinates}</span>
           </div>
         </div>
       </div>
 
       <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-5 sm:px-6">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="proto-mark text-[var(--fg)]" aria-hidden="true" />
-          <span className="text-xl font-semibold tracking-[-0.06em]">
-            {brand.name.toUpperCase()}
-          </span>
-          <span className="proto-label hidden self-end pb-1 sm:inline">
-            Estudio
-          </span>
+        <Link
+          href="/"
+          className="group transition-opacity hover:opacity-90"
+          aria-label="Nicolini Design — Inicio"
+        >
+          <NicoliniLogo />
         </Link>
 
         <nav aria-label="Secciones" className="hidden items-center gap-7 lg:flex">
@@ -40,7 +36,7 @@ export function ProtoNav() {
               href={item.href}
               className="group flex items-baseline gap-1.5 text-[13px] text-[var(--fg)] transition-colors hover:text-[var(--signal)]"
             >
-              <span className="proto-label text-[8px] transition-colors group-hover:text-[var(--signal)]">
+              <span className="proto-label text-[10px] transition-colors group-hover:text-[var(--signal)]">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {item.label}
@@ -77,7 +73,7 @@ export function ProtoNav() {
                 onClick={() => setOpen(false)}
                 className="flex items-baseline gap-3 border-b border-[var(--line)] py-3 text-lg tracking-[-0.02em] last:border-b-0"
               >
-                <span className="proto-label text-[8px]">
+                <span className="proto-label text-[10px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 {item.label}

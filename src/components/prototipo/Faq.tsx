@@ -9,7 +9,7 @@ export function Faq() {
   return (
     <section
       id="preguntas"
-      className="border-b border-[var(--line)] py-16 sm:py-24"
+      className="border-b border-[var(--line)] py-12 sm:py-24"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
@@ -45,7 +45,7 @@ export function Faq() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="group flex w-full items-start gap-4 py-5 text-left sm:gap-6">
-                    <span className="font-cota pt-1.5 text-[9px] tracking-[0.18em] text-[var(--signal)]">
+                    <span className="font-cota pt-1.5 text-[11px] tracking-[0.18em] text-[var(--signal)]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="flex-1 text-lg tracking-[-0.025em] sm:text-xl">

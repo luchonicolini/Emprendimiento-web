@@ -34,6 +34,14 @@ export function Reveal({
           el.style.transitionDelay = `${delay}ms`;
           el.dataset.reveal = "visible";
           observer.disconnect();
+
+          const onEnd = (event: TransitionEvent) => {
+            if (event.target === el && event.propertyName === "opacity") {
+              el.style.filter = "none";
+              el.removeEventListener("transitionend", onEnd);
+            }
+          };
+          el.addEventListener("transitionend", onEnd);
         }
       },
       { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },

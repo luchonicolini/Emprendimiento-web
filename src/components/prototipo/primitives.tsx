@@ -7,7 +7,7 @@ export function Kicker({
 }) {
   return (
     <p
-      className={`font-cota text-[10px] uppercase leading-none tracking-[0.24em] text-[var(--muted)] ${className}`}
+      className={`font-cota text-[11px] uppercase leading-none tracking-[0.22em] text-[var(--muted)] ${className}`}
     >
       {children}
     </p>
@@ -23,7 +23,7 @@ export function Cota({
 }) {
   return (
     <div
-      className={`proto-cota font-cota text-[9px] uppercase tracking-[0.22em] sm:text-[10px] ${className}`}
+      className={`proto-cota font-cota text-[10px] uppercase tracking-[0.2em] sm:text-[11px] ${className}`}
     >
       <span className="proto-cota-line" aria-hidden="true" />
       <span className="max-w-[85%] text-center leading-relaxed">{label}</span>

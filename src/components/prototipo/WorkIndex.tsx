@@ -1,55 +1,90 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  projectCategories,
+  projectFilters,
   projects,
-  type ProjectCategory,
+  type ProjectFilter,
 } from "@/content/prototipo";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/prototipo/Reveal";
 import { SectionHead } from "@/components/prototipo/primitives";
 
 const INITIAL_COUNT = 6;
+const MOBILE_INITIAL_COUNT = 3;
+
+// La grilla muestra 3 láminas en mobile y 6 desde tablet. La visibilidad inicial
+// se resuelve con CSS; matchMedia solo ajusta el pie y la paginación.
+function useIsWide() {
+  const [isWide, setIsWide] = useState(true);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 640px)");
+    const update = () => setIsWide(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isWide;
+}
 
 export function WorkIndex() {
-  const [selectedCategory, setSelectedCategory] =
-    useState<ProjectCategory>("Todos");
-  const [visibleCount, setVisibleCount] = useState<number>(INITIAL_COUNT);
+  const [selectedFilter, setSelectedFilter] =
+    useState<ProjectFilter>("Todos");
+  // null = paginación inicial. En mobile se ven 3 láminas; las demás quedan
+  // ocultas por CSS hasta pedir "cargar más", así la hidratación no mueve la grilla.
+  const [extraCount, setExtraCount] = useState<number | null>(null);
+  const isWide = useIsWide();
 
-  // Filtrado reactivo por categoría
+  const visibleCount = extraCount ?? INITIAL_COUNT;
+  const isInitial = extraCount === null;
+
+  // Filtrado reactivo según el filtro seleccionado
   const filteredProjects = useMemo(() => {
-    if (selectedCategory === "Todos") return projects;
-    return projects.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
+    if (selectedFilter === "Todos") return projects;
+    if (selectedFilter === "Webs hechas") {
+      return projects.filter((p) => p.kind === "produccion");
+    }
+    if (selectedFilter === "Demos") {
+      return projects.filter((p) => p.kind === "demo");
+    }
+    return projects.filter((p) => p.category === selectedFilter);
+  }, [selectedFilter]);
 
-  // Conteo por categoría para los badges
+  // Conteo por cada filtro para los badges numéricos
   const counts = useMemo(() => {
     const record: Record<string, number> = {
       Todos: projects.length,
+      "Webs hechas": projects.filter((p) => p.kind === "produccion").length,
+      Demos: projects.filter((p) => p.kind === "demo").length,
     };
-    for (const cat of projectCategories) {
-      if (cat !== "Todos") {
-        record[cat] = projects.filter((p) => p.category === cat).length;
+    for (const f of projectFilters) {
+      if (f !== "Todos" && f !== "Webs hechas" && f !== "Demos") {
+        record[f] = projects.filter((p) => p.category === f).length;
       }
     }
     return record;
   }, []);
 
-  const handleSelectCategory = (cat: ProjectCategory) => {
-    setSelectedCategory(cat);
-    setVisibleCount(INITIAL_COUNT); // Resetea la paginación al cambiar filtro
+  const handleSelectFilter = (filter: ProjectFilter) => {
+    setSelectedFilter(filter);
+    setExtraCount(null); // Resetea la paginación al cambiar filtro
   };
 
   const displayedProjects = filteredProjects.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredProjects.length;
-  const remainingCount = filteredProjects.length - visibleCount;
+  const shownCount =
+    !isWide && isInitial
+      ? MOBILE_INITIAL_COUNT
+      : Math.min(visibleCount, filteredProjects.length);
+  const hasMore = shownCount < filteredProjects.length;
+  const remainingCount = filteredProjects.length - shownCount;
 
   return (
     <section
       id="trabajos"
-      className="proto-dark border-b border-[var(--line)] py-16 sm:py-24"
+      className="proto-dark border-b border-[var(--line)] py-12 sm:py-24"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
@@ -88,14 +123,14 @@ export function WorkIndex() {
           <span className="proto-label mr-2 hidden sm:inline">
             Filtrar por tipo:
           </span>
-          {projectCategories.map((category) => {
-            const isSelected = selectedCategory === category;
-            const count = counts[category] ?? 0;
+          {projectFilters.map((filter) => {
+            const isSelected = selectedFilter === filter;
+            const count = counts[filter] ?? 0;
             return (
               <button
-                key={category}
+                key={filter}
                 type="button"
-                onClick={() => handleSelectCategory(category)}
+                onClick={() => handleSelectFilter(filter)}
                 className={cn(
                   "inline-flex items-center gap-2 border px-3 py-1.5 font-cota text-xs tracking-wider transition-all duration-200",
                   isSelected
@@ -103,7 +138,7 @@ export function WorkIndex() {
                     : "border-[var(--line)] bg-transparent text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--fg)]",
                 )}
               >
-                <span>{category}</span>
+                <span>{filter}</span>
                 <span
                   className={cn(
                     "text-[10px] opacity-70",
@@ -119,14 +154,19 @@ export function WorkIndex() {
 
         {/* Grilla compacta de 3 columnas (en desktop), 2 (tablet), 1 (móvil) */}
         <div
-          key={selectedCategory}
+          key={selectedFilter}
           className="mt-8 grid border-l border-t border-[var(--line)] sm:grid-cols-2 lg:grid-cols-3"
         >
           {displayedProjects.map((project, index) => (
             <article
-              key={`${selectedCategory}-${project.name}`}
+              key={`${selectedFilter}-${project.name}`}
               style={{ animationDelay: `${index * 30}ms` }}
-              className="proto-fade-enter group flex flex-col justify-between border-b border-r border-[var(--line)] p-5 sm:p-6 transition-colors duration-200 hover:bg-[rgba(233,230,221,0.02)]"
+              className={cn(
+                "proto-fade-enter group flex flex-col justify-between border-b border-r border-[var(--line)] p-5 sm:p-6 transition-colors duration-200 hover:bg-[rgba(233,230,221,0.02)]",
+                isInitial &&
+                  index >= MOBILE_INITIAL_COUNT &&
+                  "hidden sm:flex",
+              )}
             >
               <div>
                 {/* Encabezado técnico */}
@@ -182,7 +222,9 @@ export function WorkIndex() {
 
               {/* Pie de ficha con enlace */}
               <div className="mt-5 flex items-center justify-between border-t border-[var(--line)] pt-3 text-xs">
-                <span className="text-[var(--muted)]">Código en línea</span>
+                <span className="text-[var(--muted)]">
+                  {project.kind === "produccion" ? "Web hecha" : "Demo interactiva"}
+                </span>
                 <a
                   href={project.url}
                   target="_blank"
@@ -201,10 +243,17 @@ export function WorkIndex() {
           <div className="mt-8 flex justify-center">
             <button
               type="button"
-              onClick={() => setVisibleCount((prev) => prev + 6)}
+              onClick={() =>
+                setExtraCount(
+                  !isWide && isInitial
+                    ? INITIAL_COUNT
+                    : visibleCount + INITIAL_COUNT,
+                )
+              }
               className="proto-btn proto-btn-ghost w-full max-w-sm"
             >
-              + Cargar más obras ({remainingCount} restantes)
+              + Cargar más obras ({remainingCount}{" "}
+              {remainingCount === 1 ? "restante" : "restantes"})
             </button>
           </div>
         )}
@@ -212,10 +261,20 @@ export function WorkIndex() {
         {/* Pie con nota de escala técnica */}
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--line)] pt-4">
           <p className="proto-label">
-            Mostrando {displayedProjects.length} de {filteredProjects.length}{" "}
-            obras ({selectedCategory})
+            Mostrando {shownCount} de {filteredProjects.length}{" "}
+            obras ({selectedFilter})
           </p>
-          <span className="proto-label">Escala 1:1 · Código en producción</span>
+          <div className="flex flex-wrap items-center gap-5">
+            <a
+              href="/catalogo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="proto-label text-[var(--signal)] transition-colors hover:underline"
+            >
+              Catálogo extendido (100 obras) ↗
+            </a>
+            <span className="proto-label">Escala 1:1 · Código en producción</span>
+          </div>
         </div>
       </div>
     </section>

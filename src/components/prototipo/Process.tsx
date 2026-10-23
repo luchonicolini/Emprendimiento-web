@@ -54,7 +54,7 @@ export function Process() {
   return (
     <section
       id="proceso"
-      className="border-b border-[var(--line)] py-16 sm:py-24"
+      className="border-b border-[var(--line)] py-12 sm:py-24"
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
@@ -141,7 +141,7 @@ export function Process() {
                 {/* Encabezado del pliego */}
                 <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[var(--signal)] animate-pulse" />
+                    <span className="h-1.5 w-1.5 bg-[var(--signal)]" aria-hidden="true" />
                     <span className="font-cota text-[10px] font-bold tracking-[0.24em] uppercase text-[var(--signal)]">
                       PLIEGO DE GARANTÍA // COTA
                     </span>
