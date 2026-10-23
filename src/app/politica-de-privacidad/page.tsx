@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Política de privacidad",
   description:
-    "Cómo Cota recopila, usa y conserva los datos que enviás a través del formulario de presupuesto, y cómo gestionar tus cookies.",
+    "Cómo Nicolini Design recopila, usa y conserva los datos que enviás a través del formulario de presupuesto, y cómo gestionar tus cookies.",
   alternates: {
     canonical: "/politica-de-privacidad",
   },
@@ -34,7 +34,7 @@ export default function PrivacyPage() {
       </header>
 
       <article className="mx-auto max-w-[820px] px-5 py-16 sm:px-6 sm:py-24">
-        <p className="proto-label">Cota / Legal</p>
+        <p className="proto-label">Nicolini Design / Legal</p>
         <h1 className="proto-display mt-5 text-[clamp(2.4rem,6vw,4.8rem)]">
           Política de
           <br />

@@ -153,8 +153,10 @@ async function sendNotificationEmail(lead: {
   plazo: string;
   mensaje: string;
 }) {
-  const destinationEmail =
-    process.env.LEAD_NOTIFICATION_EMAIL || "nicolini.luciano1@gmail.com";
+  const destinationEmail = process.env.LEAD_NOTIFICATION_EMAIL;
+  if (!destinationEmail) {
+    return { ok: false, reason: "No LEAD_NOTIFICATION_EMAIL configured" };
+  }
   const resendApiKey = process.env.RESEND_API_KEY;
   const web3formsKey = process.env.WEB3FORMS_ACCESS_KEY;
 
@@ -206,7 +208,7 @@ async function sendNotificationEmail(lead: {
       ${
         lead.mensaje
           ? `
-        <div style="background: rgba(237,234,225,0.04); border-left: 3px solid #b83812; padding: 16px; margin: 20px 0; border-radius: 4px;">
+        <div style="background: rgba(237,234,225,0.04); border: 1px solid rgba(237,234,225,0.15); padding: 16px; margin: 20px 0; border-radius: 4px;">
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #98a19e; display: block; margin-bottom: 6px;">
             Requerimientos del cliente:
           </span>

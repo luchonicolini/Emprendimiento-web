@@ -1,6 +1,6 @@
-# Cota — Estudio de Desarrollo Web
+# Nicolini Design — Estudio de Desarrollo Web
 
-Sitio oficial de **Cota**, estudio especializado en diseño y desarrollo web de alta precisión. Construido con arquitectura moderna, tipografía editorial técnica y rendimiento nativo.
+Sitio oficial de **Nicolini Design**, estudio especializado en diseño y desarrollo web de alta precisión. Construido con arquitectura moderna, tipografía editorial técnica y rendimiento nativo.
 
 ---
 
@@ -16,7 +16,7 @@ El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería
 ## Componentes y Experiencia Interactiva
 
 1. **Hero con Comparador Antes / Después:**
-   * Slider interactivo con control circular que compara en tiempo real una web genérica generada por IA (plantilla saturada, código lento, sin indexación) frente a una web profesional de Cota (Next.js 16, 0.4s de carga, SEO nativo y base de datos propia).
+   * Slider interactivo con control circular que compara en tiempo real una web genérica generada por IA (plantilla saturada, código lento, sin indexación) frente a una web profesional de Nicolini Design (Next.js 16, 0.4s de carga, SEO nativo y base de datos propia).
 2. **02 / Alcance (Stacking Cards on Scroll):**
    * Efecto mazo de planos sticky donde las 4 fases se van apilando suavemente con el scroll del usuario, con aceleración por GPU (`transform-gpu`) y fichas de entregables reales.
 3. **03 / Trabajos (Galería Editorial):**
@@ -112,4 +112,4 @@ public/
 
 ## Licencia
 
-Privado © Cota Estudio. Todos los derechos reservados.
+Privado © Nicolini Design Estudio. Todos los derechos reservados.

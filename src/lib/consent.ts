@@ -1,8 +1,8 @@
 export type Consent = "granted" | "denied";
 
-export const CONSENT_KEY = "cota.cookie-consent";
-export const CONSENT_EVENT = "cota:consent-change";
-export const OPEN_CONSENT_EVENT = "cota:consent-open";
+export const CONSENT_KEY = "nicolini.cookie-consent";
+export const CONSENT_EVENT = "nicolini:consent-change";
+export const OPEN_CONSENT_EVENT = "nicolini:consent-open";
 
 export function readConsent(): Consent | null {
   try {

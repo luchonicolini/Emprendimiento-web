@@ -140,7 +140,7 @@ export function Contact() {
           },
           body: JSON.stringify({
             access_key: web3formsKey,
-            subject: `[NUEVO CLIENTE COTA] ${nombre} — ${tipo} (${plazo})`,
+            subject: `[NUEVO CLIENTE NICOLINI DESIGN] ${nombre} — ${tipo} (${plazo})`,
             from_name: "Nicolini Design Web",
             nombre,
             whatsapp: tel,

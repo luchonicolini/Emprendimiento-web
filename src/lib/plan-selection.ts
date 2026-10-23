@@ -1,6 +1,6 @@
 import type { ProjectType } from "@/content/prototipo";
 
-export const PLAN_SELECT_EVENT = "cota:select-plan";
+export const PLAN_SELECT_EVENT = "nicolini:select-plan";
 
 export function announcePlanSelection(plan: ProjectType) {
   window.dispatchEvent(

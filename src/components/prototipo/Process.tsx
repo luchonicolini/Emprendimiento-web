@@ -143,7 +143,7 @@ export function Process() {
                   <div className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 bg-[var(--signal)]" aria-hidden="true" />
                     <span className="font-cota text-[10px] font-bold tracking-[0.24em] uppercase text-[var(--signal)]">
-                      PLIEGO DE GARANTÍA // COTA
+                      PLIEGO DE GARANTÍA // NICOLINI DESIGN
                     </span>
                   </div>
                   <span className="font-cota text-[10px] text-[var(--muted)] opacity-75">
