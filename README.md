@@ -1,83 +1,120 @@
-# Cota — sitio de desarrollo web
+# Cota — Estudio de Desarrollo Web
 
-Sitio de Cota, estudio de desarrollo web. Next.js 16 (App Router), React 19,
-Tailwind CSS 4 y TypeScript estricto.
+Sitio oficial de **Cota**, estudio especializado en diseño y desarrollo web de alta precisión. Construido con arquitectura moderna, tipografía editorial técnica y rendimiento nativo.
 
-## Estado
+[![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.3-blue?logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178c6?logo=typescript)](https://www.typescriptlang.org/)
 
-Cota está en construcción. La home vive en `/` y el sitio está marcado
-`noindex, nofollow` hasta que el contenido y el formulario estén listos para
-publicarse. La antigua ruta `/prototipo` redirige a `/`.
+---
 
-## Scripts
+## 📐 Concepto Visual: Plano Técnico (Blueprint)
+
+El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería**:
+* **Paleta:** Papel pergamino (`#e9e6dd`), tinta carbón (`#0d1418`), azul blueprint (`#16324f`) y naranja de marcación técnica (`#e4572e`).
+* **Tipografía:** `Figtree` (display y lectura) + `Martian Mono` (cotas numéricas, metadatos y etiquetas técnicas).
+* **Grilla milimetrada:** Textura vectorial de fondo con líneas de medición exactas.
+
+---
+
+## ✨ Componentes y Experiencia Interactiva
+
+1. **Hero con Comparador Antes / Después:**
+   * Slider interactivo con control circular `◄ || ►` que compara en tiempo real una web genérica generada por IA (plantilla saturada, código lento, sin indexación) frente a una web profesional de Cota (Next.js 16, 0.4s de carga, SEO nativo y base de datos propia).
+2. **02 / Alcance (Stacking Cards on Scroll):**
+   * Efecto mazo de planos sticky donde las 4 fases se van apilando suavemente con el scroll del usuario, con aceleración por GPU (`transform-gpu`) y fichas de entregables reales.
+3. **03 / Trabajos (Galería Editorial):**
+   * Catálogo de proyectos publicados con capturas reales y enlaces de prueba.
+4. **04 / Proceso (Plan de obra y entrega):**
+   * Pipeline técnico interactivo con nodos numerados y la **Cédula de Garantía de Obra** en azul blueprint con el esquema de pago protegido (25% seña / 75% contra entrega).
+5. **05 / Presupuesto (Precios cerrados):**
+   * Triptych de 3 tarjetas equilibradas (Landing page, Web multipágina destacada en blueprint y Tienda online) + sub-banner para sistemas a medida.
+6. **WhatsApp Flotante:**
+   * Botón de contacto directo con indicador de estado activo (pulso verde) y mensaje preconfigurado.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+* **Framework:** Next.js 16 (App Router + Turbopack)
+* **Librería UI:** React 19
+* **Estilos:** Tailwind CSS 4 + `cota.css` (tokens de variables CSS)
+* **Componentes UI:** Radix UI primitives (`@radix-ui/react-accordion`)
+* **Analítica & Rendimiento:** Microsoft Clarity (sujeto a consentimiento de cookies)
+* **Accesibilidad:** Soporte estricto para `prefers-reduced-motion` y resiliencia sin JavaScript vía `<noscript>`.
+
+---
+
+## 🚀 Comandos de Desarrollo
 
 ```bash
-npm run dev        # desarrollo
-npm run build      # build de producción
-npm run start      # servir el build
-npm run lint       # ESLint
-npm run typecheck  # tsc --noEmit
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo local
+npm run dev
+
+# Chequeo estricto de tipos con TypeScript
+npm run typecheck
+
+# Linter de código
+npm run lint
+
+# Compilar build optimizado para producción
+npm run build
+
+# Servir build de producción localmente
+npm run start
 ```
 
-## Variables de entorno
+---
+
+## ⚙️ Variables de Entorno
 
 Copiá `.env.example` a `.env.local`:
 
-| Variable | Uso |
-| --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Dominio público. Alimenta canonical, Open Graph, `sitemap.xml`, `robots.txt` y JSON-LD. |
-| `NEXT_PUBLIC_CLARITY_ID` | ID de Microsoft Clarity. Si está vacío no se carga analítica. |
+```bash
+cp .env.example .env.local
+```
 
-## Estructura
+| Variable | Descripción |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Dominio público del sitio (alimenta canonicals, sitemap, Open Graph y JSON-LD). |
+| `NEXT_PUBLIC_CLARITY_ID` | ID de Microsoft Clarity (opcional; si está vacío no se inicializa). |
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
 src/
   app/
-    layout.tsx                 # fuentes, metadata, JSON-LD, consentimiento
-    page.tsx                   # home de Cota
-    globals.css                # base Tailwind y movimiento reducido
-    cota.css                   # sistema visual "plano técnico"
-    robots.ts / sitemap.ts     # SEO técnico
-    politica-de-privacidad/    # página legal
-    api/save-lead/             # recepción de leads
-    api/track-event/           # eventos (integración pendiente)
+    layout.tsx                 # Fuentes, metadata global, JSON-LD y cookies
+    page.tsx                   # Página principal (Home)
+    globals.css                # Estilos base de Tailwind
+    cota.css                   # Tokens y sistema visual "plano técnico"
+    robots.ts / sitemap.ts     # SEO técnico automatizado
+    politica-de-privacidad/    # Página legal
+    api/save-lead/             # Endpoint para captura de leads
+    api/track-event/           # Endpoint para eventos de analítica
   components/
-    prototipo/                 # secciones y primitivas de Cota
-    Analytics.tsx              # Clarity condicionado al consentimiento
-    CookieConsent.tsx          # banner de cookies
-    CookiePreferences.tsx      # reapertura del banner
+    prototipo/
+      ProtoHero.tsx            # Hero con slider interactivo Antes/Después
+      Scope.tsx                # Alcance con Stacking Cards sticky
+      WorkIndex.tsx            # Galería de proyectos entregados
+      Process.tsx              # Metodología de obra y cédula de garantía
+      PricingTable.tsx         # Tabla de 3 precios y sistemas a medida
+      WhatsAppFloat.tsx        # Botón flotante de WhatsApp
+      primitives.tsx           # Componentes base (Kicker, SectionHead, Cota)
   content/
-    prototipo.ts               # marca, precios, trabajos, proceso, reseñas y FAQ
-  lib/
-    site.ts                    # datos del sitio
-    consent.ts / use-consent.ts
-    utils.ts
+    prototipo.ts               # Contenido centralizado (marca, precios, proyectos)
 public/
-  portfolio/                   # capturas de proyectos
-  stack/                       # logos de herramientas (referencia)
+  portfolio/                   # Capturas de proyectos entregados
 ```
 
-## Capa de producción
+---
 
-- **Metadata**: title con marca, description, canonical, Open Graph y Twitter
-  Card.
-- **SEO técnico**: `robots.ts`, `sitemap.ts` y JSON-LD (`Organization` +
-  `WebSite`) en el layout raíz.
-- **Consentimiento**: `CookieConsent` guarda la elección en `localStorage`.
-  Microsoft Clarity solo se carga con consentimiento explícito.
-- **Resiliencia sin JS**: `Reveal` agrega `data-reveal` y el layout incluye un
-  `<noscript>` que fuerza el estado final.
-- **Accesibilidad de movimiento**: `Reveal` y `cota.css` respetan
-  `prefers-reduced-motion`.
+## 📄 Licencia
 
-## Pendiente antes de publicar
-
-1. Reemplazar marca, contacto, disponibilidad, precios, trabajos y reseñas de
-   ejemplo por datos reales de Cota.
-2. Decidir si el portfolio actual se mantiene como trabajo de Cota.
-3. Persistir los leads de `api/save-lead` (Supabase) y notificar por
-   email/WhatsApp.
-4. Crear una imagen Open Graph propia de Cota y activar la indexación
-   (`robots.index`).
-5. Convertir las capturas de `public/portfolio` a WebP/AVIF.
-6. Agregar pruebas del flujo de leads y del formulario.
+Privado © Cota Estudio. Todos los derechos reservados.
