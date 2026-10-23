@@ -51,9 +51,6 @@ export function ProtoNav() {
         <div className="flex items-center gap-2">
           <a href="#contacto" className="proto-btn hidden sm:inline-flex">
             Pedir presupuesto
-            <span aria-hidden="true" className="font-cota text-[11px]">
-              ↗
-            </span>
           </a>
           <button
             type="button"
@@ -93,9 +90,6 @@ export function ProtoNav() {
             className="proto-btn mt-4 w-full"
           >
             Pedir presupuesto
-            <span aria-hidden="true" className="font-cota text-[11px]">
-              ↗
-            </span>
           </a>
         </div>
       ) : null}

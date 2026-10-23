@@ -1,7 +1,63 @@
-import { customSystem, pricing } from "@/content/prototipo";
+"use client";
+
+import { customSystem } from "@/content/prototipo";
 import { PricingPlanLink } from "@/components/prototipo/PricingPlanLink";
 import { Reveal } from "@/components/prototipo/Reveal";
-import { SectionHead } from "@/components/prototipo/primitives";
+import { CornerMarks, SectionHead } from "@/components/prototipo/primitives";
+
+const plansData = [
+  {
+    plan: "Landing page" as const,
+    type: "Landing page",
+    tag: "PLAN 01 // CONVERSIÓN",
+    fit: "Profesionales, oficios y lanzamientos que buscan validar y recibir consultas directas sin vueltas.",
+    price: "USD 350",
+    pricePrefix: "Precio cerrado",
+    term: "7 a 10 días hábiles",
+    recommended: false,
+    features: [
+      "Diseño exclusivo orientado a conversión",
+      "Integración de WhatsApp y formulario directo",
+      "Optimización 100% Mobile y velocidad de carga",
+      "Configuración de analítica (Pixel / Analytics)",
+      "Dominio propio conectado y publicación incluida",
+    ],
+  },
+  {
+    plan: "Web multipágina" as const,
+    type: "Web multipágina",
+    tag: "PLAN 02 // ESTRUCTURAL",
+    fit: "Estudios y empresas con varios servicios que necesitan posicionar en Google y transmitir autoridad.",
+    price: "USD 500",
+    pricePrefix: "Precio cerrado",
+    term: "10 a 15 días hábiles",
+    recommended: true,
+    features: [
+      "Hasta 5 páginas o secciones independientes",
+      "Estrategia y arquitectura SEO por servicio",
+      "Formularios, llamados a la acción y WhatsApp",
+      "Entrega documentada y métricas de rendimiento",
+      "Dominio, SSL y hosting configurados a tu nombre",
+    ],
+  },
+  {
+    plan: "Tienda online" as const,
+    type: "Tienda online",
+    tag: "PLAN 03 // E-COMMERCE",
+    fit: "Marcas y comercios que necesitan catálogo digital, carrito de compras y cobros automatizados.",
+    price: "USD 650",
+    pricePrefix: "Desde",
+    term: "15 a 20 días hábiles",
+    recommended: false,
+    features: [
+      "Montaje profesional en Tienda Nube o Shopify",
+      "Pasarelas de cobro y envíos configuradas",
+      "Carga inicial de hasta 30 productos con variantes",
+      "Capacitación en video para gestionar stock y ventas",
+      "Dominio propio vinculado y lista para operar",
+    ],
+  },
+];
 
 export function PricingTable() {
   return (
@@ -13,13 +69,7 @@ export function PricingTable() {
         <Reveal>
           <SectionHead
             index="05 / Presupuesto"
-            title={
-              <>
-                Precios cerrados
-                <br />
-                antes de empezar.
-              </>
-            }
+            title="Precios cerrados antes de empezar."
             intro={
               <p>
                 Elegí el punto de partida. El número final se confirma por
@@ -30,215 +80,141 @@ export function PricingTable() {
           />
         </Reveal>
 
-        <Reveal className="mt-12 hidden md:block">
-          <table className="w-full table-fixed border-collapse text-left">
-            <caption className="sr-only">
-              Planes de Cota, qué incluye cada uno, precio y plazo de entrega.
-            </caption>
-            <colgroup>
-              <col className="w-[31%]" />
-              <col className="w-[33%]" />
-              <col className="w-[20%]" />
-              <col className="w-[16%]" />
-            </colgroup>
-            <thead>
-              <tr className="border-y border-[var(--line-strong)]">
-                <th scope="col" className="proto-label py-4 pr-8 text-left">
-                  Tipo y para quién
-                </th>
-                <th scope="col" className="proto-label py-4 pr-8 text-left">
-                  Qué incluye
-                </th>
-                <th scope="col" className="proto-label py-4 pr-8 text-left">
-                  Precio y plazo
-                </th>
-                <th scope="col" className="proto-label py-4 text-left">
-                  Empezar
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricing.map((row, index) => (
-                <tr
-                  key={row.plan}
-                  className={`align-top ${
-                    row.recommended ? "proto-blue" : ""
-                  } ${
-                    index < pricing.length - 1
-                      ? "border-b border-[var(--line)]"
-                      : ""
+        {/* Grid de 3 Tarjetas de Precios (Triptych) */}
+        <div className="mt-14 grid gap-8 md:grid-cols-3 lg:gap-8 items-stretch">
+          {plansData.map((item, index) => {
+            const isRec = item.recommended;
+            return (
+              <Reveal key={item.plan} delay={index * 80} className="flex">
+                <article
+                  className={`group relative flex w-full flex-col justify-between border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1.5 ${
+                    isRec
+                      ? "proto-blue proto-grid border-[var(--line-strong)] shadow-xl hover:border-[var(--signal)] hover:shadow-[0_20px_48px_rgba(22,50,79,0.28)]"
+                      : "border-[var(--line)] bg-[var(--bg)] hover:border-[var(--signal)] hover:shadow-[0_16px_36px_rgba(13,20,24,0.06)]"
                   }`}
                 >
-                  <th
-                    scope="row"
-                    className="py-7 pr-8 text-left align-top font-normal"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="font-cota mt-1 text-[10px] tracking-[0.18em] text-[var(--muted)]">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <h3 className="text-[1.35rem] font-semibold tracking-[-0.03em]">
-                            {row.type}
-                          </h3>
-                          {row.recommended ? (
-                            <span className="inline-flex items-center gap-2 border border-[var(--line-strong)] px-2 py-1 font-cota text-[10px] uppercase tracking-[0.18em]">
-                              <span
-                                aria-hidden="true"
-                                className="h-1.5 w-1.5 bg-[var(--signal)]"
-                              />
-                              Recomendado
-                            </span>
-                          ) : null}
-                        </div>
-                        <p className="mt-3 max-w-[300px] text-sm leading-relaxed text-[var(--muted)]">
-                          {row.fit}
-                        </p>
-                      </div>
+                  <CornerMarks />
+
+                  {/* Badge de Recomendado */}
+                  {isRec && (
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 border border-[var(--signal)] bg-[var(--signal)] px-3.5 py-1 font-cota text-[9px] uppercase tracking-[0.2em] text-white shadow-md">
+                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                      Recomendado · Más elegido
                     </div>
-                  </th>
-                  <td className="py-7 pr-8 text-sm leading-relaxed text-[var(--muted)]">
-                    {row.includes}
-                  </td>
-                  <td className="py-7 pr-8">
-                    <span className="proto-label">
-                      {row.pricePrefix || "Precio"}
-                    </span>
-                    <p className="font-cota mt-2 text-[clamp(1.7rem,2.5vw,2.35rem)] leading-none tracking-[-0.02em] text-[var(--fg)]">
-                      {row.price}
-                    </p>
-                    <p className="proto-label mt-3">{row.term}</p>
-                  </td>
-                  <td className="py-7">
-                    <PricingPlanLink
-                      plan={row.plan}
-                      ariaLabel={`Elegir ${row.type}`}
-                      className={`${
-                        row.recommended
-                          ? "proto-btn"
-                          : "proto-btn proto-btn-ghost"
-                      } w-full`}
-                    >
-                      Elegir
-                      <span
-                        aria-hidden="true"
-                        className="font-cota text-[11px]"
-                      >
-                        ↗
+                  )}
+
+                  <div>
+                    {/* Encabezado técnico */}
+                    <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
+                      <span className="font-cota text-[10px] tracking-[0.2em] font-medium text-[var(--signal)]">
+                        {item.tag}
                       </span>
-                    </PricingPlanLink>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Reveal>
+                      <span className="font-cota text-[9px] tracking-wider uppercase px-2 py-0.5 border border-[var(--line)] text-[var(--muted)]">
+                        {item.term}
+                      </span>
+                    </div>
 
-        <div className="mt-10 grid gap-4 md:hidden">
-          {pricing.map((row, index) => (
-            <Reveal key={row.plan} delay={index * 60}>
-              <article
-                className={`border border-[var(--line)] p-5 ${
-                  row.recommended ? "proto-blue" : ""
-                }`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="font-cota text-[10px] tracking-[0.2em] text-[var(--muted)]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em]">
-                      {row.type}
+                    {/* Nombre y para quién */}
+                    <h3 className="mt-4 text-2xl sm:text-[26px] font-bold tracking-[-0.035em] text-[var(--fg)]">
+                      {item.type}
                     </h3>
-                  </div>
-                  {row.recommended ? (
-                    <span className="inline-flex shrink-0 items-center gap-2 border border-[var(--line-strong)] px-2 py-1 font-cota text-[10px] uppercase tracking-[0.18em]">
-                      <span
-                        aria-hidden="true"
-                        className="h-1.5 w-1.5 bg-[var(--signal)]"
-                      />
-                      Recomendado
-                    </span>
-                  ) : null}
-                </div>
-
-                <div className="mt-5 grid grid-cols-[1fr_auto] items-end gap-4 border-y border-[var(--line)] py-4">
-                  <div>
-                    <span className="proto-label">
-                      {row.pricePrefix || "Precio"}
-                    </span>
-                    <p className="font-cota mt-2 text-[2rem] leading-none tracking-[-0.02em]">
-                      {row.price}
+                    <p className="mt-2 text-[14px] leading-relaxed text-[var(--muted)] min-h-[42px]">
+                      {item.fit}
                     </p>
+
+                    {/* Bloque de Precio */}
+                    <div className="mt-6 border-y border-[var(--line)] py-5">
+                      <span className="font-cota text-[10px] tracking-wider uppercase text-[var(--muted)]">
+                        {item.pricePrefix}
+                      </span>
+                      <div className="mt-1 flex items-baseline gap-2">
+                        <span className="font-cota text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg)]">
+                          {item.price}
+                        </span>
+                      </div>
+                      <span className="mt-1 block font-cota text-[11px] text-[var(--muted)]">
+                        Plazo: {item.term}
+                      </span>
+                    </div>
+
+                    {/* Lista de Especificaciones Técnicas */}
+                    <div className="mt-6">
+                      <span className="font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+                        Qué incluye la obra:
+                      </span>
+                      <ul className="mt-3.5 space-y-2.5">
+                        {item.features.map((feat) => (
+                          <li
+                            key={feat}
+                            className="flex items-start gap-2.5 text-[13.5px] leading-snug text-[var(--fg)]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border border-[var(--line-strong)] font-cota text-[10px] text-[var(--signal)]"
+                            >
+                              ✓
+                            </span>
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="proto-label">Plazo</span>
-                    <p className="proto-label mt-2">{row.term}</p>
+
+                  {/* Botón CTA */}
+                  <div className="mt-8 pt-4 border-t border-[var(--line)]">
+                    <PricingPlanLink
+                      plan={item.plan}
+                      ariaLabel={`Elegir ${item.type}`}
+                      className={`group/btn w-full inline-flex items-center justify-center gap-2 py-3 px-4 font-cota text-xs tracking-wider uppercase transition-all duration-200 ${
+                        isRec
+                          ? "proto-btn"
+                          : "proto-btn proto-btn-ghost hover:border-[var(--signal)]"
+                      }`}
+                    >
+                      Elegir {item.type}
+                    </PricingPlanLink>
                   </div>
-                </div>
-
-                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                  {row.fit}
-                </p>
-
-                <div className="mt-4 border-t border-[var(--line)] pt-3">
-                  <span className="proto-label">Incluye</span>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                    {row.includes}
-                  </p>
-                </div>
-
-                <PricingPlanLink
-                  plan={row.plan}
-                  ariaLabel={`Elegir ${row.type}`}
-                  className={`${
-                    row.recommended ? "proto-btn" : "proto-btn proto-btn-ghost"
-                  } mt-5 w-full`}
-                >
-                  Elegir
-                  <span aria-hidden="true" className="font-cota text-[11px]">
-                    ↗
-                  </span>
-                </PricingPlanLink>
-              </article>
-            </Reveal>
-          ))}
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
 
-        <Reveal className="mt-12">
-          <div className="grid gap-6 border-y border-[var(--line-strong)] py-7 sm:grid-cols-[1fr_auto] sm:items-center">
-            <div>
-              <h3 className="text-2xl font-semibold tracking-[-0.035em]">
-                {customSystem.type}
-              </h3>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+        {/* Banner Técnico: Sistema a Medida (El 4to caso) */}
+        <Reveal delay={200} className="mt-12">
+          <div className="relative border border-[var(--line)] bg-[var(--bg)] p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 transition-all duration-300 hover:border-[var(--signal)]">
+            <CornerMarks />
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="font-cota text-[10px] tracking-[0.2em] text-[var(--signal)] uppercase font-semibold">
+                  ALCANCE AVANZADO // CUSTOM
+                </span>
+                <span className="font-cota text-[9px] uppercase px-2 py-0.5 border border-[var(--line)] text-[var(--muted)]">
+                  {customSystem.pricePrefix} {customSystem.price}
+                </span>
+              </div>
+              <h4 className="text-xl font-bold tracking-[-0.03em] text-[var(--fg)]">
+                ¿Buscás un sistema a medida, turnos o panel de gestión?
+              </h4>
+              <p className="text-sm text-[var(--muted)] max-w-2xl leading-relaxed">
                 {customSystem.fit} {customSystem.includes}
               </p>
             </div>
-            <div className="flex flex-col gap-4 sm:items-end">
-              <div>
-                <span className="proto-label">{customSystem.pricePrefix}</span>
-                <p className="font-cota mt-1 text-[clamp(1.6rem,2.2vw,2rem)] leading-none tracking-[-0.02em]">
-                  {customSystem.price}
-                </p>
-                <p className="proto-label mt-2">{customSystem.term}</p>
-              </div>
+            <div className="shrink-0">
               <PricingPlanLink
                 plan={customSystem.plan}
                 ariaLabel="Consultar por Sistema a medida"
-                className="proto-btn proto-btn-ghost w-full sm:w-auto"
+                className="proto-btn proto-btn-ghost w-full sm:w-auto inline-flex items-center justify-center gap-2"
               >
-                Contanos qué necesitás
-                <span aria-hidden="true" className="font-cota text-[11px]">
-                  ↗
-                </span>
+                Cotizar sistema a medida
               </PricingPlanLink>
             </div>
           </div>
         </Reveal>
 
-        <Reveal className="mt-8">
+        {/* Nota de Honestidad y Selección Libre */}
+        <Reveal delay={240} className="mt-8">
           <div className="flex flex-col gap-5 border-t border-[var(--line)] pt-6 sm:flex-row sm:items-start sm:justify-between">
             <p className="max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
               Si hoy tenés menos de USD 350, te conviene arrancar con Wix o
@@ -249,13 +225,26 @@ export function PricingTable() {
               <p className="proto-label">
                 Precios en USD · pesos al cambio del día
               </p>
-              <PricingPlanLink
-                plan="No sé todavía"
-                ariaLabel="Ir al formulario sin elegir un plan"
-                className="text-sm underline decoration-[var(--signal)] underline-offset-4 transition-colors hover:text-[var(--signal)]"
-              >
-                No sé cuál me conviene
-              </PricingPlanLink>
+              <div className="flex flex-wrap items-center gap-3">
+                <PricingPlanLink
+                  plan="No sé todavía"
+                  ariaLabel="Ir al formulario sin elegir un plan"
+                  className="text-sm underline decoration-[var(--signal)] underline-offset-4 transition-colors hover:text-[var(--signal)]"
+                >
+                  No sé cuál me conviene
+                </PricingPlanLink>
+                <span className="text-xs text-[var(--muted)]">o</span>
+                <a
+                  href={`https://wa.me/5491155550101?text=${encodeURIComponent(
+                    "Hola Cota, estoy viendo la tabla de precios y no sé qué plan me conviene para mi proyecto.",
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-[var(--fg)] underline decoration-[#25D366] underline-offset-4 transition-colors hover:text-[#25D366]"
+                >
+                  Consultar por WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </Reveal>

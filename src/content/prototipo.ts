@@ -68,9 +68,19 @@ export const scope = [
   },
 ] as const;
 
+export const projectCategories = [
+  "Todos",
+  "Landing page",
+  "Web multipágina",
+  "Tienda / Sistema",
+] as const;
+
+export type ProjectCategory = (typeof projectCategories)[number];
+
 export const projects = [
   {
     name: "Ventura",
+    category: "Landing page",
     sector: "Software a medida",
     year: "2026",
     url: "https://landing-ventura.vercel.app",
@@ -78,6 +88,7 @@ export const projects = [
   },
   {
     name: "RanchApp",
+    category: "Tienda / Sistema",
     sector: "Gestión ganadera",
     year: "2025",
     url: "https://www.ranchapp.ar",
@@ -85,6 +96,7 @@ export const projects = [
   },
   {
     name: "Datero",
+    category: "Web multipágina",
     sector: "Producto digital",
     year: "2025",
     url: "https://www.datero.app",
@@ -92,6 +104,7 @@ export const projects = [
   },
   {
     name: "Ecospace",
+    category: "Web multipágina",
     sector: "Energía para empresas",
     year: "2025",
     url: "https://ecospace-energia.vercel.app",
@@ -99,6 +112,7 @@ export const projects = [
   },
   {
     name: "Join Developers",
+    category: "Web multipágina",
     sector: "Desarrolladora inmobiliaria",
     year: "2024",
     url: "https://www.joindevelopers.com",
@@ -106,10 +120,59 @@ export const projects = [
   },
   {
     name: "Softies",
+    category: "Landing page",
     sector: "Catering y eventos",
     year: "2024",
     url: "https://softiescatering.com",
     img: "/portfolio/softies.png",
+  },
+  {
+    name: "Bruggens",
+    category: "Tienda / Sistema",
+    sector: "Moda e indumentaria",
+    year: "2024",
+    url: "https://bruggens.com",
+    img: "/portfolio/bruggens.png",
+  },
+  {
+    name: "CC Electricidad",
+    category: "Landing page",
+    sector: "Servicios eléctricos",
+    year: "2025",
+    url: "https://ccelectricidad.com",
+    img: "/portfolio/ccelectricidad.png",
+  },
+  {
+    name: "Estudio Krono",
+    category: "Web multipágina",
+    sector: "Arquitectura y diseño",
+    year: "2025",
+    url: "https://estudiokrono.com",
+    img: "/portfolio/estudio-krono.png",
+  },
+  {
+    name: "Extramundano",
+    category: "Tienda / Sistema",
+    sector: "Objetos de diseño",
+    year: "2024",
+    url: "https://extramundano.com",
+    img: "/portfolio/extramundano.png",
+  },
+  {
+    name: "Lucas Rueda",
+    category: "Landing page",
+    sector: "Salud y odontología",
+    year: "2024",
+    url: "https://lucasrueda.com",
+    img: "/portfolio/lucas-rueda.png",
+  },
+  {
+    name: "NDW",
+    category: "Web multipágina",
+    sector: "Consultoría de procesos",
+    year: "2025",
+    url: "https://ndw.com.ar",
+    img: "/portfolio/ndw.png",
   },
 ] as const;
 

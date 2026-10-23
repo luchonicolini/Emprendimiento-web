@@ -103,19 +103,21 @@ export function Contact() {
               className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
             >
               <span>{brand.email}</span>
-              <span aria-hidden="true" className="font-cota text-[11px]">
-                ↗
-              </span>
             </a>
             <a
-              href={brand.whatsapp}
+              href={`${brand.whatsapp}?text=${encodeURIComponent(
+                "Hola Cota, quiero consultar por un proyecto web para mi negocio.",
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
+              className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[#25D366]"
             >
-              <span>{brand.whatsappDisplay}</span>
-              <span aria-hidden="true" className="font-cota text-[11px]">
-                ↗
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#25D366]" />
+                <span>WhatsApp directo: {brand.whatsappDisplay}</span>
+              </span>
+              <span className="font-cota text-xs text-[var(--muted)] group-hover:text-[#25D366]">
+                Chatear
               </span>
             </a>
             <a
@@ -125,9 +127,6 @@ export function Contact() {
               className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
             >
               <span>Instagram</span>
-              <span aria-hidden="true" className="font-cota text-[11px]">
-                ↗
-              </span>
             </a>
           </div>
         </div>
@@ -166,9 +165,6 @@ export function Contact() {
                   className="proto-btn"
                 >
                   Abrir WhatsApp
-                  <span aria-hidden="true" className="font-cota text-[11px]">
-                    ↗
-                  </span>
                 </a>
                 <button
                   type="button"
@@ -303,9 +299,6 @@ export function Contact() {
                 className="proto-btn mt-6 w-full disabled:opacity-60"
               >
                 {loading ? "Enviando…" : "Enviar consulta"}
-                <span aria-hidden="true" className="font-cota text-[11px]">
-                  ↗
-                </span>
               </button>
               <p className="proto-label mt-3">
                 Respuesta en menos de 24 h hábiles

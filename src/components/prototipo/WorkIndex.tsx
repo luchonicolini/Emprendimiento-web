@@ -1,15 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { projects } from "@/content/prototipo";
+import { useMemo, useState } from "react";
+import {
+  projectCategories,
+  projects,
+  type ProjectCategory,
+} from "@/content/prototipo";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/prototipo/Reveal";
 import { SectionHead } from "@/components/prototipo/primitives";
 
+const INITIAL_COUNT = 6;
+
 export function WorkIndex() {
-  const [active, setActive] = useState(0);
-  const current = projects[active];
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProjectCategory>("Todos");
+  const [visibleCount, setVisibleCount] = useState<number>(INITIAL_COUNT);
+
+  // Filtrado reactivo por categoría
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === "Todos") return projects;
+    return projects.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory]);
+
+  // Conteo por categoría para los badges
+  const counts = useMemo(() => {
+    const record: Record<string, number> = {
+      Todos: projects.length,
+    };
+    for (const cat of projectCategories) {
+      if (cat !== "Todos") {
+        record[cat] = projects.filter((p) => p.category === cat).length;
+      }
+    }
+    return record;
+  }, []);
+
+  const handleSelectCategory = (cat: ProjectCategory) => {
+    setSelectedCategory(cat);
+    setVisibleCount(INITIAL_COUNT); // Resetea la paginación al cambiar filtro
+  };
+
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProjects.length;
+  const remainingCount = filteredProjects.length - visibleCount;
 
   return (
     <section
@@ -18,105 +53,170 @@ export function WorkIndex() {
     >
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6">
         <Reveal>
-          <SectionHead
-            index="03 / Trabajos"
-            title={
-              <>
-                Planos de obra
-                <br />
-                entregados.
-              </>
-            }
-            intro={
-              <p>
-                Seis sitios publicados y funcionando. Abrilos, navegalos y
-                mirá el código desde el celular: esa es la entrega real.
-              </p>
-            }
-          />
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHead
+              index="03 / Trabajos"
+              title={
+                <>
+                  Planos de obra
+                  <br />
+                  entregados.
+                </>
+              }
+              intro={
+                <p>
+                  Sitios publicados y funcionando. Abrilos, navegalos y mirá el
+                  código desde el celular: esa es la entrega real.
+                </p>
+              }
+            />
+
+            <div className="hidden shrink-0 items-center gap-2 sm:flex">
+              <span className="proto-label">
+                {projects.length} obras registradas
+              </span>
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 bg-[var(--signal)]"
+              />
+            </div>
+          </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
-          <div>
-            {projects.map((project, index) => (
-              <Reveal key={project.name} delay={index * 40}>
+        {/* Pestañas de filtrado técnico */}
+        <div className="mt-10 flex flex-wrap items-center gap-2 border-b border-[var(--line)] pb-5 sm:gap-3">
+          <span className="proto-label mr-2 hidden sm:inline">
+            Filtrar por tipo:
+          </span>
+          {projectCategories.map((category) => {
+            const isSelected = selectedCategory === category;
+            const count = counts[category] ?? 0;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => handleSelectCategory(category)}
+                className={cn(
+                  "inline-flex items-center gap-2 border px-3 py-1.5 font-cota text-xs tracking-wider transition-all duration-200",
+                  isSelected
+                    ? "border-[var(--signal)] bg-[var(--signal)] font-semibold text-[#0d1418]"
+                    : "border-[var(--line)] bg-transparent text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--fg)]",
+                )}
+              >
+                <span>{category}</span>
+                <span
+                  className={cn(
+                    "text-[10px] opacity-70",
+                    isSelected ? "text-[#0d1418]" : "text-[var(--muted)]",
+                  )}
+                >
+                  ({count})
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Grilla compacta de 3 columnas (en desktop), 2 (tablet), 1 (móvil) */}
+        <div
+          key={selectedCategory}
+          className="mt-8 grid border-l border-t border-[var(--line)] sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {displayedProjects.map((project, index) => (
+            <article
+              key={`${selectedCategory}-${project.name}`}
+              style={{ animationDelay: `${index * 30}ms` }}
+              className="proto-fade-enter group flex flex-col justify-between border-b border-r border-[var(--line)] p-5 sm:p-6 transition-colors duration-200 hover:bg-[rgba(233,230,221,0.02)]"
+            >
+              <div>
+                {/* Encabezado técnico */}
+                <div className="flex items-center justify-between">
+                  <span className="font-cota text-[10px] tracking-[0.2em] text-[var(--signal)]">
+                    Lámina {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-cota text-[10px] tracking-[0.16em] text-[var(--muted)]">
+                    {project.year}
+                  </span>
+                </div>
+
+                {/* Título y categoría */}
+                <div className="mt-3">
+                  <h3 className="text-xl font-semibold tracking-[-0.03em] text-[var(--fg)]">
+                    {project.name}
+                  </h3>
+                  <div className="mt-1 flex items-center justify-between gap-2 text-xs">
+                    <span className="text-[var(--muted)]">{project.sector}</span>
+                    <span className="font-cota text-[9px] uppercase tracking-wider text-[var(--signal)]/80">
+                      {project.category}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Captura de pantalla */}
                 <a
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
-                  className={cn(
-                    "group grid grid-cols-[28px_1fr_auto] items-baseline gap-4 border-t border-[var(--line)] py-5 transition-colors last:border-b",
-                    active === index
-                      ? "text-[var(--fg)]"
-                      : "text-[var(--fg)]/70 hover:text-[var(--fg)]",
-                  )}
+                  aria-label={`Ver web de ${project.name} (abre en una pestaña nueva)`}
+                  className="relative mt-4 block aspect-[16/10] overflow-hidden border border-[var(--line-strong)] bg-[var(--accent)]"
                 >
-                  <span className="font-cota text-[9px] tracking-[0.18em]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span>
-                    <span className="block text-[26px] leading-none tracking-[-0.04em] sm:text-[32px]">
-                      {project.name}
-                    </span>
-                    <span className="mt-2 block text-sm text-[var(--muted)]">
-                      {project.sector}
-                    </span>
-                    <span className="mt-4 block aspect-[16/9] overflow-hidden border border-[var(--line)] lg:hidden">
-                      <Image
-                        src={project.img}
-                        alt={`Web de ${project.name}`}
-                        width={1280}
-                        height={730}
-                        sizes="100vw"
-                        className="h-full w-full object-cover object-top"
-                      />
-                    </span>
-                  </span>
-                  <span className="flex items-center gap-3 font-cota text-[9px] tracking-[0.16em] text-[var(--muted)]">
-                    {project.year}
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        "transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5",
-                        active === index && "text-[var(--signal)]",
-                      )}
-                    >
-                      ↗
-                    </span>
+                  <Image
+                    src={project.img}
+                    alt={`Captura del sitio web ${project.name}`}
+                    fill
+                    sizes="(min-width: 1024px) 380px, (min-width: 640px) 480px, 100vw"
+                    className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-black/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-2.5 top-2.5 bg-[var(--bg)] px-2 py-0.5 font-cota text-[10px] text-[var(--fg)] opacity-0 shadow transition-all duration-300 group-hover:opacity-100"
+                  >
+                    Abrir web
                   </span>
                 </a>
-              </Reveal>
-            ))}
-          </div>
+              </div>
 
-          <div className="hidden lg:block">
-            <div className="sticky top-24">
-              <div className="relative aspect-[16/9] overflow-hidden border border-[var(--line-strong)]">
-                <Image
-                  key={current.img}
-                  src={current.img}
-                  alt={`Web de ${current.name}`}
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover object-top"
-                />
+              {/* Pie de ficha con enlace */}
+              <div className="mt-5 flex items-center justify-between border-t border-[var(--line)] pt-3 text-xs">
+                <span className="text-[var(--muted)]">Código en línea</span>
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-[var(--fg)] transition-colors hover:text-[var(--signal)]"
+                >
+                  Visitar sitio
+                </a>
               </div>
-              <div className="mt-3 flex items-baseline justify-between gap-4">
-                <span className="proto-label">
-                  {current.name} — {current.sector}
-                </span>
-                <span className="proto-label">{current.year}</span>
-              </div>
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
 
-        <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[var(--muted)]">
-          Selección de trabajos de ejemplo. Antes de publicar, reemplazá las
-          capturas y los enlaces por los proyectos reales de Cota.
-        </p>
+        {/* Control de expansión (Cargar más) */}
+        {hasMore && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + 6)}
+              className="proto-btn proto-btn-ghost w-full max-w-sm"
+            >
+              + Cargar más obras ({remainingCount} restantes)
+            </button>
+          </div>
+        )}
+
+        {/* Pie con nota de escala técnica */}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--line)] pt-4">
+          <p className="proto-label">
+            Mostrando {displayedProjects.length} de {filteredProjects.length}{" "}
+            obras ({selectedCategory})
+          </p>
+          <span className="proto-label">Escala 1:1 · Código en producción</span>
+        </div>
       </div>
     </section>
   );

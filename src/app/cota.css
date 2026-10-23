@@ -118,6 +118,21 @@
   will-change: auto;
 }
 
+@keyframes proto-fade-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.proto-fade-enter {
+  animation: proto-fade-enter 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @keyframes proto-marquee {
   from {
     transform: translateX(0);
@@ -133,6 +148,93 @@
 
 .proto-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Tira de proyectos con scroll suave sin barra nativa ruidosa */
+.proto-scroll-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.proto-scroll-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tira de obra: dos filas a sangre que derivan en sentidos opuestos.
+   Se detiene al pasar el mouse, al enfocar un proyecto o con el control. */
+.proto-strip {
+  --strip-gap: clamp(8px, 1vw, 14px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.2vw, 16px);
+}
+
+.proto-strip-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(24px, 3vw, 48px),
+    #000 calc(100% - clamp(24px, 3vw, 48px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(24px, 3vw, 48px),
+    #000 calc(100% - clamp(24px, 3vw, 48px)),
+    transparent 100%
+  );
+}
+
+.proto-strip-track {
+  display: flex;
+  width: max-content;
+  animation: proto-strip-drift 95s linear infinite;
+  will-change: transform;
+}
+
+.proto-strip-row[data-direction="reverse"] .proto-strip-track {
+  animation-direction: reverse;
+  animation-duration: 120s;
+}
+
+.proto-strip-group {
+  display: flex;
+}
+
+.proto-strip-card {
+  display: block;
+  flex: none;
+  width: clamp(240px, 25vw, 360px);
+  margin-right: var(--strip-gap);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: border-color 0.3s ease;
+}
+
+.proto-strip-row--tight .proto-strip-card {
+  width: clamp(200px, 20vw, 290px);
+}
+
+.proto-strip-card:hover,
+.proto-strip-card:focus-visible {
+  border-color: var(--signal);
+}
+
+.proto-strip:hover .proto-strip-track,
+.proto-strip:focus-within .proto-strip-track,
+.proto-strip[data-paused="true"] .proto-strip-track {
+  animation-play-state: paused;
+}
+
+@keyframes proto-strip-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .proto-mark {
@@ -270,7 +372,31 @@
     transition: none !important;
   }
 
+  .proto-fade-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .proto-marquee {
     animation: none;
+  }
+
+  .proto-strip-row {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .proto-strip-track {
+    animation: none;
+  }
+
+  .proto-strip-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .proto-strip-control {
+    display: none;
   }
 }

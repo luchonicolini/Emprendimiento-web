@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local design review artifacts.
     ".impeccable/**",
+    // Local agent skills and tooling, not application code.
+    ".agents/**",
   ]),
 ]);
 

@@ -10,6 +10,7 @@ import { Testimonials } from "@/components/prototipo/Testimonials";
 import { Faq } from "@/components/prototipo/Faq";
 import { Contact } from "@/components/prototipo/Contact";
 import { ProtoFooter } from "@/components/prototipo/ProtoFooter";
+import { WhatsAppFloat } from "@/components/prototipo/WhatsAppFloat";
 
 export default function HomePage() {
   return (
@@ -28,6 +29,7 @@ export default function HomePage() {
         <Contact />
       </main>
       <ProtoFooter />
+      <WhatsAppFloat />
     </>
   );
 }
