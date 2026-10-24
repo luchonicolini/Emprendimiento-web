@@ -143,6 +143,22 @@
   animation: proto-fade-enter 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Cambio de lámina en el visor de obra: un solo movimiento, sin rebote. */
+@keyframes work-media-in {
+  from {
+    opacity: 0;
+    transform: scale(1.012);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.work-media-in {
+  animation: work-media-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes proto-marquee {
   from {
     transform: translateX(0);
