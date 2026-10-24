@@ -1,4 +1,4 @@
-import { Cota, Kicker } from "@/components/prototipo/primitives";
+import { Kicker } from "@/components/prototipo/primitives";
 import { Reveal } from "@/components/prototipo/Reveal";
 import { HeroCadSheet } from "@/components/prototipo/HeroCadSheet";
 
@@ -47,12 +47,26 @@ export function ProtoHero() {
               </div>
             </Reveal>
 
-            <Reveal delay={200}>
-              <Cota
-                label="Desde USD 200 · Promo este mes (antes USD 350) · 7–10 días hábiles"
-                className="mt-12 max-w-xl"
-              />
+            <Reveal delay={180}>
+              <div className="mt-9 grid max-w-xl gap-2 border-y border-[var(--line)] py-4 sm:grid-cols-3 sm:gap-4">
+                {[
+                  "Te entregamos una web lista para vender.",
+                  "Sin plantillas genéricas.",
+                  "Sin costos sorpresa.",
+                ].map((promise) => (
+                  <p
+                    key={promise}
+                    className="text-[13px] font-medium leading-snug text-[var(--fg)]"
+                  >
+                    <span className="mr-2 text-[var(--signal)]" aria-hidden="true">
+                      /
+                    </span>
+                    {promise}
+                  </p>
+                ))}
+              </div>
             </Reveal>
+
           </div>
 
           <Reveal delay={120} className="relative">

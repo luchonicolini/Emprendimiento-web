@@ -53,16 +53,18 @@ export function ProtoFooter() {
                   {brand.whatsappDisplay}
                 </a>
               </li>
-              <li>
-                <a
-                  href={brand.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-[var(--fg)]"
-                >
-                  Instagram
-                </a>
-              </li>
+              {brand.instagram ? (
+                <li>
+                  <a
+                    href={brand.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-[var(--fg)]"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </div>
 

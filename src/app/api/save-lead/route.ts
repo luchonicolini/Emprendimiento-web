@@ -63,10 +63,14 @@ export async function POST(request: Request) {
       }
     }
 
-    // 1. IP Rate Limiting: Silent drop if flooded
+    // 1. IP Rate Limiting: frena floods, pero avisa para que la UI ofrezca
+    // el envío por WhatsApp/correo en vez de simular un éxito.
     if (isRateLimited(ip)) {
       console.warn(`[ANTI-BOT] Rate limit alcanzado para IP: ${ip}`);
-      return NextResponse.json({ ok: true });
+      return NextResponse.json(
+        { ok: false, error: "rate_limited" },
+        { status: 429 }
+      );
     }
 
     const data = await request.json();
@@ -81,7 +85,7 @@ export async function POST(request: Request) {
     if (typeof data.loadedAt === "number" && data.loadedAt > 0) {
       const elapsed = Date.now() - data.loadedAt;
       if (elapsed < 1500) {
-        console.warn(`[ANTI-BOT] Encriptado/velocidad de bot detectada (${elapsed}ms) desde IP ${ip}`);
+        console.warn(`[ANTI-BOT] Envío demasiado rápido (${elapsed}ms) desde IP ${ip}`);
         return NextResponse.json({ ok: true });
       }
     }
@@ -132,9 +136,9 @@ export async function POST(request: Request) {
     console.log("[NUEVO LEAD REGISTRADO]:", leadRecord);
 
     // Envío de notificación privada por email (confidencial / solo servidor)
-    await sendNotificationEmail(leadRecord);
+    const notified = await sendNotificationEmail(leadRecord);
 
-    return NextResponse.json({ ok: true, id: leadId });
+    return NextResponse.json({ ok: true, id: leadId, notified });
   } catch (error) {
     console.error("Error guardando lead:", error);
     return NextResponse.json(
@@ -142,6 +146,17 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+}
+
+// Los datos del formulario terminan dentro del HTML del email de notificación.
+// Sin escapar, un visitante puede inyectar markup en tu bandeja de entrada.
+function esc(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 async function sendNotificationEmail(lead: {
@@ -152,15 +167,16 @@ async function sendNotificationEmail(lead: {
   proyecto: string;
   plazo: string;
   mensaje: string;
-}) {
+}): Promise<boolean> {
   const destinationEmail = process.env.LEAD_NOTIFICATION_EMAIL;
-  if (!destinationEmail) {
-    return { ok: false, reason: "No LEAD_NOTIFICATION_EMAIL configured" };
-  }
   const resendApiKey = process.env.RESEND_API_KEY;
   const web3formsKey = process.env.WEB3FORMS_ACCESS_KEY;
+  const fromEmail =
+    process.env.LEAD_FROM_EMAIL || "Nicolini Design <onboarding@resend.dev>";
 
-  const subject = `[NUEVO CLIENTE] ${lead.nombre} — ${lead.proyecto} (${lead.plazo})`;
+  const subject = `[NUEVO CLIENTE] ${esc(lead.nombre)} — ${lead.proyecto} (${lead.plazo})`
+    .replace(/[\r\n]+/g, " ")
+    .slice(0, 180);
   const digitsOnly = lead.whatsapp.replace(/\D/g, "");
   const waLink = digitsOnly ? `https://wa.me/${digitsOnly}` : "";
 
@@ -171,7 +187,7 @@ async function sendNotificationEmail(lead: {
           📐 NICOLINI DESIGN // FICHA DE OBRA
         </span>
         <span style="font-size: 10px; color: #98a19e; font-family: monospace;">
-          Ref: ${lead.id}
+          Ref: ${esc(lead.id)}
         </span>
       </div>
 
@@ -185,23 +201,33 @@ async function sendNotificationEmail(lead: {
       <table style="width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px;">
         <tr style="border-bottom: 1px solid rgba(237,234,225,0.1);">
           <td style="padding: 10px 0; color: #98a19e; width: 130px;">Cliente:</td>
-          <td style="padding: 10px 0; font-weight: 600; color: #ffffff;">${lead.nombre}</td>
+          <td style="padding: 10px 0; font-weight: 600; color: #ffffff;">${esc(lead.nombre)}</td>
         </tr>
         <tr style="border-bottom: 1px solid rgba(237,234,225,0.1);">
           <td style="padding: 10px 0; color: #98a19e;">WhatsApp:</td>
           <td style="padding: 10px 0;">
             <a href="${waLink}" style="color: #25D366; text-decoration: none; font-weight: 600;">
-              ${lead.whatsapp} ↗ (Abrir chat)
+              ${esc(lead.whatsapp)} ↗ (Abrir chat)
             </a>
           </td>
         </tr>
+        ${
+          lead.email
+            ? `<tr style="border-bottom: 1px solid rgba(237,234,225,0.1);">
+          <td style="padding: 10px 0; color: #98a19e;">Email:</td>
+          <td style="padding: 10px 0;">
+            <a href="mailto:${esc(lead.email)}" style="color: #e9e6dd; text-decoration: none;">${esc(lead.email)}</a>
+          </td>
+        </tr>`
+            : ""
+        }
         <tr style="border-bottom: 1px solid rgba(237,234,225,0.1);">
           <td style="padding: 10px 0; color: #98a19e;">Tipo de web:</td>
-          <td style="padding: 10px 0; color: #ffffff;">${lead.proyecto}</td>
+          <td style="padding: 10px 0; color: #ffffff;">${esc(lead.proyecto)}</td>
         </tr>
         <tr style="border-bottom: 1px solid rgba(237,234,225,0.1);">
           <td style="padding: 10px 0; color: #98a19e;">Plazo deseado:</td>
-          <td style="padding: 10px 0; color: #ffffff;">${lead.plazo}</td>
+          <td style="padding: 10px 0; color: #ffffff;">${esc(lead.plazo)}</td>
         </tr>
       </table>
 
@@ -213,7 +239,7 @@ async function sendNotificationEmail(lead: {
             Requerimientos del cliente:
           </span>
           <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #edeae1;">
-            ${lead.mensaje}
+            ${esc(lead.mensaje)}
           </p>
         </div>
       `
@@ -228,8 +254,8 @@ async function sendNotificationEmail(lead: {
     </div>
   `;
 
-  // 1. Envío directo mediante Resend (si está configurada la API key)
-  if (resendApiKey) {
+  // 1. Envío directo mediante Resend (requiere API key y destinatario)
+  if (resendApiKey && destinationEmail) {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -238,8 +264,9 @@ async function sendNotificationEmail(lead: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Nicolini Design <onboarding@resend.dev>",
+          from: fromEmail,
           to: [destinationEmail],
+          reply_to: lead.email || undefined,
           subject,
           html: htmlBody,
         }),
@@ -269,6 +296,7 @@ async function sendNotificationEmail(lead: {
           from_name: "Web Nicolini Design",
           nombre: lead.nombre,
           whatsapp: lead.whatsapp,
+          email: lead.email || "No informado",
           proyecto: lead.proyecto,
           plazo: lead.plazo,
           mensaje: lead.mensaje,
@@ -277,7 +305,7 @@ async function sendNotificationEmail(lead: {
       });
 
       if (res.ok) {
-        console.log(`[WEB3FORMS NOTIFICADO]: Consulta enviada a ${destinationEmail}`);
+        console.log("[WEB3FORMS NOTIFICADO]: Consulta enviada correctamente");
         return true;
       }
     } catch (err) {

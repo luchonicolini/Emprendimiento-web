@@ -1,5 +1,18 @@
 import type { NextConfig } from "next";
 
+// `unsafe-eval` solo hace falta para el hot reload de desarrollo. Dejarlo en
+// producción debilita la CSP sin necesidad.
+const isDev = process.env.NODE_ENV === "development";
+
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  "https://www.clarity.ms",
+  "https://*.clarity.ms",
+  "https://va.vercel-scripts.com",
+];
+if (isDev) scriptSrc.push("'unsafe-eval'");
+
 const securityHeaders = [
   // 1. Previene ataques de Clickjacking impidiendo que sitios externos carguen la web en iframes
   {
@@ -36,11 +49,11 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.clarity.ms https://*.clarity.ms https://va.vercel-scripts.com",
+      `script-src ${scriptSrc.join(" ")}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https://*.clarity.ms https://*.bing.com https://c.bing.com",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://*.clarity.ms https://*.bing.com https://va.vercel-scripts.com",
+      "connect-src 'self' https://api.web3forms.com https://api.resend.com https://*.clarity.ms https://*.bing.com https://va.vercel-scripts.com",
       "frame-ancestors 'self'",
       "object-src 'none'",
       "base-uri 'self'",

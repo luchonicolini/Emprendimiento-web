@@ -13,9 +13,10 @@ const plansData = [
     type: "Landing page",
     tag: "PLAN 01 // CONVERSIÓN",
     fit: "Profesionales, oficios y lanzamientos que buscan validar y recibir consultas directas sin vueltas.",
+    result: "Salir con una página enfocada en convertir visitas en consultas.",
     price: "USD 200",
     originalPrice: "USD 350",
-    promoBadge: "Promo este mes",
+    promoBadge: "2 cupos en noviembre",
     pricePrefix: "Precio cerrado",
     term: "7 a 10 días hábiles",
     recommended: false,
@@ -32,6 +33,7 @@ const plansData = [
     type: "Web multipágina",
     tag: "PLAN 02 // ESTRUCTURAL",
     fit: "Estudios y empresas con varios servicios que necesitan posicionar en Google y transmitir autoridad.",
+    result: "Ordenar tu oferta y construir autoridad para que te encuentren y te elijan.",
     price: "USD 500",
     pricePrefix: "Precio cerrado",
     term: "10 a 15 días hábiles",
@@ -49,6 +51,7 @@ const plansData = [
     type: "Tienda online",
     tag: "PLAN 03 // E-COMMERCE",
     fit: "Marcas y comercios que necesitan catálogo digital, carrito de compras y cobros automatizados.",
+    result: "Tener una tienda lista para recibir pedidos y cobrar online.",
     price: "USD 650",
     pricePrefix: "Desde",
     term: "15 a 20 días hábiles",
@@ -188,6 +191,15 @@ export function PricingTable() {
                     <p className="mt-2 text-[14px] leading-relaxed text-[var(--muted)] min-h-[42px]">
                       {item.fit}
                     </p>
+
+                    <div className="mt-4 border-l-2 border-[var(--signal)] pl-3">
+                      <span className="font-cota text-[9px] uppercase tracking-[0.16em] text-[var(--signal)]">
+                        Resultado buscado
+                      </span>
+                      <p className="mt-1 text-[13px] font-medium leading-snug text-[var(--fg)]">
+                        {item.result}
+                      </p>
+                    </div>
 
                     {/* Bloque de Precio */}
                     <div className="mt-6 border-y border-[var(--line)] py-5">

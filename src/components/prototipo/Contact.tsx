@@ -14,7 +14,7 @@ const deadlines = ["Esta semana", "Este mes", "En 2 o 3 meses", "Sin apuro"];
 export function Contact() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [deliveryFailed, setDeliveryFailed] = useState(false);
   const [leadId, setLeadId] = useState("");
   const [website, setWebsite] = useState("");
   const loadedAtRef = useRef<number>(0);
@@ -52,7 +52,6 @@ export function Contact() {
     }
 
     setLoading(true);
-    setError("");
 
     const data = new FormData(event.currentTarget);
     const nombre = String(data.get("nombre") ?? "").trim();
@@ -125,45 +124,30 @@ export function Contact() {
     )}&body=${encodeURIComponent(mailBodyLines.join("\n"))}`;
     setMailHref(mailtoUrl);
 
-    // Envío silencioso a tu Gmail mediante Web3Forms (no revela tu correo al cliente)
-    const web3formsKey =
-      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
-      "6926fd5b-29c5-4fd8-b98d-0eb7fcff4da0";
-
-    if (web3formsKey) {
-      try {
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            access_key: web3formsKey,
-            subject: `[NUEVO CLIENTE NICOLINI DESIGN] ${nombre} — ${tipo} (${plazo})`,
-            from_name: "Nicolini Design Web",
-            nombre,
-            whatsapp: tel,
-            email: email || undefined,
-            tipo_proyecto: tipo,
-            plazo_deseado: plazo,
-            mensaje: mensaje || "Sin requerimientos adicionales",
-            referencia: refId,
-          }),
-        }).catch(() => {});
-      } catch {
-        // Falla silenciosa sin interrumpir al usuario
-      }
+    // Abrimos WhatsApp dentro del mismo gesto del usuario: si esperamos la
+    // respuesta del servidor, el navegador bloquea la ventana emergente.
+    try {
+      window.open(targetUrl, "_blank", "noopener,noreferrer");
+    } catch {
+      // Si el navegador lo bloquea, el respaldo queda en la pantalla de confirmación.
     }
 
-    // Registro secundario en el servidor con protección anti-bot
+    // Registro en el servidor. Es el único canal que dispara la notificación
+    // por email: una sola vez por consulta y sin exponer la API key en el navegador.
+    let delivered = false;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
     try {
-      fetch("/api/save-lead", {
+      const response = await fetch("/api/save-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        keepalive: true,
         body: JSON.stringify({
           nombre,
           whatsapp: tel,
+          email,
           proyecto: tipo,
           plazo,
           negocio: "",
@@ -172,18 +156,20 @@ export function Contact() {
           parcial: "no",
           loadedAt: loadedAtRef.current,
         }),
-      }).catch(() => {});
+      });
+      const payload = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        notified?: boolean;
+      } | null;
+      delivered =
+        response.ok && payload?.ok === true && payload?.notified !== false;
     } catch {
-      // Ignorar error de red secundario
+      delivered = false;
+    } finally {
+      clearTimeout(timeout);
     }
 
-    // Abrir WhatsApp directamente
-    try {
-      window.open(targetUrl, "_blank", "noopener,noreferrer");
-    } catch {
-      // Si el navegador bloquea el popup, el botón de respaldo queda en pantalla
-    }
-
+    setDeliveryFailed(!delivered);
     setLoading(false);
     setSent(true);
   };
@@ -232,14 +218,16 @@ export function Contact() {
                 Chatear
               </span>
             </a>
-            <a
-              href={brand.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
-            >
-              <span>Instagram</span>
-            </a>
+            {brand.instagram ? (
+              <a
+                href={brand.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
+              >
+                <span>Instagram</span>
+              </a>
+            ) : null}
           </div>
         </div>
 
@@ -256,11 +244,17 @@ export function Contact() {
             <div role="status" className="flex min-h-[420px] flex-col justify-between py-6 sm:py-8">
               <div>
                 <span className="proto-label text-[var(--signal)]">
-                  Ficha de proyecto registrada
+                  {deliveryFailed
+                    ? "Registro en el sistema pendiente"
+                    : "Ficha de proyecto registrada"}
                 </span>
-                <h3 className="proto-display mt-4 text-3xl sm:text-4xl">Ficha lista.</h3>
+                <h3 className="proto-display mt-4 text-3xl sm:text-4xl">
+                  {deliveryFailed ? "Ficha lista, falta confirmarla." : "Ficha lista."}
+                </h3>
                 <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--muted)]">
-                  Tu consulta ya fue recibida en nuestro sistema. Elegí por qué canal preferís continuar la conversación:
+                  {deliveryFailed
+                    ? "No pudimos registrar la consulta en el sistema. Tus datos ya están completos: mandalos por WhatsApp o correo para que no se pierda el contacto."
+                    : "Tu consulta ya fue recibida en nuestro sistema. Elegí por qué canal preferís continuar la conversación:"}
                 </p>
                 {leadId ? (
                   <p className="mt-5 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
@@ -295,6 +289,7 @@ export function Contact() {
                     type="button"
                     onClick={() => {
                       setSent(false);
+                      setDeliveryFailed(false);
                       setLeadId("");
                     }}
                     className="font-cota text-[10px] uppercase tracking-wider text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
@@ -477,15 +472,6 @@ export function Contact() {
                   />
                 </div>
               </div>
-
-              {error ? (
-                <p
-                  role="alert"
-                  className="mt-5 border border-[var(--signal)] p-3 text-sm leading-relaxed text-[var(--signal)]"
-                >
-                  {error}
-                </p>
-              ) : null}
 
               <label className="mt-6 flex items-start gap-3 cursor-pointer text-xs leading-relaxed text-[var(--muted)] select-none">
                 <input

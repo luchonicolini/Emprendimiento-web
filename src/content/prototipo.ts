@@ -9,7 +9,8 @@ export const brand = {
   email: "contacto@nicolini.design",
   whatsapp: "https://wa.me/5491131568131",
   whatsappDisplay: "+54 9 11 3156-8131",
-  instagram: "https://www.instagram.com/",
+  // Vacío = el link de Instagram no se muestra (evita mandar a instagram.com sin perfil).
+  instagram: "",
   location: "Buenos Aires, AR",
   coordinates: "34°36′S 58°22′W",
   availability: "Agenda abierta · noviembre 2026",
@@ -36,7 +37,7 @@ export type ProjectType = (typeof projectTypes)[number];
 export const heroSheet = [
   { label: "Alcance", value: "Landing · multipágina · tienda · sistema" },
   { label: "Plazo", value: "7 a 10 días hábiles" },
-  { label: "Precio", value: "Promo USD 200 (antes USD 350)" },
+  { label: "Precio", value: "USD 200 · 2 cupos disponibles en noviembre" },
   { label: "Seña", value: "25% para arrancar" },
   { label: "Entrega", value: "Dominio y accesos a tu nombre" },
 ] as const;
@@ -423,7 +424,6 @@ export const testimonials = [
       "Excelente servicio. Logramos una página muy bien desarrollada y a un costo muy bueno. Los pacientes consultan y reservan directo sin fricción.",
     name: "Dr. Lucas Rueda",
     role: "Traumatología deportiva · Mendoza",
-    rating: "5.0 ★ Google",
     verifiedUrl: "https://share.google/RwVYrHUEOp1QmP3vA",
   },
   {
@@ -431,14 +431,12 @@ export const testimonials = [
       "Captó el espíritu de Softies desde el primer momento. La web quedó publicada en fecha exacta y los pedidos de catering entran directo por WhatsApp.",
     name: "Santiago Hazaña",
     role: "Fundador Softies Catering · Zona Norte",
-    rating: "5.0 ★ Google",
   },
   {
     quote:
       "Nos hicieron una re linda web. La parte de catálogo y contenido fue clave: llegamos con la idea dispersa y salimos con el lookbook y la tienda totalmente resueltos.",
     name: "ExtraMundano Producciones",
     role: "Joyería de autor & Colecciones · Palermo",
-    rating: "5.0 ★ Google",
   },
 ] as const;
 

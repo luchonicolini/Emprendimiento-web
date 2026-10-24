@@ -5,14 +5,16 @@ export const site = {
   email: "contacto@nicolini.design",
   phone: "+5491131568131",
   phoneDisplay: "+54 9 11 3156-8131",
-  instagram: "https://www.instagram.com/",
+  // Completar con el handle real (ej. "https://www.instagram.com/nicolini.design").
+  // Mientras esté vacío, el link de Instagram no se renderiza en el sitio.
+  instagram: "",
   whatsapp:
     "https://wa.me/5491131568131?text=Hola,%20quiero%20hablar%20sobre%20un%20proyecto",
   locality: "Buenos Aires",
   country: "AR",
   locale: "es_AR",
   description:
-    "Nicolini Design diseña y programa sitios web con alcance, precio y fecha definidos antes de empezar. Landing page USD 350, web multipágina USD 500, pago único.",
+    "Nicolini Design diseña y programa sitios web con alcance, precio y fecha definidos antes de empezar. Landing page desde USD 200, web multipágina desde USD 500, pago único.",
   slogan: "Sitios web con medidas exactas.",
 } as const;
 
