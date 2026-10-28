@@ -64,6 +64,20 @@ export const metadata: Metadata = {
     title,
     description: site.description,
   },
+  keywords: [
+    "diseño web argentina",
+    "desarrollo web buenos aires",
+    "landing page precio fijo",
+    "páginas web para profesionales",
+    "desarrollo web a medida",
+    "nicolini design",
+    "diseño web responsive",
+  ],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 const organizationSchema = {

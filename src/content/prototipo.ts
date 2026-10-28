@@ -6,7 +6,7 @@ export const brand = {
   name: "Nicolini Design",
   descriptor: "Estudio de diseño & desarrollo web",
   tagline: "Sitios web con medidas exactas.",
-  email: "contacto@nicolini.design",
+  email: "nicolini.luciano33@gmail.com",
   whatsapp: "https://wa.me/5491131568131",
   whatsappDisplay: "+54 9 11 3156-8131",
   // Vacío = el link de Instagram no se muestra (evita mandar a instagram.com sin perfil).

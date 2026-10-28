@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { CookiePreferences } from "@/components/CookiePreferences";
 import { brand, nav } from "@/content/prototipo";
@@ -53,18 +55,38 @@ export function ProtoFooter() {
                   {brand.whatsappDisplay}
                 </a>
               </li>
-              {brand.instagram ? (
-                <li>
-                  <a
-                    href={brand.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors hover:text-[var(--fg)]"
-                  >
-                    Instagram
-                  </a>
-                </li>
-              ) : null}
+              <li>
+                <button
+                  type="button"
+                  onClick={() =>
+                    alert(
+                      'Las redes oficiales de Nicolini Design en Instagram estarán disponibles próximamente.\n\nPor favor comunicate por WhatsApp al ' +
+                        brand.whatsappDisplay +
+                        ' o por email a ' +
+                        brand.email
+                    )
+                  }
+                  className="inline-block py-0.5 text-left text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] cursor-pointer"
+                >
+                  Instagram <span className="font-cota text-[10px] text-[var(--muted)] opacity-70">(Próximamente)</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() =>
+                    alert(
+                      'Las redes oficiales de Nicolini Design en LinkedIn estarán disponibles próximamente.\n\nPor favor comunicate por WhatsApp al ' +
+                        brand.whatsappDisplay +
+                        ' o por email a ' +
+                        brand.email
+                    )
+                  }
+                  className="inline-block py-0.5 text-left text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)] cursor-pointer"
+                >
+                  LinkedIn <span className="font-cota text-[10px] text-[var(--muted)] opacity-70">(Próximamente)</span>
+                </button>
+              </li>
             </ul>
           </div>
 

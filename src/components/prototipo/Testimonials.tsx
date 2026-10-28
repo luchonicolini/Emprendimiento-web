@@ -86,7 +86,7 @@ export function Testimonials() {
                         rel="noopener noreferrer"
                         className="font-cota text-[10px] text-[var(--signal)] hover:underline inline-flex items-center gap-1"
                       >
-                        Ver en Google ↗
+                        Ver en Google
                       </a>
                     )}
                   </div>
@@ -97,7 +97,7 @@ export function Testimonials() {
         </div>
 
         <p className="proto-label mt-4 md:hidden">
-          Deslizá para ver las tres →
+          Deslizá para ver las tres
         </p>
       </div>
     </section>

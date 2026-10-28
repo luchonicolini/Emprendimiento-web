@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useMemo, useRef, useState, type KeyboardEvent } from "react";
@@ -175,12 +175,7 @@ export function WorkIndex() {
                   </div>
                   <span className="flex shrink-0 items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-[var(--muted)]">
                     Ver sitio
-                    <span
-                      aria-hidden="true"
-                      className="text-[11px] leading-none transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    >
-                      ↗
-                    </span>
+                    
                   </span>
                 </div>
 
@@ -239,12 +234,7 @@ export function WorkIndex() {
                     {selected.kind === "produccion"
                       ? "Visitar sitio"
                       : "Probar prototipo"}
-                    <span
-                      aria-hidden="true"
-                      className="transition-transform duration-300 group-hover/cta:translate-x-0.5"
-                    >
-                      ↗
-                    </span>
+                    
                   </a>
                 </div>
               </figcaption>
@@ -366,7 +356,7 @@ export function WorkIndex() {
                     </div>
                     <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] transition-colors group-hover:text-[var(--signal)]">
                       Abrir
-                      <span aria-hidden="true">↗</span>
+                      
                     </span>
                   </div>
 
@@ -418,12 +408,7 @@ export function WorkIndex() {
             className="group inline-flex items-center gap-1.5 text-[12px] font-medium text-[var(--fg)] transition-colors hover:text-[var(--signal)]"
           >
             Ver los 100 prototipos del laboratorio
-            <span
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-0.5"
-            >
-              ↗
-            </span>
+            
           </a>
         </div>
       </div>

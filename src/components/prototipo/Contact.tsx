@@ -218,16 +218,40 @@ export function Contact() {
                 Chatear
               </span>
             </a>
-            {brand.instagram ? (
-              <a
-                href={brand.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between border-b border-[var(--line)] py-4 text-sm transition-colors hover:text-[var(--signal)]"
-              >
-                <span>Instagram</span>
-              </a>
-            ) : null}
+            <button
+              type="button"
+              onClick={() =>
+                alert(
+                  'Las redes oficiales de Nicolini Design en Instagram estarán disponibles próximamente.\n\nPor favor comunicate por WhatsApp al ' +
+                    brand.whatsappDisplay +
+                    ' o por email a ' +
+                    brand.email
+                )
+              }
+              className="group flex w-full items-center justify-between border-b border-[var(--line)] py-4 text-left text-sm transition-colors hover:text-[var(--signal)] cursor-pointer"
+            >
+              <span>Instagram</span>
+              <span className="font-cota text-[11px] uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--signal)]">
+                Próximamente
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                alert(
+                  'Las redes oficiales de Nicolini Design en LinkedIn estarán disponibles próximamente.\n\nPor favor comunicate por WhatsApp al ' +
+                    brand.whatsappDisplay +
+                    ' o por email a ' +
+                    brand.email
+                )
+              }
+              className="group flex w-full items-center justify-between border-b border-[var(--line)] py-4 text-left text-sm transition-colors hover:text-[var(--signal)] cursor-pointer"
+            >
+              <span>LinkedIn</span>
+              <span className="font-cota text-[11px] uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--signal)]">
+                Próximamente
+              </span>
+            </button>
           </div>
         </div>
 
@@ -273,7 +297,7 @@ export function Contact() {
                     className="proto-btn justify-center text-center"
                   >
                     <span>Enviar por WhatsApp</span>
-                    <span aria-hidden="true" className="font-cota text-xs">↗</span>
+                    
                   </a>
                   <a
                     href={mailHref}
@@ -498,7 +522,7 @@ export function Contact() {
               >
                 <span>{loading ? "Registrando consulta técnica…" : "Pedir presupuesto técnico"}</span>
                 <span aria-hidden="true" className="font-cota text-xs">
-                  {loading ? "…" : "01/01 ↗"}
+                  {loading ? "…" : "01/01"}
                 </span>
               </button>
               <p className="proto-label mt-3 text-center sm:text-left">
@@ -511,3 +535,4 @@ export function Contact() {
     </section>
   );
 }
+

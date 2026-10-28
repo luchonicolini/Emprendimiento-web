@@ -103,7 +103,7 @@ export default async function Image() {
         >
           <div style={{ display: "flex", gap: "28px" }}>
             <span style={{ fontSize: "19px", color: "#d05a3f", fontWeight: 700 }}>
-              Landing USD 350
+              Landing USD 200
             </span>
             <span style={{ fontSize: "19px", color: "#4b5563" }}>·</span>
             <span style={{ fontSize: "19px", color: "#d05a3f", fontWeight: 700 }}>

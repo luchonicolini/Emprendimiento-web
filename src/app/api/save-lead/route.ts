@@ -168,7 +168,8 @@ async function sendNotificationEmail(lead: {
   plazo: string;
   mensaje: string;
 }): Promise<boolean> {
-  const destinationEmail = process.env.LEAD_NOTIFICATION_EMAIL;
+  const destinationEmail =
+    process.env.LEAD_NOTIFICATION_EMAIL || "nicolini.luciano33@gmail.com";
   const resendApiKey = process.env.RESEND_API_KEY;
   const web3formsKey = process.env.WEB3FORMS_ACCESS_KEY;
   const fromEmail =
@@ -207,7 +208,7 @@ async function sendNotificationEmail(lead: {
           <td style="padding: 10px 0; color: #98a19e;">WhatsApp:</td>
           <td style="padding: 10px 0;">
             <a href="${waLink}" style="color: #25D366; text-decoration: none; font-weight: 600;">
-              ${esc(lead.whatsapp)} ↗ (Abrir chat)
+              ${esc(lead.whatsapp)} (Abrir chat)
             </a>
           </td>
         </tr>

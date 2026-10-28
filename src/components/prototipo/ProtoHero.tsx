@@ -34,15 +34,9 @@ export function ProtoHero() {
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a href="#contacto" className="proto-btn">
                   Pedir presupuesto
-                  <span aria-hidden="true" className="font-cota text-[11px]">
-                    ↗
-                  </span>
                 </a>
                 <a href="#trabajos" className="proto-btn proto-btn-ghost">
                   Ver trabajos
-                  <span aria-hidden="true" className="font-cota text-[11px]">
-                    ↓
-                  </span>
                 </a>
               </div>
             </Reveal>

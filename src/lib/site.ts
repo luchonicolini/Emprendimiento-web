@@ -2,7 +2,7 @@ export const site = {
   name: "Nicolini Design",
   legalName: "Nicolini Design — Estudio",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nicolini.design",
-  email: "contacto@nicolini.design",
+  email: "nicolini.luciano33@gmail.com",
   phone: "+5491131568131",
   phoneDisplay: "+54 9 11 3156-8131",
   // Completar con el handle real (ej. "https://www.instagram.com/nicolini.design").

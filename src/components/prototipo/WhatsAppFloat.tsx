@@ -100,11 +100,11 @@ export function WhatsAppFloat() {
         <div
           className={`flex items-center overflow-hidden whitespace-nowrap transition-all duration-300 ease-out ${
             isInitialExpanded
-              ? "max-w-[280px] pl-2.5 pr-2.5 opacity-100"
-              : "max-w-0 opacity-0 group-hover:max-w-[280px] group-hover:pl-2.5 group-hover:pr-2.5 group-hover:opacity-100 group-focus-visible:max-w-[280px] group-focus-visible:pl-2.5 group-focus-visible:pr-2.5 group-focus-visible:opacity-100"
+              ? "max-w-[280px] pl-2.5 pr-3 opacity-100"
+              : "max-w-0 opacity-0 group-hover:max-w-[280px] group-hover:pl-2.5 group-hover:pr-3 group-hover:opacity-100 group-focus-visible:max-w-[280px] group-focus-visible:pl-2.5 group-focus-visible:pr-3 group-focus-visible:opacity-100"
           }`}
         >
-          <div className="flex flex-col pr-2">
+          <div className="flex flex-col pr-1">
             <span className="text-[13px] font-semibold tracking-tight text-white leading-none">
               WhatsApp
             </span>
@@ -112,10 +112,6 @@ export function WhatsAppFloat() {
               Respuesta en el día
             </span>
           </div>
-
-          <span className="text-stone-400 text-xs transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-emerald-400">
-            ↗
-          </span>
         </div>
       </a>
     </aside>
