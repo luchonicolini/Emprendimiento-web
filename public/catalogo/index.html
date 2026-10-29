@@ -6,6 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Laboratorio Nicolini Design — 100 demos interactivas</title>
 <meta name="description" content="Explorá el laboratorio de Nicolini Design: 100 demos ficticias e interactivas de diseño web, arte generativo y experimentación visual. No son trabajos de clientes.">
+<link rel="canonical" href="https://nicolini-design.vercel.app/catalogo/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nicolini Design">
+<meta property="og:url" content="https://nicolini-design.vercel.app/catalogo/">
+<meta property="og:title" content="Laboratorio Nicolini Design — 100 demos interactivas">
+<meta property="og:description" content="100 prototipos interactivos de diseño, producto y tecnología. Conceptos ficticios creados por Nicolini Design.">
+<meta property="og:image" content="https://nicolini-design.vercel.app/brand/catalogo-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Laboratorio Nicolini Design: 100 demos interactivas de diseño y tecnología">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Laboratorio Nicolini Design — 100 demos interactivas">
+<meta name="twitter:description" content="100 prototipos interactivos de diseño, producto y tecnología. Conceptos ficticios creados por Nicolini Design.">
+<meta name="twitter:image" content="https://nicolini-design.vercel.app/brand/catalogo-og.png">
 <link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
 <link rel="icon" type="image/png" sizes="512x512" href="/brand/icon.png">
 <link rel="apple-touch-icon" href="/brand/icon.png">
@@ -93,14 +108,27 @@
   .file-name a:hover { border-bottom-color:currentColor; }
 
   .empty { padding:36px 0; color:var(--muted); border-bottom:1px solid var(--line-strong); display:none; }
+  .closing-cta { display:flex; align-items:center; justify-content:space-between; gap:32px; margin-top:56px; padding:30px 32px; border:1px solid #1b1b1f; background:#1b1b1f; color:#f4f1ea; }
+  .closing-copy { max-width:620px; }
+  .closing-copy h2 { font-size:clamp(22px,3vw,32px); line-height:1.15; letter-spacing:-.025em; font-weight:650; }
+  .closing-copy p { margin-top:10px; color:#d0cec8; font-size:14px; line-height:1.6; }
+  .closing-actions { display:flex; flex:0 0 auto; flex-wrap:wrap; gap:10px; }
+  .closing-actions .btn { min-height:44px; padding:0 15px; }
+  .closing-actions .primary { border-color:#b8381a; background:#b8381a; color:#fff; }
+  .closing-actions .primary:hover { border-color:#b8381a; background:#b8381a; }
+  .closing-actions .secondary { border-color:rgba(244,241,234,.45); color:#f4f1ea; }
+  .closing-actions .secondary:hover { border-color:#f4f1ea; background:rgba(244,241,234,.08); }
   footer { margin-top:48px; padding-top:20px; border-top:1px solid var(--line-strong); font-size:12px;
-           color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+            color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
 
   @media (max-width: 700px) {
     .wrap { padding:18px 16px 56px; }
     .masthead { gap:12px; }
     .masthead .wordmark img { width:140px; }
     .masthead .home-link { min-height:40px; padding:0 10px; font-size:12px; }
+    .closing-cta { align-items:flex-start; flex-direction:column; gap:20px; padding:24px 20px; }
+    .closing-actions { width:100%; }
+    .closing-actions .btn { flex:1 1 150px; }
     .card { grid-template-columns:1fr; row-gap:14px; }
     .thumb, .card-top, .prompt-panel { grid-column:1; grid-row:auto; }
     .thumb { max-width:520px; }
@@ -2058,6 +2086,17 @@ Project tiles expand into full-screen case studies through a shared-element tran
 </article>
   </div>
   <div class="empty" id="empty">No encontramos demos con esa búsqueda.</div>
+
+  <section class="closing-cta" aria-labelledby="closing-title">
+    <div class="closing-copy">
+      <h2 id="closing-title">¿Querés este nivel de diseño e interactividad para tu negocio?</h2>
+      <p>Diseñamos y programamos sitios web a medida, con alcance, precio y fecha acordados antes de empezar. Hagamos que tus visitas sepan por qué elegirte y cómo contactarte.</p>
+    </div>
+    <div class="closing-actions">
+      <a class="btn primary" href="/#contacto">Pedir presupuesto</a>
+      <a class="btn secondary" href="https://wa.me/5491131568131?text=Hola%20Luciano%2C%20estuve%20viendo%20el%20laboratorio%20de%20Nicolini%20Design%20y%20quiero%20consultar%20por%20mi%20proyecto." target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+    </div>
+  </section>
 
   <footer>
     <span>Nicolini Design · Laboratorio de demos ficticias</span>
