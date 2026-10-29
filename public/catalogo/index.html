@@ -96,6 +96,8 @@
 
   .prompt-panel { display:none; grid-column:2; border-top:1px solid var(--line); margin-top:16px; padding:15px 0 0; background:transparent; }
   .card.open .prompt-panel { display:block; }
+  .tech-description-label { margin:0 0 7px; color:var(--acc3); font-size:12px; font-weight:650; }
+  .tech-description { margin:0 0 18px; color:var(--muted); font-size:14px; line-height:1.65; }
   .kind-tag { display:inline-flex; width:max-content; margin:0 0 9px; padding:0; border:0; color:var(--acc-ink); font-size:11px; font-weight:650; letter-spacing:.04em; }
   .category-button { min-height:34px; padding:6px 10px; border:0; border-bottom:2px solid transparent; color:var(--muted); background:transparent; font:inherit; font-size:13px; cursor:pointer; }
   .category-button:hover, .category-button[aria-pressed="true"] { color:var(--tx); border-color:var(--acc); background:transparent; }
@@ -2123,19 +2125,70 @@ Project tiles expand into full-screen case studies through a shared-element tran
     return "Arte y experiencias";
   }
 
+  function plainSummary(category, text) {
+    if (/synth|music|audio|soundscape|sound mixer|instrument/.test(text)) {
+      return "Una experiencia musical interactiva para crear sonidos, probar controles y explorar distintas combinaciones.";
+    }
+    if (/weather|forecast|dashboard|analytics|data dashboard/.test(text)) {
+      return "Una pantalla clara que reúne información importante y ayuda a entenderla de un vistazo.";
+    }
+    if (/simulation|simulator|physics|pendulum|gravity|orbital|wave equation/.test(text)) {
+      return "Una simulación visual para explorar una idea paso a paso y ver cómo cambia al interactuar.";
+    }
+    if (/game|puzzle|playable|play the|playable/.test(text)) {
+      return "Una experiencia para jugar y descubrir cómo responde la interfaz a cada acción.";
+    }
+    if (/shop|store|e-commerce|ecommerce|commerce|cart|checkout|retail|marketplace|catalogue|catalogo/.test(text)) {
+      return "Una propuesta de tienda digital para descubrir productos y hacer más claro el camino hasta la compra.";
+    }
+    if (/portfolio|photographer|designer|architect|illustrator|selected work/.test(text)) {
+      return "Una presentación visual para mostrar trabajos, contar quién está detrás y dar ganas de saber más.";
+    }
+    if (/editorial|magazine|journal|zine|newspaper|long-read|long read|storybook|picture book/.test(text)) {
+      return "Una experiencia de lectura que organiza historias y contenido de una forma visual y fácil de recorrer.";
+    }
+    if (category === "Sitios y marcas") {
+      return "Una página para presentar un negocio, explicar qué ofrece y facilitar el contacto.";
+    }
+    if (category === "Tiendas y productos") {
+      return "Una tienda digital para presentar productos y acompañar a las personas durante su compra.";
+    }
+    if (category === "Paneles y herramientas") {
+      return "Una herramienta interactiva que vuelve más fácil consultar información y explorar opciones.";
+    }
+    if (category === "Editorial y portfolios") {
+      return "Una propuesta para presentar trabajos o contenido con una lectura visual cuidada.";
+    }
+    return "Una experiencia visual interactiva para explorar una idea y ver cómo responde a cada acción.";
+  }
+
   cards.forEach(function (card) {
-    var category = categoryFor(card.textContent.toLowerCase());
+    var sourceText = card.textContent.toLowerCase();
+    var category = categoryFor(sourceText);
     card.setAttribute("data-category", category);
     var tag = document.createElement("span");
     tag.className = "kind-tag";
     tag.textContent = category;
     var main = card.querySelector(".main");
-    if (main) main.insertBefore(tag, main.querySelector(".desc"));
+    var desc = main && main.querySelector(".desc");
+    var detailedDescription = desc ? desc.textContent.trim() : "";
+    if (desc) desc.textContent = plainSummary(category, sourceText);
+    if (main) main.insertBefore(tag, desc);
     var panel = card.querySelector(".prompt-panel");
     var promptLabel = panel && panel.querySelector(".prompt-label");
-    if (promptLabel) promptLabel.textContent = "Brief original · inglés";
+    if (promptLabel) promptLabel.textContent = "Brief de diseño original · inglés";
+    if (panel && detailedDescription) {
+      var detailedLabel = document.createElement("p");
+      detailedLabel.className = "tech-description-label";
+      detailedLabel.textContent = "Descripción completa · inglés";
+      var detailedCopy = document.createElement("p");
+      detailedCopy.className = "tech-description";
+      detailedCopy.textContent = detailedDescription;
+      panel.insertBefore(detailedCopy, promptLabel);
+      panel.insertBefore(detailedLabel, detailedCopy);
+    }
     var detailButton = card.querySelector(".btn-prompt");
-    if (detailButton) detailButton.lastChild.textContent = "Ver detalle";
+    if (detailButton) detailButton.lastChild.textContent = "Ver detalles técnicos";
   });
 
   categories.forEach(function (category) {
