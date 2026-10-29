@@ -295,8 +295,8 @@ export function HeroCadSheet() {
                     <span className="font-cota text-[9px] uppercase tracking-wider text-[var(--muted)]">
                       Lighthouse
                     </span>
-                    <span className="font-cota text-xs font-bold text-emerald-400">
-                      100/100
+                  <span className="font-cota text-[10px] font-bold text-emerald-400">
+                      A medir
                     </span>
                   </div>
                   <p className="mt-1 font-cota text-[9px] text-[var(--muted)]">

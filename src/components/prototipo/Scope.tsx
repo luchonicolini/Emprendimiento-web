@@ -25,15 +25,14 @@ const stackingCards = [
   {
     index: "02",
     tag: "FRENTE 02 // INGENIERÍA FRONTEND",
-    headline: "Carga en menos de 1 segundo. Cero constructores que espantan visitas.",
+    headline: "Una web ágil, sin depender de constructores pesados.",
     explanation:
-      "Desarrollamos con arquitectura moderna en Next.js sin WordPress sobrecargado ni constructores lentos. Tu web abrirá en menos de 1 segundo en el celular de tu cliente, evitando que se vaya a la competencia antes de ver tu número.",
-    badges: ["Carga en < 1s", "Next.js & React", "Core Web Vitals 100/100", "0% plugins rotos"],
+      "Desarrollamos con Next.js y optimizamos imágenes, recursos y carga inicial. El rendimiento final depende del contenido, el dispositivo y la conexión; podemos medirlo antes de publicar.",
+    badges: ["Rendimiento optimizado", "Next.js & React", "Métricas medibles", "Menos dependencias"],
     deliverables: [
-      "Velocidad de carga instantánea en conexiones móviles (4G y 5G)",
-      "Fotos y recursos ultra-optimizados que no consumen datos ni demoran",
-      "Estructura técnica optimizada para que Google te indexe primero",
-      "Sitio seguro y estable: sin caídas ni mantenimiento engorroso un domingo",
+      "Imágenes y recursos optimizados para reducir tiempos de carga en móviles",
+      "Estructura técnica preparada para facilitar el rastreo e indexación en Google, sin garantizar posiciones",
+      "Configuración de seguridad y dependencias acotadas; la disponibilidad también depende del proveedor de hosting",
     ],
     saves:
       "Clientes perdidos por pantallas que tardan en abrir, plugins que se caen solos y visitas que abandonan antes de tocar tu WhatsApp.",
@@ -57,15 +56,15 @@ const stackingCards = [
   {
     index: "04",
     tag: "FRENTE 04 // ANALÍTICA Y PUESTA EN MARCHA",
-    headline: "Sabé con exactitud cuántas consultas te entran y qué anuncio las trajo.",
+    headline: "Medí las consultas y conocé qué canales las generan.",
     explanation:
       "Tener una web sin medir es tener un local con la persiana a oscuras. Configuramos la analítica y el seguimiento de WhatsApp para que sepas cuántos presupuestos te piden, de qué canal vienen y cómo rinde cada peso que invertís.",
     badges: ["Medición de WhatsApp", "Meta Pixel & Google", "Dominio propio & SSL", "Retorno de inversión"],
     deliverables: [
-      "Seguimiento exacto de cada clic a tu WhatsApp y cada formulario enviado",
-      "Píxel de Meta y Google configurados para no malgastar plata en publicidad",
+      "Medición de clics a WhatsApp y envíos de formularios, según las herramientas y el consentimiento configurados",
+      "Configuración de Meta Pixel y Google Analytics para analizar el rendimiento de campañas",
       "Dominio web oficial (.com / .ar) y candado de seguridad SSL incluidos a tu nombre",
-      "Puesta en marcha garantizada y verificada en celulares antes del lanzamiento",
+      "Revisión de la puesta en marcha en dispositivos móviles antes del lanzamiento",
     ],
     saves:
       "Pautar en redes a ciegas sin saber qué te genera ventas, perder contactos por enlaces rotos y lidiar con configuraciones técnicas engorrosas.",

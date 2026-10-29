@@ -23,7 +23,7 @@ const plansData = [
     features: [
       "Diseño exclusivo enfocado en que te escriban por WhatsApp",
       "Botón directo de WhatsApp y formulario de contacto ágil",
-      "Carga en < 1 segundo para que tus visitas no se vayan",
+      "Optimización de carga y recursos para una experiencia ágil",
       "Medición de consultas (Pixel de Meta / Google Analytics)",
       "Dominio propio (.com) y publicación global incluidos",
     ],
@@ -42,7 +42,7 @@ const plansData = [
       "Hasta 5 páginas o secciones para ordenar todos tus servicios",
       "Estructura SEO preparada para posicionar en Google en tu país o mercado objetivo",
       "Llamados a la acción claros y botón de WhatsApp en cada página",
-      "Carga instantánea y máxima seguridad sin caídas",
+      "Rendimiento optimizado y configuración de seguridad",
       "Dominio, SSL y hosting configurados a tu nombre",
     ],
   },

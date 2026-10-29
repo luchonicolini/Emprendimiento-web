@@ -212,7 +212,7 @@ export function Process() {
                 {/* Pie técnico */}
                 <div className="mt-5 flex items-center justify-between border-t border-[var(--line)]/50 pt-3 text-[10px] font-cota text-[var(--muted)]">
                   <span>SEGURIDAD TÉCNICA</span>
-                  <span>0% RIESGO COMERCIAL</span>
+                  <span>CONDICIONES POR ESCRITO</span>
                 </div>
               </div>
             </Reveal>

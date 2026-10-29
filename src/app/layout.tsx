@@ -40,6 +40,10 @@ export const metadata: Metadata = {
   applicationName: site.name,
   alternates: {
     canonical: "/",
+    languages: {
+      "es-AR": "/",
+      "en-US": "/en",
+    },
   },
   robots: {
     index: true,

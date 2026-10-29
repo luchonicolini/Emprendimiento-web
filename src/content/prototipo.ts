@@ -146,7 +146,7 @@ export const projects: readonly Project[] = [
     year: "2025",
     url: "https://ecospace-energia.vercel.app",
     img: "/portfolio/ecospace.png",
-    tag: "Cotizador solar · 100% Mobile",
+    tag: "Cotizador solar · Diseño mobile-first",
     liveDomain: "ecospace-energia.vercel.app",
   },
   {

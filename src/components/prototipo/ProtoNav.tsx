@@ -44,7 +44,28 @@ export function ProtoNav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {/* Language Switcher */}
+          <div
+            role="group"
+            aria-label="Seleccionar idioma / Select language"
+            className="flex items-center border border-[var(--line-strong)] bg-[var(--surface)] text-[11px] font-cota tracking-wider"
+          >
+            <span
+              className="bg-[var(--fg)] text-[var(--bg)] px-2.5 py-1 font-bold"
+              aria-current="true"
+            >
+              ES
+            </span>
+            <Link
+              href="/en"
+              className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+              title="Switch to English"
+            >
+              EN
+            </Link>
+          </div>
+
           <a href="#contacto" className="proto-btn hidden sm:inline-flex">
             Pedir presupuesto
           </a>
@@ -80,6 +101,22 @@ export function ProtoNav() {
               </a>
             ))}
           </nav>
+          <div className="mt-4 flex items-center justify-between border-t border-[var(--line)] pt-4">
+            <span className="proto-label">Idioma / Language</span>
+            <div className="flex items-center border border-[var(--line-strong)] bg-[var(--surface)] text-[11px] font-cota tracking-wider">
+              <span className="bg-[var(--fg)] text-[var(--bg)] px-2.5 py-1 font-bold">
+                ES
+              </span>
+              <Link
+                href="/en"
+                onClick={() => setOpen(false)}
+                className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+              >
+                EN
+              </Link>
+            </div>
+          </div>
+
           <a
             href="#contacto"
             onClick={() => setOpen(false)}

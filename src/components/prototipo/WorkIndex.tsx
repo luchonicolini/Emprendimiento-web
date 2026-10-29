@@ -141,9 +141,10 @@ export function WorkIndex() {
               <span className="block">entregados.</span>
             </h2>
             <p className="max-w-[50ch] text-[15px] leading-[1.6] text-[var(--muted)] sm:text-[16px] sm:leading-relaxed md:pb-2">
-              Una selección de sitios que diseñamos y programamos de principio a
-              fin: webs de clientes publicadas con dominio propio y prototipos
-              interactivos del laboratorio.
+              Una selección de sitios de clientes publicados y prototipos
+              interactivos creados por Nicolini Design. Los prototipos son demos
+              ficticias para mostrar posibilidades visuales y técnicas; no
+              representan clientes ni negocios reales.
             </p>
           </div>
         </Reveal>
@@ -407,7 +408,7 @@ export function WorkIndex() {
             aria-label="Ver los 100 prototipos del laboratorio (abre en una pestaña nueva)"
             className="group inline-flex items-center gap-1.5 text-[12px] font-medium text-[var(--fg)] transition-colors hover:text-[var(--signal)]"
           >
-            Ver los 100 prototipos del laboratorio
+            Explorar el laboratorio de demos
             
           </a>
         </div>
