@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CookiePreferences } from "@/components/CookiePreferences";
 import { brandEn, navEn } from "@/content/prototipo.en";
 import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
+import { triggerLanguageTransition } from "@/components/prototipo/LanguageTransition";
 
 export function ProtoFooterEn() {
   return (
@@ -114,12 +115,13 @@ export function ProtoFooterEn() {
         <div className="flex flex-col gap-3 border-t border-[var(--line)] py-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <span className="proto-label">© 2026 {brandEn.name}</span>
           <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--muted)]">
-            <Link
-              href="/"
-              className="font-cota text-[10px] uppercase tracking-wider text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+            <button
+              type="button"
+              onClick={() => triggerLanguageTransition("/", "es")}
+              className="font-cota text-[10px] uppercase tracking-wider text-[var(--muted)] hover:text-[var(--fg)] transition-colors cursor-pointer"
             >
               Versión en Español (ES)
-            </Link>
+            </button>
             <span aria-hidden="true" className="text-[var(--line)]">·</span>
             <Link
               href="/politica-de-privacidad"

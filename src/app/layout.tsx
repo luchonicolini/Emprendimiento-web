@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Figtree, Martian_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { LanguageTransition } from "@/components/prototipo/LanguageTransition";
 import { Analytics } from "@/components/Analytics";
 import { CookieConsent } from "@/components/CookieConsent";
 import { site, siteUrl } from "@/lib/site";
@@ -137,6 +138,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <VercelAnalytics />
+        <LanguageTransition />
       </body>
     </html>
   );

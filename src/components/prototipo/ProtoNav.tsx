@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { brand, nav } from "@/content/prototipo";
 import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
+import { triggerLanguageTransition } from "@/components/prototipo/LanguageTransition";
 
 export function ProtoNav() {
   const [open, setOpen] = useState(false);
@@ -57,13 +58,14 @@ export function ProtoNav() {
             >
               ES
             </span>
-            <Link
-              href="/en"
-              className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+            <button
+              type="button"
+              onClick={() => triggerLanguageTransition("/en", "en")}
+              className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors cursor-pointer"
               title="Switch to English"
             >
               EN
-            </Link>
+            </button>
           </div>
 
           <a href="#contacto" className="proto-btn hidden sm:inline-flex">
@@ -107,13 +109,16 @@ export function ProtoNav() {
               <span className="bg-[var(--fg)] text-[var(--bg)] px-2.5 py-1 font-bold">
                 ES
               </span>
-              <Link
-                href="/en"
-                onClick={() => setOpen(false)}
-                className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  triggerLanguageTransition("/en", "en");
+                }}
+                className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors cursor-pointer"
               >
                 EN
-              </Link>
+              </button>
             </div>
           </div>
 

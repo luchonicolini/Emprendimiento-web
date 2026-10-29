@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { brandEn, navEn } from "@/content/prototipo.en";
 import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
+import { triggerLanguageTransition } from "@/components/prototipo/LanguageTransition";
 
 export function ProtoNavEn() {
   const [open, setOpen] = useState(false);
@@ -51,13 +52,14 @@ export function ProtoNavEn() {
             aria-label="Select language"
             className="flex items-center border border-[var(--line-strong)] bg-[var(--surface)] text-[11px] font-cota tracking-wider"
           >
-            <Link
-              href="/"
-              className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+            <button
+              type="button"
+              onClick={() => triggerLanguageTransition("/", "es")}
+              className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors cursor-pointer"
               title="Cambiar a Español"
             >
               ES
-            </Link>
+            </button>
             <span
               className="bg-[var(--fg)] text-[var(--bg)] px-2.5 py-1 font-bold"
               aria-current="true"
@@ -105,13 +107,16 @@ export function ProtoNavEn() {
           <div className="mt-4 flex items-center justify-between border-t border-[var(--line)] pt-4">
             <span className="proto-label">Language / Idioma</span>
             <div className="flex items-center border border-[var(--line-strong)] bg-[var(--surface)] text-[11px] font-cota tracking-wider">
-              <Link
-                href="/"
-                onClick={() => setOpen(false)}
-                className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors"
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  triggerLanguageTransition("/", "es");
+                }}
+                className="px-2.5 py-1 text-[var(--muted)] hover:text-[var(--fg)] transition-colors cursor-pointer"
               >
                 ES
-              </Link>
+              </button>
               <span className="bg-[var(--fg)] text-[var(--bg)] px-2.5 py-1 font-bold">
                 EN
               </span>

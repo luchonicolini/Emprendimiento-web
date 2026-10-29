@@ -440,3 +440,17 @@
     display: none;
   }
 }
+
+/* Transición cinemática de calibración de idioma */
+@keyframes cad-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.animate-cad-sweep {
+  animation: cad-sweep 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

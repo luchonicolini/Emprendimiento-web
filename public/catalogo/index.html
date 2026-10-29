@@ -9,38 +9,38 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c2410c'/%3E%3Cpath d='M32 12l4.6 13.4L50 30l-13.4 4.6L32 48l-4.6-13.4L14 30l13.4-4.6z' fill='%23fff7ed'/%3E%3C/svg%3E">
 <style>
   :root {
-    --bg:#f7f5f0; --card:#ffffff; --line:#e7e1d6; --line-strong:#d0c6b4;
-    --tx:#221d18; --muted:#675e51; --dim:#948a78;
-    --acc:#b4461f; --acc-ink:#9a3412; --acc2:#b45309; --acc3:#0e7a5f;
-    --shadow:0 1px 2px rgba(60,30,10,.05), 0 8px 24px -12px rgba(60,30,10,.14);
+    --bg:#e9e6dd; --card:#f4f2ec; --line:rgba(13,20,24,.12); --line-strong:rgba(13,20,24,.25);
+    --tx:#0d1418; --muted:#58615f; --dim:#737b77;
+    --acc:#b83812; --acc-ink:#9e3211; --acc2:#b83812; --acc3:#16324f;
+    --shadow:3px 3px 0 rgba(13,20,24,.16);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  html { scroll-behavior:smooth; scroll-padding-top:24px; }
+  body { font-family:"Figtree", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
          background:var(--bg); color:var(--tx); min-height:100vh; line-height:1.5; }
   body::before { content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
     background:
       radial-gradient(ellipse 80% 50% at 8% -10%, rgba(217,119,87,.14), transparent 52%),
       radial-gradient(ellipse 60% 40% at 92% 0%, rgba(180,83,9,.09), transparent 46%),
       radial-gradient(ellipse 50% 30% at 50% 100%, rgba(14,122,95,.07), transparent 40%); }
-  .wrap { position:relative; z-index:1; max-width:960px; margin:0 auto; padding:48px 20px 80px; }
+  .wrap { position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:30px 24px 80px; }
 
-  header { margin-bottom:28px; }
+  header { margin-bottom:34px; padding:36px clamp(24px,5vw,64px); border:1px solid var(--line-strong); background-color:#0d1418; color:#e9e6dd; background-image:linear-gradient(rgba(233,230,221,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(233,230,221,.035) 1px,transparent 1px); background-size:28px 28px; }
   .eyebrow { display:flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.28em;
              text-transform:uppercase; color:var(--acc); margin-bottom:12px; font-weight:600; }
   .eyebrow svg { width:16px; height:16px; flex:none; }
   h1 { font-size:clamp(28px, 5vw, 44px); font-weight:800; letter-spacing:-.03em; line-height:1.1; margin-bottom:14px; }
   h1 span { background:linear-gradient(120deg, #d97757, #c2410c 55%, #0e7a5f);
             -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .lede { color:var(--muted); font-size:16px; max-width:62ch; }
+  .lede { color:#bac0bb; font-size:16px; max-width:72ch; line-height:1.7; }
   .facts { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; padding:0; list-style:none; }
-  .facts li { font-size:12px; color:var(--muted); background:rgba(255,255,255,.7); border:1px solid var(--line);
-              border-radius:999px; padding:5px 11px; }
+  .facts li { font-size:11px; color:#d2d5cf; background:rgba(255,255,255,.04); border:1px solid rgba(233,230,221,.2);
+              border-radius:0; padding:6px 11px; }
   .facts b { color:var(--tx); font-weight:650; }
 
   .toolbar { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:24px 0 8px;
              position:sticky; top:0; z-index:10; padding:14px 0;
-             background:linear-gradient(180deg, rgba(247,245,240,.97) 65%, rgba(247,245,240,0));
+              background:linear-gradient(180deg, rgba(233,230,221,.97) 65%, rgba(233,230,221,0));
              -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
   .search { flex:1; min-width:220px; position:relative; }
   .search input { width:100%; background:var(--card); border:1px solid var(--line-strong); color:var(--tx);
@@ -58,11 +58,11 @@
   .count b { color:var(--acc); font-weight:600; }
 
   .list { display:flex; flex-direction:column; gap:12px; margin-top:8px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  .card { background:var(--card); border:1px solid var(--line); border-radius:0; overflow:hidden;
           box-shadow:var(--shadow); transition:border-color .2s, box-shadow .2s, transform .15s; }
   .card:hover { border-color:#cbbfa9; transform:translateY(-1px);
                 box-shadow:0 2px 6px rgba(60,30,10,.06), 0 16px 34px -16px rgba(60,30,10,.22); }
-  .thumb { display:block; overflow:hidden; border-radius:14px 14px 0 0; background:#15120f; }
+  .thumb { display:block; overflow:hidden; border-radius:0; background:#0d1418; }
   .thumb img { display:block; width:100%; height:auto; aspect-ratio:16 / 10; object-fit:cover;
                transition:transform .35s ease; }
   .card:hover .thumb img { transform:scale(1.015); }
@@ -121,20 +121,30 @@
     .card, .thumb img, .btn { transition:none; }
     .card:hover, .card:hover .thumb img { transform:none; }
   }
+  @media (min-width:760px) {
+    .list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; align-items:start; }
+    .card { min-width:0; }
+    .thumb img { aspect-ratio:16 / 9; }
+  }
+  @media (min-width:1100px) { .list { grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; } }
+  @media (max-width:640px) { .wrap { padding:16px 14px 52px; } header { padding:26px 20px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" fill="currentColor"/></svg>Nicolini Design · Laboratorio</div>
-    <h1>Ideas en movimiento. <span>100 demos</span> interactivas</h1>
-    <p class="lede">Un espacio de exploración visual de Nicolini Design: experiencias interactivas, arte generativo, simulaciones, juegos y conceptos de sitios web. Cada pieza es una demo ficticia creada para mostrar posibilidades de diseño y desarrollo; las marcas, personas, testimonios y datos que aparecen en ellas son inventados y no representan clientes ni proyectos comerciales reales. Las descripciones y prompts originales se conservan en inglés.</p>
+    <div class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" fill="currentColor"/></svg>NICOLINI DESIGN &nbsp; / &nbsp; ESTUDIO · LABORATORIO</div>
+    <h1>Ideas en movimiento.<br><span>Diseño que se puede explorar.</span></h1>
+    <p class="lede">Prototipos interactivos para explorar ideas, diseño y tecnología.</p>
+    <p style="max-width:72ch;margin-top:12px;color:#9fa9a6;font-size:13px;line-height:1.65">Son conceptos ficticios, no trabajos de clientes. Las consignas originales están disponibles en inglés dentro de cada ficha.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+      <a class="btn btn-open" href="/" style="color:#e9e6dd;border-color:rgba(233,230,221,.35);background:rgba(233,230,221,.08)">← Nicolini Design</a>
+      <a class="btn btn-open" href="#list" style="color:#fff;border:0;background:#b83812">Explorar proyectos ↓</a>
+    </div>
     <ul class="facts" aria-label="Datos del laboratorio">
-      <li><b>100</b> demos</li>
-      <li>Proyectos ficticios</li>
-      <li>Diseño y código interactivo</li>
-      <li>Escritorio y móvil</li>
-      <li>Exploración visual</li>
+      <li><b>100</b> prototipos</li>
+      <li>Interfaces y experiencias</li>
+      <li>Diseño · interacción · desarrollo</li>
     </ul>
   </header>
 
@@ -146,15 +156,16 @@
     </div>
     <div class="count" id="count" aria-live="polite"><b>100</b> demos</div>
   </div>
+  <nav id="category-filters" aria-label="Filtrar proyectos por tipo" style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 22px"></nav>
 
   <div class="list" id="list">
 <article class="card" id="p001">
   <a class="thumb" href="001-aurora-glass.html" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><img src="thumbs/001-aurora-glass.jpg" width="1200" height="750" alt="Aurora Glass — Stillwater screenshot" loading="lazy" decoding="async"></a>
   <div class="card-top">
-    <div class="num">001</div>
+      <div class="num">001</div>
     <div class="main">
       <h2 class="title"><a href="001-aurora-glass.html" target="_blank" rel="noopener">Aurora Glass — Stillwater</a></h2>
-      <p class="desc">A landing page for &quot;Stillwater&quot;, a fictional breathing and meditation app, built as refined glassmorphism over a living night sky. A full-viewport canvas paints a faint twinkling star field and three slow aurora curtains (teal #2de2c4, violet #7b5cff, rose #ff6fa8) on deep midnight #070b1f; everything else floats above it on frosted glass with grain and a hairline inner highlight. The hero is an editorial composition rather than a centred template: a huge, ultra-light two-line headline staggered left/right, a breathing orb centred beneath it on a 4-7-8 dial, the lede and calls to action anchored bottom-left, and a glass legend card top-right that lights up the current phase. Below: three tilting feature cards with small animated SVG vignettes, a glass testimonial strip with a drifting marquee, a pricing section with a sliding glass billing pill, and a footer that states plainly that the product and people are fictional.</p>
+        <p class="desc">A landing page for &quot;Stillwater&quot;, a fictional breathing and meditation app, built as refined glassmorphism over a living night sky. A full-viewport canvas paints a faint twinkling star field and three slow aurora curtains (teal #2de2c4, violet #7b5cff, rose #ff6fa8) on deep midnight #070b1f; everything else floats above it on frosted glass with grain and a hairline inner highlight. The hero is an editorial composition rather than a centred template: a huge, ultra-light two-line headline staggered left/right, a breathing orb centred beneath it on a 4-7-8 dial, the lede and calls to action anchored bottom-left, and a glass legend card top-right that lights up the current phase. Below: three tilting feature cards with small animated SVG vignettes, a glass testimonial strip with a drifting marquee, a pricing section with a sliding glass billing pill, and a footer that states plainly that the product and people are fictional.</p>
     </div>
     <div class="actions">
       <a class="btn btn-open" href="001-aurora-glass.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Abrir demo</a>
