@@ -14,7 +14,7 @@ export const site = {
   country: "AR",
   locale: "es_AR",
   description:
-    "Nicolini Design diseña y programa sitios web con alcance, precio y fecha definidos antes de empezar. Landing page desde USD 200, web multipágina desde USD 500, pago único.",
+    "Nicolini Design diseña y programa sitios web con alcance, precio y fecha definidos antes de empezar. Landing page desde USD 200, web multipágina desde USD 500, pago único. Clientes en USA, Europa y Latinoamérica.",
   slogan: "Sitios web con medidas exactas.",
 } as const;
 

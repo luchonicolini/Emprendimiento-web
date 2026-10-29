@@ -217,6 +217,21 @@ export function Contact() {
                 Chatear
               </span>
             </a>
+            <div className="flex items-center justify-between border-b border-[var(--line)] py-4 text-sm">
+              <span className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--signal)]" />
+                <span>Videollamada: Google Meet / Zoom</span>
+              </span>
+              <span className="font-cota text-xs text-[var(--muted)]">
+                15 min
+              </span>
+            </div>
+            <div className="border-b border-[var(--line)] py-3 text-xs text-[var(--muted)]">
+              <span className="font-cota uppercase tracking-wider block text-[10px] text-[var(--fg)] mb-1">
+                Pagos internacionales
+              </span>
+              Wise · PayPal · Payoneer · Transferencia internacional (USD/EUR) · USDT
+            </div>
             <button
               type="button"
               onClick={() =>

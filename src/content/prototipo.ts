@@ -4,16 +4,16 @@
 
 export const brand = {
   name: "Nicolini Design",
-  descriptor: "Estudio de diseño & desarrollo web",
+  descriptor: "Estudio de diseño & desarrollo web internacional",
   tagline: "Sitios web con medidas exactas.",
   email: "nicolini.luciano33@gmail.com",
   whatsapp: "https://wa.me/5491131568131",
   whatsappDisplay: "+54 9 11 3156-8131",
   // Vacío = el link de Instagram no se muestra (evita mandar a instagram.com sin perfil).
   instagram: "",
-  location: "Buenos Aires, AR",
+  location: "Remoto global · Base Buenos Aires (UTC-3)",
   coordinates: "34°36′S 58°22′W",
-  availability: "Agenda abierta · noviembre 2026",
+  availability: "Agenda abierta · Clientes en USA, Europa & Latam",
 } as const;
 
 export const nav = [
@@ -35,11 +35,11 @@ export const projectTypes = [
 export type ProjectType = (typeof projectTypes)[number];
 
 export const heroSheet = [
-  { label: "Alcance", value: "Landing · multipágina · tienda · sistema" },
+  { label: "Alcance", value: "Landing · Web corporativa · Tienda · Sistema" },
   { label: "Plazo", value: "7 a 10 días hábiles" },
   { label: "Precio", value: "USD 200 · 2 cupos disponibles en noviembre" },
-  { label: "Seña", value: "25% para arrancar" },
-  { label: "Entrega", value: "Dominio y accesos a tu nombre" },
+  { label: "Anticipo", value: "25% al iniciar · Saldo contra entrega aprobada" },
+  { label: "Entrega", value: "Dominio (.com) y accesos 100% a tu nombre" },
 ] as const;
 
 export const scope = [
@@ -52,7 +52,7 @@ export const scope = [
   {
     index: "02",
     title: "Desarrollo a medida",
-    body: "Código propio, sin plantillas pesadas. Tu web abre en menos de 1 segundo en el celular del cliente, evitando que se vaya antes de contactarte.",
+    body: "Código propio en Next.js, sin plantillas lentas. Carga en < 1 segundo con red CDN global para clientes en USA, España o Latam.",
     detail: "Next.js · carga en < 1s · SEO técnico",
   },
   {
@@ -361,7 +361,7 @@ export const phases = [
   {
     index: "02",
     title: "Cerramos precio y fecha de entrega",
-    body: "Seguimos por WhatsApp. Te pasamos un brief de 10 minutos sobre tu negocio y con eso te confirmamos el número final y el día de entrega. Sin reuniones de venta.",
+    body: "Coordinamos por WhatsApp o videollamada corta. Con un brief ágil de 10 minutos te confirmamos presupuesto final y fecha de entrega. Sin reuniones innecesarias de venta.",
   },
   {
     index: "03",
@@ -400,7 +400,7 @@ export const pricing = [
     plan: "Tienda online",
     type: "Tienda online",
     fit: "Marcas que venden con carrito, envíos y medios de pago.",
-    includes: "Tienda Nube o Shopify, carga inicial de hasta 30 productos y capacitación.",
+    includes: "Shopify o WooCommerce, pasarelas de cobro globales (Stripe, PayPal, tarjetas), envíos y capacitación.",
     pricePrefix: "Desde",
     price: "USD 650",
     term: "15–20 días",
@@ -442,8 +442,12 @@ export const testimonials = [
 
 export const faqs = [
   {
+    q: "¿Cómo trabajamos si estamos en diferentes países o zonas horarias?",
+    a: "Trabajamos 100% en remoto con clientes de Estados Unidos, España, Brasil y toda Latinoamérica. La comunicación es ágil y asíncrona vía WhatsApp o correo electrónico, con sesiones de revisión por Google Meet o Zoom. Nuestra base horaria (UTC-3) es perfectamente compatible con la jornada laboral de América y Europa.",
+  },
+  {
     q: "¿Cómo se paga?",
-    a: "25% de seña para reservar la semana y el resto cuando la web está publicada y aprobada. En pesos al cambio del día o en dólares, con factura. Nunca el 100% por adelantado.",
+    a: "25% de anticipo para reservar el cupo de desarrollo y el 75% restante contra entrega final y aprobación. Aceptamos Wise, PayPal, Payoneer, transferencia bancaria internacional y cripto (USDT). Nunca pagás el 100% por adelantado.",
   },
   {
     q: "¿Qué pasa si cambio el alcance a mitad de obra?",
@@ -455,7 +459,7 @@ export const faqs = [
   },
   {
     q: "¿Por qué no hacerla con Wix o con una IA?",
-    a: "Si estás validando una idea o tenés menos de USD 350, es una alternativa rápida. La diferencia aparece cuando necesitás que la web facture: un sitio lento pierde la mitad de los visitantes antes de cargar, las plantillas genéricas no posicionan bien en Google y no tienen un recorrido pensado para que el cliente termine escribiéndote por WhatsApp.",
+    a: "Si estás validando una idea o tenés un presupuesto muy ajustado, es una alternativa rápida. La diferencia aparece cuando necesitás que la web facture y convierta: un sitio lento pierde más del 40% de los visitantes antes de cargar, las plantillas genéricas no posicionan bien en Google y no tienen un recorrido optimizado para que el cliente termine contactándote.",
   },
   {
     q: "¿Quién escribe los textos y consigue las fotos?",

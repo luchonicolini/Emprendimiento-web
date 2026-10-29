@@ -25,7 +25,7 @@ const plansData = [
       "Botón directo de WhatsApp y formulario de contacto ágil",
       "Carga en < 1 segundo para que tus visitas no se vayan",
       "Medición de consultas (Pixel de Meta / Google Analytics)",
-      "Dominio propio (.com / .ar) y publicación incluidos",
+      "Dominio propio (.com) y publicación global incluidos",
     ],
   },
   {
@@ -40,7 +40,7 @@ const plansData = [
     recommended: true,
     features: [
       "Hasta 5 páginas o secciones para ordenar todos tus servicios",
-      "Estructura preparada para que Google te encuentre cuando busquen tu rubro",
+      "Estructura SEO preparada para posicionar en Google en tu país o mercado objetivo",
       "Llamados a la acción claros y botón de WhatsApp en cada página",
       "Carga instantánea y máxima seguridad sin caídas",
       "Dominio, SSL y hosting configurados a tu nombre",
@@ -57,8 +57,8 @@ const plansData = [
     term: "15 a 20 días hábiles",
     recommended: false,
     features: [
-      "Montaje profesional en Tienda Nube o Shopify",
-      "Cobros con Mercado Pago / tarjetas y envíos automatizados",
+      "Montaje profesional en Shopify o Tienda Nube",
+      "Pasarelas de cobro globales (Stripe, PayPal, tarjetas) y envíos",
       "Carga inicial de hasta 30 productos listos para vender",
       "Capacitación en video para que manejes tus ventas sin depender de nadie",
       "Dominio propio vinculado y lista para operar",
@@ -317,7 +317,7 @@ export function PricingTable() {
             </p>
             <div className="flex flex-col gap-2 sm:items-end">
               <p className="proto-label">
-                Precios en USD · pesos al cambio del día
+                Precios en USD · Cobro global vía Wise, PayPal, Payoneer o USDT
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <PricingPlanLink
