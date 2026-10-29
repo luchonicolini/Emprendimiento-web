@@ -1,7 +1,7 @@
 "use client";
 
 import * as Accordion from "@radix-ui/react-accordion";
-import { faqsEn, brandEn } from "@/content/prototipo.en";
+import { faqsEn } from "@/content/prototipo.en";
 import { Reveal } from "@/components/prototipo/Reveal";
 import { SectionHead } from "@/components/prototipo/primitives";
 

@@ -4,40 +4,23 @@ import Image from "next/image";
 import { useMemo, useRef, useState, type KeyboardEvent } from "react";
 import {
   projects,
-  type Project,
   type ProjectKind,
 } from "@/content/prototipo";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/prototipo/Reveal";
-
-const INITIAL_GALLERY_COUNT = 4;
-const GALLERY_STEP = 6;
 
 const scopesEn: readonly { id: ProjectKind; label: string }[] = [
   { id: "produccion", label: "Clients" },
   { id: "demo", label: "Studio Lab" },
 ];
 
-function projectDomain(project: Project) {
-  if (project.liveDomain) return project.liveDomain;
-  return `nicolini.design${project.url.replace(/\.html$/, "")}`;
-}
-
 function statusLabel(kind: ProjectKind) {
   return kind === "produccion" ? "Live in production" : "Interactive prototype";
-}
-
-function projectCountLabel(kind: ProjectKind, count: number) {
-  if (kind === "produccion") {
-    return `${count} ${count === 1 ? "live site" : "live sites"}`;
-  }
-  return `${count} ${count === 1 ? "prototype" : "prototypes"}`;
 }
 
 export function WorkIndexEn() {
   const [scope, setScope] = useState<ProjectKind>("produccion");
   const [selectedName, setSelectedName] = useState(projects[0].name);
-  const [galleryCount, setGalleryCount] = useState(INITIAL_GALLERY_COUNT);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const counts = useMemo(
@@ -64,7 +47,6 @@ export function WorkIndexEn() {
 
   const handleScopeChange = (nextScope: ProjectKind) => {
     setScope(nextScope);
-    setGalleryCount(INITIAL_GALLERY_COUNT);
     const firstOfScope = projects.find((project) => project.kind === nextScope);
     if (firstOfScope) setSelectedName(firstOfScope.name);
   };

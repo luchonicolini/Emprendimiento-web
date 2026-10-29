@@ -4,7 +4,6 @@ import Link from "next/link";
 import { CookiePreferences } from "@/components/CookiePreferences";
 import { brand, nav } from "@/content/prototipo";
 import { NicoliniLogo } from "@/components/brand/NicoliniLogo";
-import { triggerLanguageTransition } from "@/components/prototipo/LanguageTransition";
 
 export function ProtoFooter() {
   return (

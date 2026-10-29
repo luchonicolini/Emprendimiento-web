@@ -51,7 +51,7 @@ export function TestimonialsEn() {
               >
                 <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
                   <span className="proto-label text-[10px]">
-                    REVIEW 0{index + 1} // VERIFIED
+                    REVIEW 0{index + 1} {"//"} VERIFIED
                   </span>
                   <span className="font-mono text-xs text-[#25D366]">★★★★★</span>
                 </div>
