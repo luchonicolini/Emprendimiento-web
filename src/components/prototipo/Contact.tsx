@@ -161,8 +161,7 @@ export function Contact() {
         ok?: boolean;
         notified?: boolean;
       } | null;
-      delivered =
-        response.ok && payload?.ok === true && payload?.notified !== false;
+      delivered = response.ok && payload?.ok === true;
     } catch {
       delivered = false;
     } finally {
@@ -269,16 +268,16 @@ export function Contact() {
               <div>
                 <span className="proto-label text-[var(--signal)]">
                   {deliveryFailed
-                    ? "Registro en el sistema pendiente"
+                    ? "Envío directo a WhatsApp"
                     : "Ficha de proyecto registrada"}
                 </span>
                 <h3 className="proto-display mt-4 text-3xl sm:text-4xl">
-                  {deliveryFailed ? "Ficha lista, falta confirmarla." : "Ficha lista."}
+                  {deliveryFailed ? "Ficha lista para enviar." : "Ficha lista."}
                 </h3>
                 <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--muted)]">
                   {deliveryFailed
-                    ? "No pudimos registrar la consulta en el sistema. Tus datos ya están completos: mandalos por WhatsApp o correo para que no se pierda el contacto."
-                    : "Tu consulta ya fue recibida en nuestro sistema. Elegí por qué canal preferís continuar la conversación:"}
+                    ? "Tus datos ya están cargados. Hacé clic en el botón para abrir WhatsApp y enviarnos tu consulta directamente."
+                    : "Tu ficha técnica fue generada con éxito. Si no se abrió la ventana automáticamente, hacé clic en Enviar por WhatsApp:"}
                 </p>
                 {leadId ? (
                   <p className="mt-5 font-cota text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
