@@ -101,6 +101,8 @@
   .kind-tag { display:inline-flex; width:max-content; margin:0 0 9px; padding:0; border:0; color:var(--acc-ink); font-size:11px; font-weight:650; letter-spacing:.04em; }
   .category-button { min-height:34px; padding:6px 10px; border:0; border-bottom:2px solid transparent; color:var(--muted); background:transparent; font:inherit; font-size:13px; cursor:pointer; }
   .category-button:hover, .category-button[aria-pressed="true"] { color:var(--tx); border-color:var(--acc); background:transparent; }
+  .reset-button { margin-top:12px; padding:9px 12px; border:1px solid var(--line-strong); background:transparent; color:var(--tx); font:inherit; font-size:13px; cursor:pointer; }
+  .reset-button:hover { border-color:var(--acc); color:var(--acc-ink); }
   .prompt-label { font-size:12px; letter-spacing:.04em; text-transform:none; color:var(--acc3);
                   margin-bottom:10px; font-weight:600; }
   .prompt-text { font-size:13.5px; color:#463e30; line-height:1.65; white-space:pre-wrap; overflow-wrap:anywhere; }
@@ -2087,7 +2089,10 @@ Project tiles expand into full-screen case studies through a shared-element tran
   </div>
 </article>
   </div>
-  <div class="empty" id="empty">No encontramos demos con esa búsqueda.</div>
+  <div class="empty" id="empty">
+    <p>No encontramos demos con esos filtros. Probá otro término o mostrá todo el catálogo.</p>
+    <button class="reset-button" id="reset-filters" type="button">Limpiar búsqueda y filtros</button>
+  </div>
 
   <section class="closing-cta" aria-labelledby="closing-title">
     <div class="closing-copy">
@@ -2115,15 +2120,20 @@ Project tiles expand into full-screen case studies through a shared-element tran
   var filters = document.getElementById("category-filters");
   var categories = ["Todos", "Sitios y marcas", "Tiendas y productos", "Paneles y herramientas", "Editorial y portfolios", "Arte y experiencias"];
   var activeCategory = "Todos";
-  var haystack = cards.map(function (c) { return c.textContent.replace(/\s+/g, " ").toLowerCase(); });
-
-  function categoryFor(text) {
-    if (/shop|store|e-commerce|ecommerce|commerce|product configurator|cart|checkout|retail|marketplace|catalogue|catalogo/.test(text)) return "Tiendas y productos";
-    if (/dashboard|weather|timer|clock|synth|simulator|simulation|generator|console|calculator|tool|mixer|editor|tracker|planner/.test(text)) return "Paneles y herramientas";
-    if (/editorial|magazine|journal|zine|newspaper|long-read|long read|portfolio|artist|photographer|designer/.test(text)) return "Editorial y portfolios";
-    if (/landing page|landing-page|brand identity|brand system|agency|hotel|restaurant|cafe|café|bakery|studio|salon/.test(text)) return "Sitios y marcas";
-    return "Arte y experiencias";
-  }
+  var categoryById = {};
+  var categoryGroups = {
+    "Sitios y marcas": ["001", "010", "015", "035", "048", "058", "062", "073"],
+    "Tiendas y productos": ["024", "082", "085"],
+    "Editorial y portfolios": ["006", "008", "014", "020", "040", "043", "052", "063", "068", "077", "081", "087", "096", "098"],
+    "Paneles y herramientas": ["003", "007", "012", "019", "021", "023", "025", "026", "028", "029", "030", "031", "034", "036", "037", "042", "044", "045", "046", "049", "054", "055", "060", "064", "066", "071", "075", "076", "088", "089", "090", "092", "094", "095", "097", "100"],
+    "Arte y experiencias": ["002", "004", "005", "009", "011", "013", "016", "017", "018", "022", "027", "032", "033", "038", "039", "041", "047", "050", "051", "053", "056", "057", "059", "061", "065", "067", "069", "070", "072", "074", "078", "079", "080", "083", "084", "086", "091", "093", "099"],
+  };
+  Object.keys(categoryGroups).forEach(function (category) {
+    categoryGroups[category].forEach(function (number) {
+      categoryById["p" + number] = category;
+    });
+  });
+  var haystack = [];
 
   function plainSummary(category, text) {
     if (/synth|music|audio|soundscape|sound mixer|instrument/.test(text)) {
@@ -2164,7 +2174,7 @@ Project tiles expand into full-screen case studies through a shared-element tran
 
   cards.forEach(function (card) {
     var sourceText = card.textContent.toLowerCase();
-    var category = categoryFor(sourceText);
+    var category = categoryById[card.id] || "Arte y experiencias";
     card.setAttribute("data-category", category);
     var tag = document.createElement("span");
     tag.className = "kind-tag";
@@ -2189,6 +2199,9 @@ Project tiles expand into full-screen case studies through a shared-element tran
     }
     var detailButton = card.querySelector(".btn-prompt");
     if (detailButton) detailButton.lastChild.textContent = "Ver ficha completa (inglés)";
+  });
+  haystack = cards.map(function (card) {
+    return card.textContent.replace(/\s+/g, " ").toLowerCase();
   });
 
   categories.forEach(function (category) {
@@ -2226,6 +2239,15 @@ Project tiles expand into full-screen case studies through a shared-element tran
     count.textContent = shown;
     empty.style.display = shown ? "none" : "block";
   }
+  document.getElementById("reset-filters").addEventListener("click", function () {
+    q.value = "";
+    activeCategory = "Todos";
+    Array.prototype.forEach.call(filters.children, function (item) {
+      item.setAttribute("aria-pressed", item.textContent === activeCategory ? "true" : "false");
+    });
+    apply();
+    q.focus();
+  });
   q.addEventListener("input", apply);
   document.addEventListener("keydown", function (ev) {
     if (ev.key === "/" && document.activeElement !== q && !/^(input|textarea|select)$/i.test(document.activeElement.tagName)) {
