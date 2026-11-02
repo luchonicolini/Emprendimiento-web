@@ -1,12 +1,12 @@
 import { Kicker } from "@/components/prototipo/primitives";
 import { Reveal } from "@/components/prototipo/Reveal";
-import { HeroCadSheetEn } from "@/components/prototipo/en/HeroCadSheetEn";
+import { HeroVideo } from "@/components/prototipo/HeroVideo";
 
 export function ProtoHeroEn() {
   return (
     <section className="proto-grid border-b border-[var(--line)]">
       <div className="mx-auto max-w-[1240px] px-5 pb-14 pt-14 sm:px-6 sm:pb-20 sm:pt-24">
-        <div className="grid gap-14 lg:grid-cols-[1.32fr_0.68fr] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-center lg:gap-14">
           <div className="min-w-0">
             <Reveal>
               <div className="flex items-center gap-3">
@@ -59,8 +59,14 @@ export function ProtoHeroEn() {
             </Reveal>
           </div>
 
-          <Reveal delay={120}>
-            <HeroCadSheetEn />
+          <Reveal delay={120} className="relative">
+            <HeroVideo
+              title="Blueprint 01 · Technical Demo"
+              badge="Rev. 2026.1"
+              outcomeLabel="From template to custom design"
+              playLabel="Play"
+              pauseLabel="Pause"
+            />
           </Reveal>
         </div>
       </div>
