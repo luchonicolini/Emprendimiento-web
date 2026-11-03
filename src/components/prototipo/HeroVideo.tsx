@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
-import { CornerMarks } from "@/components/prototipo/primitives";
 
 interface HeroVideoProps {
   title?: string;
@@ -55,11 +54,10 @@ export function HeroVideo({
 
   return (
     <div className="relative">
-      <aside className="proto-blue proto-grid relative border border-[var(--line-strong)] p-4 sm:p-5 transition-all duration-300 shadow-md">
-        <CornerMarks />
+      <aside className="proto-grid relative border border-[var(--line-strong)] bg-[var(--bg)] p-3 sm:p-4 transition-all duration-300 shadow-sm">
 
         {/* Barra superior estilo CAD */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] pb-2.5">
           <div className="flex items-center gap-2">
             <span
               className="inline-block h-2 w-2 bg-[var(--signal)] animate-pulse"
@@ -75,7 +73,7 @@ export function HeroVideo({
         </div>
 
         {/* Contenedor del video 1:1 con marco técnico */}
-        <div className="relative mt-3.5 aspect-square w-full overflow-hidden border border-[var(--line-strong)] bg-[#0d1418]">
+        <div className="relative mt-3 aspect-square w-full overflow-hidden border border-[var(--line-strong)] bg-[#0d1418] shadow-inner">
           <video
             ref={videoRef}
             src="/brand/hero-video.mp4"
