@@ -1,145 +1,89 @@
-# Nicolini Design — Estudio de Desarrollo Web
+# Nicolini Design
+### Sitios web con medidas exactas. Una presencia digital diseñada para generar confianza y oportunidades de negocio.
 
-Sitio oficial de **Nicolini Design**, estudio especializado en diseño y desarrollo web de alta precisión. Construido con arquitectura moderna, tipografía técnica editorial y rendimiento nativo.
-
----
-
-## Concepto Visual: Plano Técnico (CAD Blueprint)
-
-El sitio utiliza una metáfora de **plano técnico y arquitectura de ingeniería**:
-
-* **Paleta:** Papel pergamino (`#e9e6dd`), tinta carbón (`#0d1418`), azul blueprint (`#16324f`) y naranja de marcación técnica (`#b83812`).
-* **Tipografía:** `Figtree` (lectura y display) + `Martian Mono` (cotas numéricas, metadatos y etiquetas técnicas).
-* **Grilla milimetrada:** Textura vectorial de fondo con líneas de medición exactas y marcadores de cota.
-* **Transiciones de calibración:** Animación de velo CAD de alta precisión al alternar entre idiomas.
+**[Conocé la web en funcionamiento](https://nicolini-design.vercel.app/)** · **[Explorá los trabajos](https://nicolini-design.vercel.app/#trabajos)** · **[Solicitá un presupuesto](https://nicolini-design.vercel.app/#presupuesto)**
 
 ---
 
-## Estructura de Secciones y Experiencia
+## Una web profesional no debería ser un gasto sin rumbo
 
-1. **Navegación Técnica (`ProtoNav`):** Barra fija minimalista con acceso a secciones, enlace a catálogo y conmutador de idioma `ES | EN` con persistencia de sesión.
-2. **Hero & Ficha Técnica CAD (`ProtoHero` + `HeroCadSheet`):** Propuesta de valor directa con lámina interactiva CAD de tres modos:
-   * *01 Ficha de Obra:* Alcance, stack tecnológico, tiempos de entrega y garantía.
-   * *02 Cotas CAD:* Wireframe interactivo con visualización de medidas y cotas dimensionales.
-   * *03 Métricas:* Tiempos de carga reales (< 0.5s), Core Web Vitals y optimización SEO nativa.
-3. **Alcance (`Scope`):** Cuatro etapas claras de ejecución técnica (Diseño & Arquitectura, Rendimiento & Accesibilidad, Conversión & Formularios, Despliegue & Dominio).
-4. **Visor de Obras (`WorkIndex`):** Selector dividido entre proyectos entregados a clientes en producción y prototipos interactivos del laboratorio con inspector lateral.
-5. **Proceso & Pliego de Garantía (`Process`):** Cronograma de obra en cuatro fases y pliego contractual con esquema de pago protegido (seña inicial y saldo contra entrega conforme).
-6. **Presupuesto Transparente (`PricingTable`):** Precios cerrados para Landing Page, Web Multipágina y Tienda/Sistema a medida, con soporte para pagos locales e internacionales (Wise, PayPal, USDT).
-7. **Preguntas Frecuentes (`Faq`):** Respuestas a dudas técnicas, propiedad del código fuente y mantenimiento.
-8. **Formulario de Contacto (`Contact`):** Captura de consultas con protección anti-bot (honeypot + time-latch), notificación por correo y generación de ficha estructurada para WhatsApp.
-9. **Cápsula Flotante de WhatsApp (`WhatsAppFloat`):** Botón de contacto directo con estilo obsidian dark, no invasivo y contextual al idioma activo.
-10. **Catálogo Técnico Extendido (`/catalogo`):** Repositorio interactivo con 100 prototipos funcionales organizados por industria y estilo visual.
+Para muchos negocios, la página web es el primer encuentro con un posible cliente. Si no explica con claridad qué ofrece la empresa, no transmite confianza o dificulta el contacto, una oportunidad puede perderse antes de comenzar una conversación.
 
----
+**Nicolini Design** presenta una propuesta de diseño y desarrollo web orientada a resultados: construir sitios a medida, claros, rápidos de recorrer y preparados para transformar el interés de una visita en una consulta comercial.
 
-## Stack Tecnológico
+El objetivo no es simplemente «estar en internet». Es contar con una presencia digital que represente el valor real de un negocio y ayude a venderlo mejor.
 
-* **Framework:** Next.js 16 (App Router + Turbopack)
-* **Librería UI:** React 19
-* **Estilos:** Tailwind CSS 4 + `cota.css` (tokens de variables CSS para el sistema visual plano técnico)
-* **Componentes UI:** Radix UI primitives (`@radix-ui/react-accordion`)
-* **Métricas & Rendimiento:** `@vercel/speed-insights` y `@vercel/analytics`
-* **Analítica Opcional:** Microsoft Clarity (sujeto a consentimiento de cookies)
-* **Seguridad:** Cabeceras HTTP estrictas (CSP, HSTS, X-Frame-Options, Permissions-Policy) y rate limiting en endpoints de API
-* **Accesibilidad:** Soporte para `prefers-reduced-motion` y compatibilidad sin JavaScript vía `<noscript>`
+## ¿Qué ofrece Nicolini Design?
 
----
+**Diseño que diferencia.** Cada proyecto parte de la identidad y los objetivos del negocio, con una presentación visual propia en lugar de depender de plantillas genéricas.
 
-## Comandos de Desarrollo
+**Un recorrido pensado para convertir.** Los contenidos, los servicios y los llamados a la acción se organizan para que la persona entienda rápidamente la propuesta y sepa cómo dar el siguiente paso.
 
-```bash
-# Instalar dependencias
-npm install
+**Experiencia cómoda desde el celular.** Sitios adaptados a distintos tamaños de pantalla, con especial atención a la navegación móvil y a una carga ágil.
 
-# Iniciar servidor de desarrollo local
-npm run dev
+**Comunicación que genera confianza.** Ayuda para ordenar el mensaje comercial, explicar los servicios y resolver dudas antes del primer contacto.
 
-# Chequeo estricto de tipos con TypeScript
-npm run typecheck
+**Consultas más fáciles de recibir.** Integración de vías de contacto, como WhatsApp y formularios, para reducir los pasos entre una visita y una oportunidad de venta.
 
-# Linter de código
-npm run lint
+**Información para mejorar.** Opciones de medición de visitas, formularios e interacciones de contacto para entender qué canales atraen interés, según la configuración de cada proyecto.
 
-# Compilar build optimizado para producción
-npm run build
+## Una manera de trabajar que marca la diferencia
 
-# Servir build de producción localmente
-npm run start
-```
+| Lo que suele preocupar a un cliente | La propuesta de Nicolini Design |
+| --- | --- |
+| No saber cuánto terminará costando su página | **Precio y alcance acordados por escrito** antes de comenzar. |
+| Encontrarse con un diseño parecido al de todos | **Diseño a medida**, alineado con la identidad de su negocio. |
+| Pagar sin saber cuándo recibirá el trabajo | **Fechas y etapas de entrega definidas** desde el inicio. |
+| Tener que explicar lo mismo en reuniones interminables | **Un proceso simple y directo**, con un presupuesto inicial y una breve definición del proyecto. |
+| Quedar dependiendo del proveedor para siempre | **Dominio y accesos a nombre del cliente**, con control sobre su sitio. |
+| Invertir en una web que no facilite nuevos contactos | **Una experiencia orientada a consultas**, con botones de contacto y seguimiento configurable. |
 
----
+Estas son características de la propuesta presentada por Nicolini Design; no implican que todos los proveedores del mercado trabajen del mismo modo.
 
-## Variables de Entorno
+## Del primer mensaje a la publicación
 
-Creá el archivo `.env.local` a partir de `.env.example`:
+**01 — Contanos qué necesitás.** Elegís el tipo de web y compartís una idea de tu proyecto para recibir una estimación inicial.
 
-```bash
-cp .env.example .env.local
-```
+**02 — Definimos las condiciones.** Se acuerdan por escrito el alcance, el precio final y la fecha de entrega.
 
-| Variable | Ámbito | Descripción |
-| --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Público | Dominio base del sitio (usado para canonicals, sitemap, Open Graph y JSON-LD). Por defecto: `https://nicolini.design`. |
-| `NEXT_PUBLIC_CLARITY_ID` | Público | ID de proyecto de Microsoft Clarity (opcional; si está vacío no se carga). |
-| `LEAD_NOTIFICATION_EMAIL` | Servidor | Correo de destino que recibe las consultas enviadas por el formulario técnico. |
-| `RESEND_API_KEY` | Servidor | Clave API de Resend para envío transaccional de notificaciones de nuevos leads. |
-| `WEB3FORMS_ACCESS_KEY` | Servidor | Clave alternativa de Web3Forms para respaldo en la recepción de formularios. |
-| `LEAD_FROM_EMAIL` | Servidor | Dirección remitente autorizada para los correos salientes (ej. `notificaciones@nicolini.design`). |
+**03 — Ves el resultado antes de aprobarlo.** Recibís una versión navegable para recorrerla y solicitar ajustes dentro del alcance acordado.
 
----
+**04 — Tu negocio sale al mundo.** El sitio se publica y se entregan los accesos correspondientes.
 
-## Estructura del Proyecto
+La propuesta también contempla un esquema de pago del **25 % al inicio y 75 % contra publicación y aprobación**, según las condiciones detalladas en la web.
 
-```
-src/
-  app/
-    layout.tsx                 # Fuentes, metadatos globales, OpenGraph, JSON-LD y Analytics
-    page.tsx                   # Página principal en español (/)
-    globals.css                # Configuración base de Tailwind CSS 4
-    cota.css                   # Tokens de diseño, grilla CAD y animaciones técnicas
-    robots.ts / sitemap.ts     # SEO técnico automatizado y soporte hreflang
-    politica-de-privacidad/    # Política de privacidad y tratamiento de datos
-    en/
-      page.tsx                 # Página principal en inglés (/en)
-    api/
-      save-lead/               # Endpoint para registro y notificación de consultas técnicas
-      track-event/             # Endpoint para telemetría interna y analítica de eventos
-  components/
-    brand/
-      NicoliniLogo.tsx         # Isotipo y logotipo de Nicolini Design
-    prototipo/
-      ProtoNav.tsx             # Barra de navegación con conmutador de idioma ES|EN
-      ProtoHero.tsx            # Hero con propuesta de valor y ficha técnica
-      HeroCadSheet.tsx         # Lámina interactiva CAD (Ficha, Cotas, Métricas)
-      Scope.tsx                # Alcance de obra y etapas de entrega
-      WorkIndex.tsx            # Visor técnico de obras (Clientes / Laboratorio)
-      Process.tsx              # Metodología y pliego de garantía contractual
-      PricingTable.tsx         # Tabla de presupuestos cerrados y medios de pago
-      Faq.tsx                  # Preguntas frecuentes con acordeón técnico
-      Contact.tsx              # Formulario de consulta con anti-bot y enlace a WhatsApp
-      ProtoFooter.tsx          # Pie de página y enlaces institucionales
-      WhatsAppFloat.tsx        # Cápsula flotante minimalista de contacto
-      LanguageTransition.tsx   # Efecto visual de calibración CAD al cambiar de idioma
-      primitives.tsx           # Componentes base (Kicker, SectionHead, Cota)
-      Reveal.tsx               # Animaciones de entrada progresiva
-      en/                      # Componentes equivalentes adaptados al inglés para /en
-  content/
-    prototipo.ts               # Contenido centralizado en español (marca, precios, proyectos)
-    prototipo.en.ts            # Contenido centralizado en inglés
-  lib/
-    site.ts                    # Metadatos del sitio, URLs y configuración global
-    consent.ts                 # Manejador de consentimiento de cookies
-    rate-limit.ts              # Control de tasa de peticiones (rate limiting) para endpoints
-    plan-selection.ts          # Eventos y comunicación entre componentes de selección de plan
-public/
-  catalogo/                    # Catálogo técnico interactivo con 100 prototipos funcionales
-  brand/                       # Recursos gráficos y previsualizaciones OpenGraph
-  portfolio/                   # Capturas de proyectos entregados
-```
+## Soluciones para distintas etapas de un negocio
+
+### Landing page — Una presentación enfocada en recibir consultas
+Ideal para profesionales, emprendimientos y servicios que necesitan explicar su propuesta con claridad y facilitar que nuevos clientes se comuniquen.
+
+### Web multipágina — Más espacio para mostrar lo que hacés
+Pensada para empresas con varios servicios, proyectos o áreas de trabajo que necesitan una presencia digital más completa y organizada.
+
+### Tienda online — Un canal para exhibir productos y recibir pedidos
+Una alternativa para marcas y comercios que buscan presentar su catálogo y ofrecer una experiencia de compra digital.
+
+### Sistemas a medida — Soluciones para necesidades particulares
+Proyectos que requieren funciones específicas, como gestión de turnos, pedidos, usuarios o paneles internos, sujetos a evaluación y presupuesto.
+
+## El trabajo habla por sí mismo
+
+La web reúne **proyectos publicados** y un **laboratorio de demostraciones interactivas** para explorar estilos y posibilidades. Las demostraciones conceptuales se identifican como tales y no se presentan como clientes reales.
+
+**[Explorar el sitio y sus trabajos →](https://nicolini-design.vercel.app/)**
+
+## Una inversión con reglas claras
+
+En Nicolini Design, el punto de partida es simple: **saber qué se va a entregar, cuánto va a costar y cuándo va a estar listo**.
+
+El valor de esta propuesta está en combinar una identidad visual diferenciada, una experiencia enfocada en el cliente, un proceso de trabajo transparente y una entrega bajo control del negocio.
+
+No se prometen ventas ni posiciones garantizadas en Google: se construye una base profesional para comunicar mejor, recibir consultas y medir oportunidades.
 
 ---
 
-## Licencia
+### ¿Tu negocio necesita una web que esté a la altura de lo que ofrecés?
 
-Privado © Nicolini Design Estudio. Todos los derechos reservados.
+**[Visitá Nicolini Design y pedí tu presupuesto](https://nicolini-design.vercel.app/)**
+
+*Diseño, claridad comercial y condiciones definidas desde el principio.*
