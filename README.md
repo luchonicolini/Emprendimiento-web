@@ -1,6 +1,10 @@
 # Nicolini Design
 ### Sitios web con medidas exactas. Una presencia digital diseñada para generar confianza y oportunidades de negocio.
 
+![Presentación visual de Nicolini Design](public/brand/hero-video-poster.jpg)
+
+*Una muestra de la identidad visual de Nicolini Design. [Explorá la experiencia completa en vivo](https://nicolini-design.vercel.app/).*
+
 **[Conocé la web en funcionamiento](https://nicolini-design.vercel.app/)** · **[Explorá los trabajos](https://nicolini-design.vercel.app/#trabajos)** · **[Solicitá un presupuesto](https://nicolini-design.vercel.app/#presupuesto)**
 
 ---
